@@ -1,16 +1,20 @@
 //cose per il canvas
-let height = 800
-let width = 1200
+let height = 700
+let width = 1300
 
 //varibili immagini
 let sfondoPricipale
 
-//bottoni
+//immagini bottoni
+let bottoneImpostazini_image
+
+//bottoni (oggetti)
 let bottonSettings
 let bottoneStart  //o play sono la stessa cosa
 let bottonePause
 let bottoneHome
 let bottoneStrumento
+let bottoneReplay
 
 //schermate
 let schermataPrincipale
@@ -32,15 +36,18 @@ const States = {
 
 // Setup code
 function preload(){
-    sfondoPricipale_image = loadImage("images/sfondoSchermataPrincipale.png");
+    sfondoPricipale = loadImage("images/sfondoSchermataPrincipale.png");
     bottoneImpostazini_image = loadImage("images/immagineBottoneSettings.png");
+    bottoneRepImg = loadImage("images/immagineButtonReplay.png");
 
 
 }
 
 //inizializza i bottoni nelle posizioni
 function inizializzaBottoni(){
-    bottonSettings = new Bottone(0 ,0 , bottoneImpostazini_image);
+    bottonSettings = new Bottone(10, 10, bottoneImpostazini_image, 75);
+    bottoneReplay = new Bottone(50, 10, bottoneRepImg, 20);
+
 
 
 
@@ -55,14 +62,12 @@ function setup () {
 
 
 function draw () {
-    background(sfondoPricipale);
-
+    drawSchermataPrincipale();
 }
 
-function schermataPrincipale(){
+function drawSchermataPrincipale(){
     background(sfondoPricipale);
     bottonSettings.draw();
-
 }
 
 
