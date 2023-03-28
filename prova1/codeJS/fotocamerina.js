@@ -32,6 +32,7 @@ function draw() {
 
 // A function to draw ellipses over the detected keypoints
 function drawKeypoints() {
+
   for (let i = 0; i < predictions.length; i += 1) {
     const prediction = predictions[i];
     for (let j = 0; j < prediction.landmarks.length; j += 1) {
@@ -41,4 +42,7 @@ function drawKeypoints() {
       ellipse(keypoint[0], keypoint[1], 10, 10);
     }
   }
+
+   
+
 }
