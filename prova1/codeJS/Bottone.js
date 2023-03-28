@@ -11,4 +11,6 @@ class Bottone{
         image(this.img,this.posX, this.posY, this.dim, this.dim);
     }
 
+
+
 }
