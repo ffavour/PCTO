@@ -10,14 +10,15 @@ let bottoneImpostazini_image
 let bottoneRepImg
 let bottoneHomeImg
 let bottoneinfoImg
-let 
+let bottonePlayImg
+let bottonePauseImg
 
 //bottoni (oggetti)
 let bottonSettings
-let bottoneStart  //o play sono la stessa cosa
+let bottoneStart  //o play sono la stessa cosa (forse non serve)
 let bottonePause
 let bottoneHome
-let bottoneStrumento
+let bottoneStrumento //non credo serva
 let bottoneReplay
 let bottoneInfo
 
@@ -49,11 +50,9 @@ function preload(){
     bottoneImpostazini_image = loadImage("images/immagineBottoneSettings.png");
     bottoneRepImg = loadImage("images/immagineButtonReplay.png");
     bottoneHomeImg = loadImage("images/immagineBottoneHome.png");
-    bottoneinfoImg = loadImage()
-
-
-
-
+    bottoneinfoImg = loadImage("images/immagineButtoneInfo.png");
+    bottonePlayImg = loadImage("images/immagineButtonePlay.png");
+    bottonePauseImg = loadImage("images/immagineButtonePause.png");
 }
 
 //inizializza i bottoni nelle posizioni
@@ -61,6 +60,8 @@ function inizializzaBottoni(){
     bottonSettings = new Bottone(10, 10, bottoneImpostazini_image, 75);
     bottoneReplay = new Bottone(50, 50, bottoneRepImg, 75);
     bottoneHome = new Bottone(80, 80, bottoneHomeImg, 75);
+    bottonePause = new Bottone(180, 80, bottonePauseImg, 75);
+    bottoneInfo = new Bottone(120, 80, bottoneinfoImg, 75);
 }
 
 
@@ -93,7 +94,7 @@ function draw () {
 
 //start gioco
 function drawSchermataPrincipale(){
-    background(sfondoPricipale);
+    image(sfondoPricipale, 0,0);
     bottonSettings.draw();
     //bottoneReplay.draw();  //è di prova
 }
