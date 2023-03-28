@@ -7,6 +7,10 @@ let sfondoPricipale
 
 //immagini bottoni
 let bottoneImpostazini_image
+let bottoneRepImg
+let bottoneHomeImg
+let bottoneinfoImg
+let 
 
 //bottoni (oggetti)
 let bottonSettings
@@ -45,6 +49,9 @@ function preload(){
     bottoneImpostazini_image = loadImage("images/immagineBottoneSettings.png");
     bottoneRepImg = loadImage("images/immagineButtonReplay.png");
     bottoneHomeImg = loadImage("images/immagineBottoneHome.png");
+    bottoneinfoImg = loadImage()
+
+
 
 
 }
