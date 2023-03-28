@@ -46,11 +46,7 @@ function preload(){
 //inizializza i bottoni nelle posizioni
 function inizializzaBottoni(){
     bottonSettings = new Bottone(10, 10, bottoneImpostazini_image, 75);
-    bottoneReplay = new Bottone(50, 10, bottoneRepImg, 20);
-
-
-
-
+    bottoneReplay = new Bottone(50, 50, bottoneRepImg, 75);
 }
 
 
@@ -68,6 +64,7 @@ function draw () {
 function drawSchermataPrincipale(){
     background(sfondoPricipale);
     bottonSettings.draw();
+    //bottoneReplay.draw();  //è di prova
 }
 
 
