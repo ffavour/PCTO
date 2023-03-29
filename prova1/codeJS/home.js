@@ -212,7 +212,7 @@ function bottoneStartPremuto(){
 
 function bottoneHomePremuto(){
     if(mouseIsPressed){
-        var d = dist(mouseX, mouseY, bottoneHome.getPosX()+40, bottoneHome.getPosY()+40);
+        var d = dist(mouseX, mouseY, bottoneHome.getPosX()+100, bottoneHome.getPosY()+40);
         if(d < 100){
             stato = States.Start;
         }
