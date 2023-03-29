@@ -9,6 +9,9 @@ let widht_init = 640
 
 //varibili immagini
 let sfondoPricipale
+let sfondoSecondario
+let sfondoCanzone
+let sfondoStrumento
 
 //immagini bottoni
 let bottoneImpostazini_image
@@ -89,6 +92,8 @@ function modelReady() {
 function preload(){
     sfondoPricipale = loadImage("images/sfondoSchermataPrincipale.png");
     sfondoSecondario = loadImage("images/sfondoBlur.jpg");
+    sfondoCanzone = loadImage("images/sfondoBlurCanzone.jpg");
+    sfondoStrumento = loadImage("images/sfondoBlurStrumento.jpg");
 
     bottoneImpostazini_image = loadImage("images/immagineBottoneSettings.png");
     bottoneRepImg = loadImage("images/immagineButtonReplay.png");
@@ -246,7 +251,7 @@ function drawSchermataPrincipale(){
 
 
 function drawschermataStrumento(){
-    background(sfondoSecondario);
+    background(sfondoStrumento);
     bottoneSettings.draw();
     bottoneInfo.draw();
     bottoneHome.draw();
@@ -255,7 +260,7 @@ function drawschermataStrumento(){
 }
 
 function drawschermataCanzone(){
-    background(sfondoSecondario);
+    background(sfondoCanzone);
     bottoneSettings.draw();
     bottoneInfo.draw();
     bottoneHome.draw();
