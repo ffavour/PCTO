@@ -1,12 +1,14 @@
 //cose per il canvas
 let height = 700
 let width = 1300
+//cose per la videocamera
+let height_init = 480
+let widht_init = 630
 
-//varibili immagini sfondi
+
+
+//varibili immagini
 let sfondoPricipale
-let sfondoSecondario
-let sfondoCanzone
-let sfondoStrumento
 
 //immagini bottoni
 let bottoneImpostazini_image
@@ -59,17 +61,21 @@ const States = {
 }
 let stato  =  States.Start //variabile per stati
 
-function drawKeypoints() { //disegna la posizione delle mani
+function drawKeypoints() {
+
     for (let i = 0; i < predictions.length; i += 1) {
         const prediction = predictions[i];
         for (let j = 0; j < prediction.landmarks.length; j += 1) {
             const keypoint = prediction.landmarks[j];
             fill(0, 255, 0);
             noStroke();
+            keypoint[0] = keypoint[0]*width/widht_init;
+            keypoint[1] = keypoint[1]*height/height_init;
             ellipse(keypoint[0], keypoint[1], 10, 10);
         }
     }
 }
+
 function modelReady() {
     console.log("Model ready!");
 }
@@ -79,8 +85,6 @@ function modelReady() {
 function preload(){
     sfondoPricipale = loadImage("images/sfondoSchermataPrincipale.png");
     sfondoSecondario = loadImage("images/sfondoBlur.jpg");
-    sfondoCanzone = loadImage("images/sfondoBlurCanzone.jpg");
-    sfondoStrumento = loadImage("images/sfondoBlurStrumento.jpg");
 
     bottoneImpostazini_image = loadImage("images/immagineBottoneSettings.png");
     bottoneRepImg = loadImage("images/immagineButtonReplay.png");
@@ -108,20 +112,22 @@ function inizializzaBottoni(){
 
 
 function setup () {
-    createCanvas(width, height);
 
-    /* per la fotocamera
+    // per la fotocamera
+    createCanvas(width, height);
     video = createCapture(VIDEO);
     video.size(width, height);
-    video.hide();
-    frameRate(120);
+
     handpose = ml5.handpose(video, modelReady);
 
     // This sets up an event that fills the global variable "predictions"
     // with an array every time new hand poses are detected
     handpose.on("predict", results => {
         predictions = results;
-    });*/
+    });
+
+    // Hide the video element, and just show the canvas
+    video.hide();
     inizializzaBottoni();
 }
 
@@ -152,41 +158,36 @@ function draw () {
 
 //start gioco
 function drawSchermataPrincipale(){
-    //image(video, 0, 0, width, height); per la fotocamera
-    //drawKeypoints();
     //image(sfondoPricipale, 0,0, width, height);
     //background(video);
 
-    background(sfondoPricipale);
+    // background(sfondoPricipale);
     bottoneSettings.draw();
     bottoneInfo.draw();
     bottoneStart.draw();
     //bottoneReplay.draw();  //è di prova (va in game over)
-
+    image(video, 0, 0, width, height); //per la fotocamera
+    drawKeypoints();
     bottoneStartPremuto();
 
 }
 
 function drawschermataStrumento(){
-    background(sfondoStrumento);
+    background(sfondoSecondario);
     bottoneSettings.draw();
     bottoneInfo.draw();
     bottoneHome.draw();
     bottoneScorreSX.draw();
     bottoneScorreDX.draw();
-
-    bottoneHomePremuto();
 }
 
 function drawschermataCanzone(){
-    background(sfondoCanzone);
+    background(sfondoSecondario);
     bottoneSettings.draw();
     bottoneInfo.draw();
     bottoneHome.draw();
     bottoneScorreSX.draw();
     bottoneScorreDX.draw();
-
-    bottoneHomePremuto();
 }
 
 function mousePressed(){
@@ -202,23 +203,13 @@ function mousePressed(){
 }
 
 function bottoneStartPremuto(){
-    if(mouseIsPressed && stato === States.Start){
+    if(mouseIsPressed){
         var d = dist(mouseX, mouseY, bottoneStart.getPosX()+100, bottoneStart.getPosY()-50);
         if(d < 100){
             stato = States.Strumento;
         }
     }
 }
-
-function bottoneHomePremuto(){
-    if(mouseIsPressed){
-        var d = dist(mouseX, mouseY, bottoneHome.getPosX()+100, bottoneHome.getPosY()+40);
-        if(d < 100){
-            stato = States.Start;
-        }
-    }
-}
-
 
 
 function drawSchermataPausa(){
@@ -242,7 +233,3 @@ function drawSchermataGioco(){
 function drawSchermataInfo(){
 
 }
-
-
-
-
