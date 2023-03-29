@@ -176,9 +176,16 @@ function drawSchermataPrincipale(){
     //image(video, 0, 0, width, height); //per la fotocamera
     bottoneStartPremuto();
 
-    drawKeypoints();
+    //drawKeypoints();
+    drawVideo();
+
 }
 
+function drawVideo(){
+    translate(width, 0);
+    scale(-1, 1);
+    drawKeypoints();
+}
 
 function drawschermataStrumento(){
     background(sfondoSecondario);
