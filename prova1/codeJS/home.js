@@ -3,7 +3,7 @@ let height = 700
 let width = 1300
 //cose per la videocamera
 let height_init = 480
-let widht_init = 630
+let widht_init = 640
 
 
 
@@ -69,9 +69,12 @@ function drawKeypoints() {
             const keypoint = prediction.landmarks[j];
             fill(0, 255, 0);
             noStroke();
-            keypoint[0] = keypoint[0]*width/widht_init;
-            keypoint[1] = keypoint[1]*height/height_init;
-            ellipse(keypoint[0], keypoint[1], 10, 10);
+
+            // Adatta le coordinate dei punti chiave alla scala della finestra
+            const x = keypoint[0] * (1300 / 640);
+            const y = keypoint[1] * (700 / 480);
+
+            ellipse(x, y, 10, 10);
         }
     }
 }
@@ -115,6 +118,7 @@ function setup () {
 
     // per la fotocamera
     createCanvas(width, height);
+
     video = createCapture(VIDEO);
     video.size(width, height);
 
@@ -161,12 +165,12 @@ function drawSchermataPrincipale(){
     //image(sfondoPricipale, 0,0, width, height);
     //background(video);
 
-    // background(sfondoPricipale);
+    background(sfondoPricipale);
     bottoneSettings.draw();
     bottoneInfo.draw();
     bottoneStart.draw();
     //bottoneReplay.draw();  //è di prova (va in game over)
-    image(video, 0, 0, width, height); //per la fotocamera
+    //image(video, 0, 0, width, height); //per la fotocamera
     drawKeypoints();
     bottoneStartPremuto();
 

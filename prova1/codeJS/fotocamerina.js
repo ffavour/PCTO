@@ -2,8 +2,15 @@ let handpose;
 let video;
 let predictions = [];
 
+let height = 700
+let width = 1300
+
+let height_init = 480
+let widht_init = 640
+
+
 function setup() {
-  createCanvas(640, 480);
+  createCanvas(width, height);
   video = createCapture(VIDEO);
   video.size(width, height);
 
@@ -39,10 +46,12 @@ function drawKeypoints() {
       const keypoint = prediction.landmarks[j];
       fill(0, 255, 0);
       noStroke();
-      ellipse(keypoint[0], keypoint[1], 10, 10);
+
+      // Adatta le coordinate dei punti chiave alla scala della finestra
+      const x = keypoint[0] * (1300 / 640);
+      const y = keypoint[1] * (700 / 480);
+
+      ellipse(x, y, 10, 10);
     }
   }
-
-   
-
 }
