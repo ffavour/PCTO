@@ -69,8 +69,8 @@ function drawKeypoints() {
         const keypoint = prediction.landmarks[j];
         fill(0, 255, 0);
         noStroke();
-        keypoint[0] = keypoint[0]*width/widht_init;
-        keypoint[1] = keypoint[1]*height/height_init;
+        keypoint[0] = (keypoint[0]*width)/widht_init;
+        keypoint[1] = (keypoint[1]*height)/height_init;
         ellipse(keypoint[0], keypoint[1], 10, 10);
       }
     }
