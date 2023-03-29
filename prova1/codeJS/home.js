@@ -64,20 +64,17 @@ let stato  =  States.Start //variabile per stati
 function drawKeypoints() {
 
     for (let i = 0; i < predictions.length; i += 1) {
-        const prediction = predictions[i];
-        for (let j = 0; j < prediction.landmarks.length; j += 1) {
-            const keypoint = prediction.landmarks[j];
-            fill(0, 255, 0);
-            noStroke();
-            keypoint[0] = keypoint[0]*width/widht_init;
-            keypoint[1] = keypoint[1]*height/height_init;
-            ellipse(keypoint[0], keypoint[1], 10, 10);
-        }
+      const prediction = predictions[i];
+      for (let j = 0; j < prediction.landmarks.length; j += 1) {
+        const keypoint = prediction.landmarks[j];
+        fill(0, 255, 0);
+        noStroke();
+        keypoint[0] = keypoint[0]*width/widht_init;
+        keypoint[1] = keypoint[1]*height/height_init;
+        ellipse(keypoint[0], keypoint[1], 10, 10);
+      }
     }
-
-
-
-}
+  }
 
 function modelReady() {
     console.log("Model ready!");
@@ -115,13 +112,12 @@ function inizializzaBottoni(){
 
 
 function setup () {
-    createCanvas(width, height);
 
     // per la fotocamera
+    createCanvas(width, height);
     video = createCapture(VIDEO);
     video.size(width, height);
-    video.hide();
-    frameRate(120);
+
     handpose = ml5.handpose(video, modelReady);
 
     // This sets up an event that fills the global variable "predictions"
@@ -129,6 +125,9 @@ function setup () {
     handpose.on("predict", results => {
         predictions = results;
     });
+
+    // Hide the video element, and just show the canvas
+    video.hide();
     inizializzaBottoni();
 }
 
@@ -159,19 +158,17 @@ function draw () {
 
 //start gioco
 function drawSchermataPrincipale(){
-    image(video, 0, 0, width, height); //per la fotocamera
-
     //image(sfondoPricipale, 0,0, width, height);
     //background(video);
 
-   // background(sfondoPricipale);
+    // background(sfondoPricipale);
     bottoneSettings.draw();
     bottoneInfo.draw();
     bottoneStart.draw();
     //bottoneReplay.draw();  //è di prova (va in game over)
-
-    bottoneStartPremuto();
+    image(video, 0, 0, width, height); //per la fotocamera
     drawKeypoints();
+    bottoneStartPremuto();
 
 }
 
