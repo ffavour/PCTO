@@ -53,7 +53,7 @@ const States = {
     Strumento: 6,
     Canzone: 7,
 }
-let stato  =  States.Strumento //variabile per stati
+let stato  =  States.Start //variabile per stati
 
 function drawKeypoints() { //disegna la posizione delle mani
     for (let i = 0; i < predictions.length; i += 1) {
@@ -175,6 +175,16 @@ function drawschermataCanzone(){
     bottoneHome.draw();
     bottoneScorreSX.draw();
     bottoneScorreDX.draw();
+}
+
+function mousePressed(){
+    if(stato === States.Start && mouseIsPressed &&
+        mouseX >= ((width/2 - (200/2)) - 100) &&
+        mouseX <= ((width/2 - (200/2)) + 100) &&
+        mouseY >= (height-200 - 40) &&
+        mouseY <= height-200 + 40){
+        stato = States.Strumento;
+    }
 }
 
 
