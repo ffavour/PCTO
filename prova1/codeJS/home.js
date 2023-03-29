@@ -73,8 +73,9 @@ function drawKeypoints() {
             // Adatta le coordinate dei punti chiave alla scala della finestra
             const x = keypoint[0] * (1300 / 640);
             const y = keypoint[1] * (700 / 480);
+            const x_magica = width-x;
 
-            ellipse(x, y, 10, 10);
+            ellipse(x_magica, y, 10, 10);
         }
     }
 }
@@ -132,16 +133,54 @@ function setup () {
 
     // Hide the video element, and just show the canvas
     video.hide();
+
     inizializzaBottoni();
 }
+/*
+function specchiaImmagine() {
+    let flippedVideo = createImage(video.width, video.height);
+    flippedVideo.loadPixels();
+    video.loadPixels();
+    for (let y = 0; y < video.height; y++) {
+        for (let x = 0; x < video.width; x++) {
+            let index = (x + y * video.width) * 4;
+            let flippedIndex = ((video.width - x - 1) + y * video.width) * 4;
+            flippedVideo.pixels[flippedIndex] = video.pixels[index];
+            flippedVideo.pixels[flippedIndex + 1] = video.pixels[index + 1];
+            flippedVideo.pixels[flippedIndex + 2] = video.pixels[index + 2];
+            flippedVideo.pixels[flippedIndex + 3] = video.pixels[index + 3];
+        }
+    }
+    flippedVideo.updatePixels();
+
+    // Disegna l'immagine invertita
+
+
+
+    return flippedVideo;
+}
+
+*/
+
+
+
+
+
 
 
 function draw () {
+
+   //video = specchiaImmagine(video);
+   // translate(width, 0);  sposta l'origine degli assi a destra
+    //scale(-1, 1);  specchia l'immagine orizzontalmente
+
+
     //translate(width, 0);
     //scale(-1, 1);
     drawSchermataPrincipale();
     gestioneSchermate();
 }
+
 
 function gestioneSchermate(){
     if(stato === States.Gioco){
@@ -173,7 +212,32 @@ function drawSchermataPrincipale(){
     bottoneInfo.draw();
     bottoneStart.draw();
     //bottoneReplay.draw();  //è di prova (va in game over)
+
+    //video = specchiaImmagine();
+
+    // Inverto l'immagine orizzontalmente
+    let flippedVideo = createImage(video.width, video.height);
+    flippedVideo.loadPixels();
+    video.loadPixels();
+    for (let y = 0; y < video.height; y++) {
+        for (let x = 0; x < video.width; x++) {
+            let index = (x + y * video.width) * 4;
+            let flippedIndex = ((video.width - x - 1) + y * video.width) * 4;
+            flippedVideo.pixels[flippedIndex] = video.pixels[index];
+            flippedVideo.pixels[flippedIndex + 1] = video.pixels[index + 1];
+            flippedVideo.pixels[flippedIndex + 2] = video.pixels[index + 2];
+            flippedVideo.pixels[flippedIndex + 3] = video.pixels[index + 3];
+        }
+    }
+    flippedVideo.updatePixels();
+
+
+    //video = specchiaImmagine();
+    //image(flippedVideo, 0, 0);
+    drawKeypoints();
+
     //image(video, 0, 0, width, height); //per la fotocamera
+
     bottoneStartPremuto();
 
     drawKeypoints();
