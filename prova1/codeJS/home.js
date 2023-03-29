@@ -44,10 +44,10 @@ let schermataStrumento
 let schermataInfo
 
 //gestione della videocamera
-let video ;
+let video;
 let handpose; //<-- per la mano
 let predictions = []
-let debug = 1
+let debug = 0
 
 
 
@@ -62,24 +62,82 @@ const States = {
     Strumento: 6,
     Canzone: 7,
 }
-let stato  =  States.Start //variabile per stati
+let stato = States.Start //variabile per stati
 
-function drawKeypoints() {
+function puntoMedio(p1X, p1Y, p2x, p2y){
+    
+    
+        const x = (p1X + p2x) / 2;
+        const y = (p1Y + p2y) / 2;
+        return { x, y };
+      
+}
+
+function drawKeypoints() { // la punta dell'indice ha valore 12 ed è quindi il dito indice per il limite sotto invece è 0
+
+    if (debug) { //fino alla 74 solo per fare i vari calcoli della mano
+        var posYmin = 100000; //--> corrisponde al dito piu altro (solo in fase di test)
+        var posYmax = 0; //--> corrisponde alla parte piu bassa del palmo
+        var valueMax;
+        var valueMin;
+    }
+
+    noStroke();
 
     for (let i = 0; i < predictions.length; i += 1) {
         const prediction = predictions[i];
-        for (let j = 0; j < prediction.landmarks.length; j += 1) {
-            const keypoint = prediction.landmarks[j];
-            fill(0, 255, 0);
-            noStroke();
+        //i valori importanti sono quelli del 12 e del 0
+        //occore fare una media tra i due per trovare un punto centrale 
+        //e poi disegnare il cursore 
+        const keypoint1 = prediction.landmarks[0];
+        const keypoint2 = prediction.landmarks[12];
 
-            // Adatta le coordinate dei punti chiave alla scala della finestra
-            const x = keypoint[0] * (1300 / 640);
-            const y = keypoint[1] * (700 / 480);
-            const x_magica = width-x;
+        var midd = puntoMedio(keypoint1[0]* (1300 / 640),keypoint1[1]* (700 / 480), keypoint2[0]* (1300 / 640), keypoint2[1]* (700 / 480));
+        console.log(midd);
+        fill(0, 60, 33);
+        
+        ellipse(midd.x=width - midd.x , midd.y, 100 , 100);
 
-            ellipse(x_magica, y, 10, 10);
+
+        if (debug) {
+            for (let j = 0; j < prediction.landmarks.length; j += 1) {
+                const keypoint = prediction.landmarks[j];
+                fill(0, 255, 0);
+                
+
+                // Adatta le coordinate dei punti chiave alla scala della finestra
+                const x = keypoint[0] * (1300 / 640);
+                const y = keypoint[1] * (700 / 480);
+                const x_magica = width - x;
+                if (debug) {
+
+
+                    if (y < posYmin) {
+                        posYmin = y;
+                        valueMin = j;
+                        console.log(y);
+                    } else if (y > posYmax) {
+                        valueMax = j;
+                        posYmax = y
+                        console.log(y);
+                    }
+
+                }
+                if (j == 12) {
+                    fill(255, 0, 0);
+                    ellipse(x_magica, y, 10, 10);
+                } else if (j == 0) {
+                    fill(200, 50, 255);
+                    ellipse(x_magica, y, 10, 10);
+                } else {
+                    ellipse(x_magica, y, 10, 10);
+                }
+            }
         }
+    }
+    if (debug) {
+        console.log("posizione dell'indice (piu in alto) " + valueMin);
+        console.log("posizione del palmo (piu in basso)" + valueMin);
     }
 }
 
@@ -89,7 +147,7 @@ function modelReady() {
 
 
 // Setup code
-function preload(){
+function preload() {
     sfondoPricipale = loadImage("images/sfondoSchermataPrincipale.png");
     sfondoSecondario = loadImage("images/sfondoBlur.jpg");
     sfondoCanzone = loadImage("images/sfondoBlurCanzone.jpg");
@@ -107,20 +165,20 @@ function preload(){
 }
 
 //inizializza i bottoni nelle posizioni
-function inizializzaBottoni(){
+function inizializzaBottoni() {
     bottoneSettings = new Bottone(10, 10, bottoneImpostazini_image, 75, 75);
     bottoneReplay = new Bottone(50, 50, bottoneRepImg, 75, 75);
     bottoneHome = new Bottone(80, 80, bottoneHomeImg, 75, 75);
     bottonePause = new Bottone(180, 80, bottonePauseImg, 75, 75);
     bottoneInfo = new Bottone((width - 90), 10, bottoneinfoImg, 75, 75);
-    bottoneStart = new Bottone((width/2 - (200/2)), height-200, bottoneStartImg, 200,80);
+    bottoneStart = new Bottone((width / 2 - (200 / 2)), height - 200, bottoneStartImg, 200, 80);
     bottoneHome = new Bottone(width - 90, height - 85, bottoneHomeImg, 75, 75);
-    bottoneScorreSX = new Bottone((width/2 - (75/2) - 300), (height/2 - (75/2)), scorreSxImg, 80, 100);
-    bottoneScorreDX = new Bottone((width/2 - (75/2) + 300), (height/2 - (75/2)), scorreDxImg, 80, 85);
+    bottoneScorreSX = new Bottone((width / 2 - (75 / 2) - 300), (height / 2 - (75 / 2)), scorreSxImg, 80, 100);
+    bottoneScorreDX = new Bottone((width / 2 - (75 / 2) + 300), (height / 2 - (75 / 2)), scorreDxImg, 80, 85);
 }
 
 
-function setup () {
+function setup() {
 
     // per la fotocamera
     createCanvas(width, height);
@@ -173,10 +231,10 @@ function specchiaImmagine() {
 
 
 
-function draw () {
+function draw() {
 
-   //video = specchiaImmagine(video);
-   // translate(width, 0);  sposta l'origine degli assi a destra
+    //video = specchiaImmagine(video);
+    // translate(width, 0);  sposta l'origine degli assi a destra
     //scale(-1, 1);  specchia l'immagine orizzontalmente
 
 
@@ -187,28 +245,28 @@ function draw () {
 }
 
 
-function gestioneSchermate(){
-    if(stato === States.Gioco){
+function gestioneSchermate() {
+    if (stato === States.Gioco) {
         drawSchermataGioco();
-    }else if(stato === States.Pause){
+    } else if (stato === States.Pause) {
         drawSchermataPausa();
-    }else if(stato === States.Info){
+    } else if (stato === States.Info) {
         drawSchermataInfo();
-    }else if(stato === States.Start){
+    } else if (stato === States.Start) {
         drawSchermataPrincipale();
-    }else if (stato === States.GameOver){
+    } else if (stato === States.GameOver) {
         drawSchermataGameOver();
-    }else if(stato === States.Strumento){
+    } else if (stato === States.Strumento) {
         drawschermataStrumento();
-    }else if (stato === States.Settings){
+    } else if (stato === States.Settings) {
         drawSchermataSettings();
-    }else if (stato === States.Canzone){
+    } else if (stato === States.Canzone) {
         drawschermataCanzone();
     }
 }
 
 //start gioco
-function drawSchermataPrincipale(){
+function drawSchermataPrincipale() {
     //image(sfondoPricipale, 0,0, width, height);
     //background(video);
 
@@ -236,12 +294,13 @@ function drawSchermataPrincipale(){
     }
     flippedVideo.updatePixels();
 
+    //image(video, 0, 0, width, height); //per la fotocamera
 
     //video = specchiaImmagine();
     //image(flippedVideo, 0, 0);
     drawKeypoints();
 
-    //image(video, 0, 0, width, height); //per la fotocamera
+
 
     bottoneStartPremuto();
 
@@ -250,7 +309,7 @@ function drawSchermataPrincipale(){
 }
 
 
-function drawschermataStrumento(){
+function drawschermataStrumento() {
     background(sfondoStrumento);
     bottoneSettings.draw();
     bottoneInfo.draw();
@@ -259,7 +318,7 @@ function drawschermataStrumento(){
     bottoneScorreDX.draw();
 }
 
-function drawschermataCanzone(){
+function drawschermataCanzone() {
     background(sfondoCanzone);
     bottoneSettings.draw();
     bottoneInfo.draw();
@@ -268,7 +327,7 @@ function drawschermataCanzone(){
     bottoneScorreDX.draw();
 }
 
-function mousePressed(){
+function mousePressed() {
     /*if(stato === States.Start && mouseIsPressed &&
         mouseX >= ((width/2 - (200/2)) - 100) &&
         mouseX <= ((width/2 - (200/2)) + 10+ùù+0) &&
@@ -280,34 +339,34 @@ function mousePressed(){
     //if(stato == States.Start)
 }
 
-function bottoneStartPremuto(){
-    if(mouseIsPressed){
-        var d = dist(mouseX, mouseY, bottoneStart.getPosX()+100, bottoneStart.getPosY()-50);
-        if(d < 100){
+function bottoneStartPremuto() {
+    if (mouseIsPressed) {
+        var d = dist(mouseX, mouseY, bottoneStart.getPosX() + 100, bottoneStart.getPosY() - 50);
+        if (d < 100) {
             stato = States.Strumento;
         }
     }
 }
 
 
-function drawSchermataPausa(){
+function drawSchermataPausa() {
 
 }
 
-function drawSchermataSettings(){
+function drawSchermataSettings() {
 
 }
 
-function drawSchermataGameOver(){
+function drawSchermataGameOver() {
 
 }
 
 
 
-function drawSchermataGioco(){
+function drawSchermataGioco() {
 
 }
 
-function drawSchermataInfo(){
+function drawSchermataInfo() {
 
 }
