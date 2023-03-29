@@ -1,6 +1,11 @@
 //cose per il canvas
 let height = 700
 let width = 1300
+//cose per la videocamera
+let height_init = 480
+let widht_init = 630
+
+
 
 //varibili immagini
 let sfondoPricipale
@@ -56,17 +61,24 @@ const States = {
 }
 let stato  =  States.Start //variabile per stati
 
-function drawKeypoints() { //disegna la posizione delle mani
+function drawKeypoints() {
+
     for (let i = 0; i < predictions.length; i += 1) {
         const prediction = predictions[i];
         for (let j = 0; j < prediction.landmarks.length; j += 1) {
             const keypoint = prediction.landmarks[j];
             fill(0, 255, 0);
             noStroke();
+            keypoint[0] = keypoint[0]*width/widht_init;
+            keypoint[1] = keypoint[1]*height/height_init;
             ellipse(keypoint[0], keypoint[1], 10, 10);
         }
     }
+
+
+
 }
+
 function modelReady() {
     console.log("Model ready!");
 }
@@ -105,7 +117,7 @@ function inizializzaBottoni(){
 function setup () {
     createCanvas(width, height);
 
-    /* per la fotocamera
+    // per la fotocamera
     video = createCapture(VIDEO);
     video.size(width, height);
     video.hide();
@@ -116,7 +128,7 @@ function setup () {
     // with an array every time new hand poses are detected
     handpose.on("predict", results => {
         predictions = results;
-    });*/
+    });
     inizializzaBottoni();
 }
 
@@ -147,18 +159,19 @@ function draw () {
 
 //start gioco
 function drawSchermataPrincipale(){
-    //image(video, 0, 0, width, height); per la fotocamera
-    //drawKeypoints();
+    image(video, 0, 0, width, height); //per la fotocamera
+
     //image(sfondoPricipale, 0,0, width, height);
     //background(video);
 
-    background(sfondoPricipale);
+   // background(sfondoPricipale);
     bottoneSettings.draw();
     bottoneInfo.draw();
     bottoneStart.draw();
     //bottoneReplay.draw();  //è di prova (va in game over)
 
     bottoneStartPremuto();
+    drawKeypoints();
 
 }
 

@@ -2,8 +2,15 @@ let handpose;
 let video;
 let predictions = [];
 
+let height = 700
+let width = 1300
+
+let height_init = 480
+let widht_init = 630
+
+
 function setup() {
-  createCanvas(640, 480);
+  createCanvas(width, height);
   video = createCapture(VIDEO);
   video.size(width, height);
 
@@ -39,6 +46,8 @@ function drawKeypoints() {
       const keypoint = prediction.landmarks[j];
       fill(0, 255, 0);
       noStroke();
+      keypoint[0] = keypoint[0]*width/widht_init;
+      keypoint[1] = keypoint[1]*height/height_init;
       ellipse(keypoint[0], keypoint[1], 10, 10);
     }
   }
