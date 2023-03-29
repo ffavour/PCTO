@@ -2,8 +2,11 @@
 let height = 700
 let width = 1300
 
-//varibili immagini
+//varibili immagini sfondi
 let sfondoPricipale
+let sfondoSecondario
+let sfondoCanzone
+let sfondoStrumento
 
 //immagini bottoni
 let bottoneImpostazini_image
@@ -76,6 +79,8 @@ function modelReady() {
 function preload(){
     sfondoPricipale = loadImage("images/sfondoSchermataPrincipale.png");
     sfondoSecondario = loadImage("images/sfondoBlur.jpg");
+    sfondoCanzone = loadImage("images/sfondoBlurCanzone.jpg");
+    sfondoStrumento = loadImage("images/sfondoBlurStrumento.jpg");
 
     bottoneImpostazini_image = loadImage("images/immagineBottoneSettings.png");
     bottoneRepImg = loadImage("images/immagineButtonReplay.png");
@@ -163,21 +168,25 @@ function drawSchermataPrincipale(){
 }
 
 function drawschermataStrumento(){
-    background(sfondoSecondario);
+    background(sfondoStrumento);
     bottoneSettings.draw();
     bottoneInfo.draw();
     bottoneHome.draw();
     bottoneScorreSX.draw();
     bottoneScorreDX.draw();
+
+    bottoneHomePremuto();
 }
 
 function drawschermataCanzone(){
-    background(sfondoSecondario);
+    background(sfondoCanzone);
     bottoneSettings.draw();
     bottoneInfo.draw();
     bottoneHome.draw();
     bottoneScorreSX.draw();
     bottoneScorreDX.draw();
+
+    bottoneHomePremuto();
 }
 
 function mousePressed(){
@@ -193,13 +202,23 @@ function mousePressed(){
 }
 
 function bottoneStartPremuto(){
-    if(mouseIsPressed){
+    if(mouseIsPressed && stato === States.Start){
         var d = dist(mouseX, mouseY, bottoneStart.getPosX()+100, bottoneStart.getPosY()-50);
         if(d < 100){
             stato = States.Strumento;
         }
     }
 }
+
+function bottoneHomePremuto(){
+    if(mouseIsPressed){
+        var d = dist(mouseX, mouseY, bottoneHome.getPosX()+40, bottoneHome.getPosY()+40);
+        if(d < 100){
+            stato = States.Start;
+        }
+    }
+}
+
 
 
 function drawSchermataPausa(){
