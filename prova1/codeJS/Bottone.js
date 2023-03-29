@@ -24,5 +24,14 @@ class Bottone{
          image(this.img, this.posX, this.posY, this.dimX, this.dimY);
     }
 
+    getPosX(){
+        return this.posY;
+    }
+
+    getPosY(){
+        return this.posX;
+    }
+
+
 
 }

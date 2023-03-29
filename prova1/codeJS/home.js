@@ -39,6 +39,7 @@ let schermataInfo
 let video ;
 let handpose; //<-- per la mano
 let predictions = []
+let debug = 1
 
 
 
@@ -157,6 +158,8 @@ function drawSchermataPrincipale(){
     bottoneStart.draw();
     //bottoneReplay.draw();  //è di prova (va in game over)
 
+    bottoneStartPremuto();
+
 }
 
 function drawschermataStrumento(){
@@ -178,12 +181,23 @@ function drawschermataCanzone(){
 }
 
 function mousePressed(){
-    if(stato === States.Start && mouseIsPressed &&
+    /*if(stato === States.Start && mouseIsPressed &&
         mouseX >= ((width/2 - (200/2)) - 100) &&
-        mouseX <= ((width/2 - (200/2)) + 100) &&
+        mouseX <= ((width/2 - (200/2)) + 10+ùù+0) &&
         mouseY >= (height-200 - 40) &&
         mouseY <= height-200 + 40){
         stato = States.Strumento;
+    }*/
+
+    //if(stato == States.Start)
+}
+
+function bottoneStartPremuto(){
+    if(mouseIsPressed){
+        var d = dist(mouseX, mouseY, bottoneStart.getPosX()+100, bottoneStart.getPosY()-50);
+        if(d < 100){
+            stato = States.Strumento;
+        }
     }
 }
 
