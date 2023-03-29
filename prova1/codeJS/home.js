@@ -137,8 +137,13 @@ function setup () {
 
 
 function draw () {
+    //translate(width, 0);
+    //scale(-1, 1);
     drawSchermataPrincipale();
+    gestioneSchermate();
+}
 
+function gestioneSchermate(){
     if(stato === States.Gioco){
         drawSchermataGioco();
     }else if(stato === States.Pause){
@@ -156,8 +161,6 @@ function draw () {
     }else if (stato === States.Canzone){
         drawschermataCanzone();
     }
-
-
 }
 
 //start gioco
@@ -171,9 +174,17 @@ function drawSchermataPrincipale(){
     bottoneStart.draw();
     //bottoneReplay.draw();  //è di prova (va in game over)
     //image(video, 0, 0, width, height); //per la fotocamera
-    drawKeypoints();
     bottoneStartPremuto();
 
+    //drawKeypoints();
+    drawVideo();
+
+}
+
+function drawVideo(){
+    translate(width, 0);
+    scale(-1, 1);
+    drawKeypoints();
 }
 
 function drawschermataStrumento(){
