@@ -3,7 +3,7 @@ let height = 700
 let width = 1300
 //cose per la videocamera
 let height_init = 480
-let widht_init = 630
+let widht_init = 640
 
 
 
