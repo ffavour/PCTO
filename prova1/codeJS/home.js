@@ -96,7 +96,7 @@ function inizializzaBottoni(){
     bottoneInfo = new Bottone((width - 90), 10, bottoneinfoImg, 75, 75);
     bottoneStart = new Bottone((width/2 - (200/2)), height-200, bottoneStartImg, 200,80);
     bottoneHome = new Bottone(width - 90, height - 85, bottoneHomeImg, 75, 75);
-    bottoneScorreSX = new Bottone((width/2 - (75/2) - 300), (height/2 - (75/2)), scorreSxImg, 75, 75);
+    bottoneScorreSX = new Bottone((width/2 - (75/2) - 300), (height/2 - (75/2)), scorreSxImg, 75, 80);
     bottoneScorreDX = new Bottone((width/2 - (75/2) + 300), (height/2 - (75/2)), scorreDxImg, 75, 75);
 }
 
