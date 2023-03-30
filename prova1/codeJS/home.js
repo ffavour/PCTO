@@ -27,7 +27,6 @@ let scorreSxImg
 let bottoneStartImg
 
 //cursori
-
 let cursorePremuto;
 let cursoreRilasciato;
 
@@ -41,6 +40,8 @@ let bottoneReplay
 let bottoneInfo
 let bottoneScorreDX
 let bottoneScorreSX
+let bottoneBack
+let bottoneFront
 
 //schermate
 let schermataPrincipale
@@ -68,7 +69,7 @@ let sCanzone
 let video;
 let handpose; //<-- per la mano
 let predictions = []
-let debug = 0
+let debug = 0;
 let flippedVideoM //per specchiare la sorgente video
 
 
@@ -122,13 +123,10 @@ function drawKeypoints() { // la punta dell'indice ha valore 12 ed è quindi il 
 
             console.log(midd);
             if(premuto){
-                fill(255,0,0);
+                image(cursorePremuto,midd.x = width - midd.x, midd.y, 100, 100);
             }else{
-                fill(19,160,229);
+                image(cursoreRilasciato,midd.x = width - midd.x, midd.y, 100, 100)
             }
-
-
-            ellipse(midd.x = width - midd.x, midd.y, 100, 100);
             var x1 = midd.x = width - midd.x;
             var y1 = midd.y;
 
@@ -207,7 +205,7 @@ function preload() {
 function inizializzaBottoni() {
     bottoneSettings = new Bottone(10, 10, bottoneImpostazini_image, 75, 75, "settings");
     bottoneReplay = new Bottone(50, 50, bottoneRepImg, 75, 75,"replay");
-    bottoneHome = new Bottone(80, 80, bottoneHomeImg, 75, 75),"home";
+    //bottoneHome = new Bottone(80, 80, bottoneHomeImg, 75, 75),"home";
     bottonePause = new Bottone(180, 80, bottonePauseImg, 75, 75, "pause");
     bottoneInfo = new Bottone((width - 90), 10, bottoneinfoImg, 75, 75, "info");
     bottoneStart = new Bottone((width / 2 - (200 / 2)), height - 200, bottoneStartImg, 200, 80, "start");
@@ -223,8 +221,8 @@ function inizializzaSchermate(){
     sPause = new Schermata(["info", "replay"]);
     sInfo = new Schermata(["back"]); //il pulsante back non esiste
     sSettings = new Schermata(["back"]); //il pulsante back non esiste
-    sStrumento = new Schermata(["back", "info", "settings", "avanti", "scorreDX", "scorreSX"]); //il pulsante back non esiste
-    sCanzone = new Schermata(["back", "info", "settings", "avanti", "scorreDX", "scorreSX"]); //il pulsante back non esiste
+    sStrumento = new Schermata(["back", "info","home", "settings", "avanti", "scorreDX", "scorreSX"]); //il pulsante back non esiste
+    sCanzone = new Schermata(["back", "info", "home", "settings", "avanti", "scorreDX", "scorreSX"]); //il pulsante back non esiste
 }
 
 function setup() {
@@ -283,8 +281,8 @@ function controllaBottoni(sche){
     //settings e info sono invetite pk si
 
     bottoneStart.premuto(States.Strumento, sche);
-    bottoneSettings.premuto(4, sche);
-    bottoneInfo.premuto(5, sche);
+    bottoneSettings.premuto(States.Settings, sche);
+    bottoneInfo.premuto(States.Info, sche);
     bottoneHome.premuto(States.Start, sche);
 }
 
