@@ -34,11 +34,11 @@ class Bottone{
         if(schermata.cerca(this.stringa)) { //qui controlla se il tasto si puo premere
             if (premuto) {
                 var d1 = dist(x1, y1, this.posX + this.dimX / 2, this.posY + this.dimY / 2);
-                if (!debug) {
+                if (debug) {
                     rect(this.posX + this.dimX / 2, this.posY + this.dimY / 2, 50, 50);
                     console.log(d1 + this.stringa);
                 }
-                if (d1 < 75) {
+                if (d1 < 150) {
                     console.log("lo stato all'interno del bottone prima" + stato + "stato in imput:" + staSuccessivo);
                     console.log("bottone: "+this.stringa);
                     stato = staSuccessivo;
