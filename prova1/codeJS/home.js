@@ -51,6 +51,19 @@ let schermataGameOver
 let schermataStrumento
 let schermataInfo
 
+
+//oggettiSchermate
+
+let sStart
+let sGioco
+let sGameOver
+let sPause
+let sInfo
+let sSettings
+let sStrumento
+let sCanzone
+
+
 //gestione della videocamera
 let video;
 let handpose; //<-- per la mano
@@ -192,19 +205,26 @@ function preload() {
 
 //inizializza i bottoni nelle posizioni
 function inizializzaBottoni() {
-    bottoneSettings = new Bottone(10, 10, bottoneImpostazini_image, 75, 75);
-    bottoneReplay = new Bottone(50, 50, bottoneRepImg, 75, 75);
-    bottoneHome = new Bottone(80, 80, bottoneHomeImg, 75, 75);
-    bottonePause = new Bottone(180, 80, bottonePauseImg, 75, 75);
-    bottoneInfo = new Bottone((width - 90), 10, bottoneinfoImg, 75, 75);
-    bottoneStart = new Bottone((width / 2 - (200 / 2)), height - 200, bottoneStartImg, 200, 80);
-    bottoneHome = new Bottone(width - 90, height - 85, bottoneHomeImg, 75, 75);
-    bottoneScorreSX = new Bottone((width / 2 - (75 / 2) - 300), (height / 2 - (75 / 2)), scorreSxImg, 80, 100);
-    bottoneScorreDX = new Bottone((width / 2 - (75 / 2) + 300), (height / 2 - (75 / 2)), scorreDxImg, 80, 85);
+    bottoneSettings = new Bottone(10, 10, bottoneImpostazini_image, 75, 75, "settings");
+    bottoneReplay = new Bottone(50, 50, bottoneRepImg, 75, 75,"replay");
+    bottoneHome = new Bottone(80, 80, bottoneHomeImg, 75, 75),"home";
+    bottonePause = new Bottone(180, 80, bottonePauseImg, 75, 75, "pause");
+    bottoneInfo = new Bottone((width - 90), 10, bottoneinfoImg, 75, 75, "info");
+    bottoneStart = new Bottone((width / 2 - (200 / 2)), height - 200, bottoneStartImg, 200, 80, "start");
+    bottoneHome = new Bottone(width - 90, height - 85, bottoneHomeImg, 75, 75, "home");
+    bottoneScorreSX = new Bottone((width / 2 - (75 / 2) - 300), (height / 2 - (75 / 2)), scorreSxImg, 80, 100, "scorreSX");
+    bottoneScorreDX = new Bottone((width / 2 - (75 / 2) + 300), (height / 2 - (75 / 2)), scorreDxImg, 80, 85, "scorreDX");
 }
 
 function inizializzaSchermate(){
-    
+    sStart = new Schermata(["settings", "info", "start"]);
+    sGioco = new Schermata(["settings", "info"]);
+    sGameOver = new Schermata(["settings", "info", "replay"]);
+    sPause = new Schermata(["info", "replay"]);
+    sInfo = new Schermata(["back"]); //il pulsante back non esiste
+    sSettings = new Schermata(["back"]); //il pulsante back non esiste
+    sStrumento = new Schermata(["back", "info", "settings", "avanti", "scorreDX", "scorreSX"]); //il pulsante back non esiste
+    sCanzone = new Schermata(["back", "info", "settings", "avanti", "scorreDX", "scorreSX"]); //il pulsante back non esiste
 }
 
 function setup() {
@@ -227,6 +247,7 @@ function setup() {
     video.hide();
 
     inizializzaBottoni();
+    inizializzaSchermate();
 }
 
 
@@ -258,12 +279,13 @@ function gestioneSchermate() {
     }
 }
 
-function controllaBottoni(){
+function controllaBottoni(sche){
     //settings e info sono invetite pk si
-    bottoneStart.premuto(States.Strumento);
-    bottoneSettings.premuto(4);
-    bottoneInfo.premuto(5);
-    bottoneHome.premuto(States.Start);
+
+    bottoneStart.premuto(States.Strumento, sche);
+    bottoneSettings.premuto(4, sche);
+    bottoneInfo.premuto(5, sche);
+    bottoneHome.premuto(States.Start, sche);
 }
 
 //start gioco
@@ -278,7 +300,7 @@ function drawSchermataPrincipale() {
 
     // Inverto l'immagine orizzontalmente
     flippedVideoM = cursoreMagiK();
-    controllaBottoni();
+    controllaBottoni(sStart);
     //flippedVideoM.updatePixels();
 
     /*flippedVideo.loadPixels();
@@ -324,8 +346,9 @@ function cursoreMagiK(){
 
 
 function drawschermataStrumento() {
+
     background(sfondoStrumento);
-    controllaBottoni();
+    controllaBottoni(sStrumento);
     bottoneSettings.draw();
     bottoneInfo.draw();
     bottoneHome.draw();
@@ -335,7 +358,7 @@ function drawschermataStrumento() {
 
 function drawschermataCanzone() {
     background(sfondoCanzone);
-    controllaBottoni();
+    controllaBottoni(sCanzone);
     bottoneSettings.draw();
     bottoneInfo.draw();
     bottoneHome.draw();
@@ -348,7 +371,7 @@ function drawSchermataInfo() {
         console.log("mi trovo nella schermata info");
     background(sfondoInfo);
 
-    controllaBottoni();
+    controllaBottoni(sInfo);
 
     testo = "info"
     text(testo, 50, 50, 150);
@@ -359,7 +382,7 @@ function drawSchermataSettings() {
     background(sfondoSettings);
     testo = "settings"
     text(testo, 50, 50, 150);
-    controllaBottoni();
+    controllaBottoni(sSettings);
 
 }
 
