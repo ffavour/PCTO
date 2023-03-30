@@ -26,6 +26,11 @@ let scorreDxImg
 let scorreSxImg
 let bottoneStartImg
 
+//cursori
+
+let cursorePremuto;
+let cursoreRilasciato;
+
 //bottoni (oggetti)
 let bottoneSettings
 let bottoneStart  //o play sono la stessa cosa
@@ -181,6 +186,8 @@ function preload() {
     bottoneStartImg = loadImage("images/immagineBottoneStart.png");
     scorreDxImg = loadImage("images/scorreDX.png");
     scorreSxImg = loadImage("images/scorreSX.png");
+    cursorePremuto = loadImage("images/pallaCursorePremuto.png");
+    cursoreRilasciato = loadImage("images/pallaCursoreRilasciato.png");
 }
 
 //inizializza i bottoni nelle posizioni
@@ -196,6 +203,9 @@ function inizializzaBottoni() {
     bottoneScorreDX = new Bottone((width / 2 - (75 / 2) + 300), (height / 2 - (75 / 2)), scorreDxImg, 80, 85);
 }
 
+function inizializzaSchermate(){
+    
+}
 
 function setup() {
 
@@ -222,7 +232,6 @@ function setup() {
 
 
 function draw() {
-    drawSchermataPrincipale();
     gestioneSchermate();
 }
 
@@ -250,11 +259,11 @@ function gestioneSchermate() {
 }
 
 function controllaBottoni(){
+    //settings e info sono invetite pk si
     bottoneStart.premuto(States.Strumento);
-    bottoneSettings.premuto(States.Settings);
-    bottoneInfo.premuto(States.Info);
+    bottoneSettings.premuto(4);
+    bottoneInfo.premuto(5);
     bottoneHome.premuto(States.Start);
-    //bottone
 }
 
 //start gioco
@@ -313,25 +322,6 @@ function cursoreMagiK(){
     return flippedVideo;
 }
 
-function cursoreMagiK1(flippedVideo){
-    flippedVideo = createImage(video.width, video.height);
-
-    video.loadPixels();
-    for (let y = 0; y < video.height; y++) {
-        for (let x = 0; x < video.width; x++) {
-            let index = (x + y * video.width) * 4;
-            let flippedIndex = ((video.width - x - 1) + y * video.width) * 4;
-            flippedVideo.pixels[flippedIndex] = video.pixels[index];
-            flippedVideo.pixels[flippedIndex + 1] = video.pixels[index + 1];
-            flippedVideo.pixels[flippedIndex + 2] = video.pixels[index + 2];
-            flippedVideo.pixels[flippedIndex + 3] = video.pixels[index + 3];
-        }
-    }
-    flippedVideo.updatePixels();
-
-    //return flippedVideo;
-}
-
 
 function drawschermataStrumento() {
     background(sfondoStrumento);
@@ -341,8 +331,6 @@ function drawschermataStrumento() {
     bottoneHome.draw();
     bottoneScorreSX.draw();
     bottoneScorreDX.draw();
-
-
 }
 
 function drawschermataCanzone() {
@@ -356,7 +344,21 @@ function drawschermataCanzone() {
 }
 
 function drawSchermataInfo() {
+    if(debug)
+        console.log("mi trovo nella schermata info");
     background(sfondoInfo);
+
+    controllaBottoni();
+
+    testo = "info"
+    text(testo, 50, 50, 150);
+
+}
+
+function drawSchermataSettings() {
+    background(sfondoSettings);
+    testo = "settings"
+    text(testo, 50, 50, 150);
     controllaBottoni();
 
 }
@@ -393,9 +395,7 @@ function drawSchermataPausa() {
 
 }
 
-function drawSchermataSettings() {
 
-}
 
 function drawSchermataGameOver() {
 

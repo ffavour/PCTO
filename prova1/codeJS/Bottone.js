@@ -1,11 +1,12 @@
 class Bottone{
 
-    constructor(posX, posY, img, dimX, dimY){
+    constructor(posX, posY, img, dimX, dimY, stringa){
         this.posX = posX;
         this.posY = posY;
         this.img = img;
         this.dimX = dimX;
-        this.dimY = dimY
+        this.dimY = dimY;
+        this.stringa = stringa;
     }
 
     draw(){
@@ -24,18 +25,20 @@ class Bottone{
          image(this.img, this.posX, this.posY, this.dimX, this.dimY);
     }
 
-    premuto(sta){
+    premuto(staSuccessivo){
         var obj = drawKeypoints();
         var x1 = obj.x1;
         var y1 = obj.y1;
         var premuto = obj.premuto;
-
         if(premuto){
             var d1 = dist(x1,y1, this.posX + this.dimX/2, this.posY + this.dimY/2);
             if(debug)
                 rect(this.posX + this.dimX/2, this.posY + this.dimY/2,50,50);
-            if(d1<100){
-                stato = sta;
+            if(d1<75){
+                console.log("lo stato all'interno del bottone prima"+stato+ "stato in imput:"+staSuccessivo);
+                    stato = staSuccessivo;
+
+
             }
         }
 
@@ -44,9 +47,10 @@ class Bottone{
                 var d = dist(mouseX, mouseY, this.posX + 100, this.posY - 50);
 
                 if (d < 100) {
-                    stato = sta;
+                    stato = staSuccessivo;
                 }
             }
+        console.log("lo stato all'interno del bottone dopo"+stato);
 
     }
 
