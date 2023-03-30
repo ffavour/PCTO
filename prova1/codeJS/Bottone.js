@@ -24,6 +24,33 @@ class Bottone{
          image(this.img, this.posX, this.posY, this.dimX, this.dimY);
     }
 
+    premuto(sta){
+        var obj = drawKeypoints();
+        var x1 = obj.x1;
+        var y1 = obj.y1;
+        var premuto = obj.premuto;
+
+        if(premuto){
+            var d1 = dist(x1,y1, this.posX + this.dimX/2, this.posY + this.dimY/2);
+            if(debug)
+                rect(this.posX + this.dimX/2, this.posY + this.dimY/2,50,50);
+            if(d1<100){
+                stato = sta;
+            }
+        }
+
+        if(debug)
+            if (mouseIsPressed) {
+                var d = dist(mouseX, mouseY, this.posX + 100, this.posY - 50);
+
+                if (d < 100) {
+                    stato = sta;
+                }
+            }
+
+    }
+
+
     getPosX(){
         return this.posY;
     }

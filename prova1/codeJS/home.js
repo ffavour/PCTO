@@ -22,6 +22,7 @@ let bottonePlayImg
 let bottonePauseImg
 let scorreDxImg
 let scorreSxImg
+let bottoneStartImg
 
 //bottoni (oggetti)
 let bottoneSettings
@@ -65,12 +66,9 @@ const States = {
 let stato = States.Start //variabile per stati
 
 function puntoMedio(p1X, p1Y, p2x, p2y){
-    
-    
         const x = (p1X + p2x) / 2;
         const y = (p1Y + p2y) / 2;
-        return { x, y };
-      
+        return { x, y};
 }
 
 function drawKeypoints() { // la punta dell'indice ha valore 12 ed è quindi il dito indice per il limite sotto invece è 0
@@ -80,65 +78,81 @@ function drawKeypoints() { // la punta dell'indice ha valore 12 ed è quindi il 
         var posYmax = 0; //--> corrisponde alla parte piu bassa del palmo
         var valueMax;
         var valueMin;
-    }
+    }else {
 
-    noStroke();
+        noStroke();
 
-    for (let i = 0; i < predictions.length; i += 1) {
-        const prediction = predictions[i];
-        //i valori importanti sono quelli del 12 e del 0
-        //occore fare una media tra i due per trovare un punto centrale 
-        //e poi disegnare il cursore 
-        const keypoint1 = prediction.landmarks[0];
-        const keypoint2 = prediction.landmarks[12];
+        for (let i = 0; i < predictions.length; i += 1) {
+            const prediction = predictions[i];
+            //i valori importanti sono quelli del 12 e del 0
+            //occore fare una media tra i due per trovare un punto centrale
+            //e poi disegnare il cursore
+            const keypoint1 = prediction.landmarks[0];
+            const keypoint2 = prediction.landmarks[12];
+            var premuto = false;
 
-        var midd = puntoMedio(keypoint1[0]* (1300 / 640),keypoint1[1]* (700 / 480), keypoint2[0]* (1300 / 640), keypoint2[1]* (700 / 480));
-        console.log(midd);
-        fill(0, 60, 33);
-        
-        ellipse(midd.x=width - midd.x , midd.y, 100 , 100);
+            var midd = puntoMedio(keypoint1[0] * (1300 / 640), keypoint1[1] * (700 / 480), keypoint2[0] * (1300 / 640), keypoint2[1] * (700 / 480));
 
-
-        if (debug) {
-            for (let j = 0; j < prediction.landmarks.length; j += 1) {
-                const keypoint = prediction.landmarks[j];
-                fill(0, 255, 0);
-                
-
-                // Adatta le coordinate dei punti chiave alla scala della finestra
-                const x = keypoint[0] * (1300 / 640);
-                const y = keypoint[1] * (700 / 480);
-                const x_magica = width - x;
-                if (debug) {
+            var d  = dist(keypoint1[0] * (1300 / 640), keypoint1[1] * (700 / 480), keypoint2[0] * (1300 / 640), keypoint2[1] * (700 / 480));
+            if(d < 100){
+                premuto = true;
+            }
 
 
-                    if (y < posYmin) {
-                        posYmin = y;
-                        valueMin = j;
-                        console.log(y);
-                    } else if (y > posYmax) {
-                        valueMax = j;
-                        posYmax = y
-                        console.log(y);
+            console.log(midd);
+            if(premuto){
+                fill(255,0,0);
+            }else{
+                fill(19,160,229);
+            }
+
+
+            ellipse(midd.x = width - midd.x, midd.y, 100, 100);
+            var x1 = midd.x = width - midd.x;
+            var y1 = midd.y;
+
+            if (debug) {
+                for (let j = 0; j < prediction.landmarks.length; j += 1) {
+                    const keypoint = prediction.landmarks[j];
+                    fill(0, 255, 0);
+
+                    // Adatta le coordinate dei punti chiave alla scala della finestra
+                    const x = keypoint[0] * (1300 / 640);
+                    const y = keypoint[1] * (700 / 480);
+                    const x_magica = width - x;
+                    if (debug) {
+
+                        if (y < posYmin) {
+                            posYmin = y;
+                            valueMin = j;
+                            console.log(y);
+                        } else if (y > posYmax) {
+                            valueMax = j;
+                            posYmax = y
+                            console.log(y);
+                        }
                     }
-
-                }
-                if (j == 12) {
-                    fill(255, 0, 0);
-                    ellipse(x_magica, y, 10, 10);
-                } else if (j == 0) {
-                    fill(200, 50, 255);
-                    ellipse(x_magica, y, 10, 10);
-                } else {
-                    ellipse(x_magica, y, 10, 10);
+                    if (j == 12) {
+                        fill(255, 0, 0);
+                        ellipse(x_magica, y, 10, 10);
+                    } else if (j == 0) {
+                        fill(200, 50, 255);
+                        ellipse(x_magica, y, 10, 10);
+                    } else {
+                        ellipse(x_magica, y, 10, 10);
+                    }
                 }
             }
+
+
+
         }
     }
     if (debug) {
         console.log("posizione dell'indice (piu in alto) " + valueMin);
         console.log("posizione del palmo (piu in basso)" + valueMin);
     }
+    return ({x1,y1,premuto});
 }
 
 function modelReady() {
@@ -199,47 +213,10 @@ function setup() {
 
     inizializzaBottoni();
 }
-/*
-function specchiaImmagine() {
-    let flippedVideo = createImage(video.width, video.height);
-    flippedVideo.loadPixels();
-    video.loadPixels();
-    for (let y = 0; y < video.height; y++) {
-        for (let x = 0; x < video.width; x++) {
-            let index = (x + y * video.width) * 4;
-            let flippedIndex = ((video.width - x - 1) + y * video.width) * 4;
-            flippedVideo.pixels[flippedIndex] = video.pixels[index];
-            flippedVideo.pixels[flippedIndex + 1] = video.pixels[index + 1];
-            flippedVideo.pixels[flippedIndex + 2] = video.pixels[index + 2];
-            flippedVideo.pixels[flippedIndex + 3] = video.pixels[index + 3];
-        }
-    }
-    flippedVideo.updatePixels();
-
-    // Disegna l'immagine invertita
-
-
-
-    return flippedVideo;
-}
-
-*/
-
-
-
-
 
 
 
 function draw() {
-
-    //video = specchiaImmagine(video);
-    // translate(width, 0);  sposta l'origine degli assi a destra
-    //scale(-1, 1);  specchia l'immagine orizzontalmente
-
-
-    //translate(width, 0);
-    //scale(-1, 1);
     drawSchermataPrincipale();
     gestioneSchermate();
 }
@@ -263,6 +240,14 @@ function gestioneSchermate() {
     } else if (stato === States.Canzone) {
         drawschermataCanzone();
     }
+}
+
+function controllaBottoni(){
+    bottoneStart.premuto(States.Strumento);
+    bottoneSettings.premuto(States.Settings);
+    bottoneInfo.premuto(States.info);
+    bottoneHome.premuto(States.Start);
+    //bottone
 }
 
 //start gioco
@@ -298,14 +283,9 @@ function drawSchermataPrincipale() {
 
     //video = specchiaImmagine();
     //image(flippedVideo, 0, 0);
-    drawKeypoints();
-
-
-
-    bottoneStartPremuto();
-
     //drawKeypoints();
-
+    //bottoneStartPremuto();
+    controllaBottoni();
 }
 
 
@@ -316,6 +296,8 @@ function drawschermataStrumento() {
     bottoneHome.draw();
     bottoneScorreSX.draw();
     bottoneScorreDX.draw();
+
+
 }
 
 function drawschermataCanzone() {
@@ -327,26 +309,37 @@ function drawschermataCanzone() {
     bottoneScorreDX.draw();
 }
 
-function mousePressed() {
-    /*if(stato === States.Start && mouseIsPressed &&
-        mouseX >= ((width/2 - (200/2)) - 100) &&
-        mouseX <= ((width/2 - (200/2)) + 10+ùù+0) &&
-        mouseY >= (height-200 - 40) &&
-        mouseY <= height-200 + 40){
-        stato = States.Strumento;
-    }*/
+function drawSchermataInfo() {
+    
 
-    //if(stato == States.Start)
 }
 
+
+/*
 function bottoneStartPremuto() {
+
+    var obj = drawKeypoints();
+    var x1 = obj.x1;
+    var y1 = obj.y1;
+    var premuto = obj.premuto;
+
+    if(premuto){
+        var d1 = dist(x1,y1, bottoneStart.getPosX() + 100, bottoneStart.getPosY() - 50);
+        if(d1<100){
+            stato = States.Strumento;
+        }
+    }
+
+    if(debug)
     if (mouseIsPressed) {
         var d = dist(mouseX, mouseY, bottoneStart.getPosX() + 100, bottoneStart.getPosY() - 50);
         if (d < 100) {
             stato = States.Strumento;
         }
     }
+
 }
+*/
 
 
 function drawSchermataPausa() {
@@ -361,12 +354,7 @@ function drawSchermataGameOver() {
 
 }
 
-
-
 function drawSchermataGioco() {
 
 }
 
-function drawSchermataInfo() {
-
-}
