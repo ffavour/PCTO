@@ -12,6 +12,8 @@ let sfondoPricipale
 let sfondoSecondario
 let sfondoCanzone
 let sfondoStrumento
+let sfondoInfo;
+let sfondoSettings
 
 //immagini bottoni
 let bottoneImpostazini_image
@@ -49,6 +51,7 @@ let video;
 let handpose; //<-- per la mano
 let predictions = []
 let debug = 0
+let flippedVideoM //per specchiare la sorgente video
 
 
 
@@ -166,6 +169,8 @@ function preload() {
     sfondoSecondario = loadImage("images/sfondoBlur.jpg");
     sfondoCanzone = loadImage("images/sfondoBlurCanzone.jpg");
     sfondoStrumento = loadImage("images/sfondoBlurStrumento.jpg");
+    sfondoSettings = loadImage("images/sfondoBlurSettings.png");
+    sfondoInfo = loadImage("images/sfondoBlurInfo.png");
 
     bottoneImpostazini_image = loadImage("images/immagineBottoneSettings.png");
     bottoneRepImg = loadImage("images/immagineButtonReplay.png");
@@ -223,6 +228,8 @@ function draw() {
 
 
 function gestioneSchermate() {
+    if(!debug)
+        console.log(stato);
     if (stato === States.Gioco) {
         drawSchermataGioco();
     } else if (stato === States.Pause) {
@@ -245,7 +252,7 @@ function gestioneSchermate() {
 function controllaBottoni(){
     bottoneStart.premuto(States.Strumento);
     bottoneSettings.premuto(States.Settings);
-    bottoneInfo.premuto(States.info);
+    bottoneInfo.premuto(States.Info);
     bottoneHome.premuto(States.Start);
     //bottone
 }
@@ -259,11 +266,35 @@ function drawSchermataPrincipale() {
     bottoneSettings.draw();
     bottoneInfo.draw();
     bottoneStart.draw();
-    //bottoneReplay.draw();  //è di prova (va in game over)
-
-    //video = specchiaImmagine();
 
     // Inverto l'immagine orizzontalmente
+    flippedVideoM = cursoreMagiK();
+    controllaBottoni();
+    //flippedVideoM.updatePixels();
+
+    /*flippedVideo.loadPixels();
+    video.loadPixels();
+    for (let y = 0; y < video.height; y++) {
+        for (let x = 0; x < video.width; x++) {
+            let index = (x + y * video.width) * 4;
+            let flippedIndex = ((video.width - x - 1) + y * video.width) * 4;
+            flippedVideo.pixels[flippedIndex] = video.pixels[index];
+            flippedVideo.pixels[flippedIndex + 1] = video.pixels[index + 1];
+            flippedVideo.pixels[flippedIndex + 2] = video.pixels[index + 2];
+            flippedVideo.pixels[flippedIndex + 3] = video.pixels[index + 3];
+        }
+    }*/
+    //flippedVideoM.updatePixels();
+
+    //image(video, 0, 0, width, height); //per la fotocamera
+
+    //video = specchiaImmagine();
+    //image(flippedVideo, 0, 0);
+    //drawKeypoints();
+    //bottoneStartPremuto();
+}
+
+function cursoreMagiK(){
     let flippedVideo = createImage(video.width, video.height);
     flippedVideo.loadPixels();
     video.loadPixels();
@@ -277,20 +308,34 @@ function drawSchermataPrincipale() {
             flippedVideo.pixels[flippedIndex + 3] = video.pixels[index + 3];
         }
     }
+    flippedVideo.updatePixels(); // Update the flippedVideo image with the flipped pixels
+
+    return flippedVideo;
+}
+
+function cursoreMagiK1(flippedVideo){
+    flippedVideo = createImage(video.width, video.height);
+
+    video.loadPixels();
+    for (let y = 0; y < video.height; y++) {
+        for (let x = 0; x < video.width; x++) {
+            let index = (x + y * video.width) * 4;
+            let flippedIndex = ((video.width - x - 1) + y * video.width) * 4;
+            flippedVideo.pixels[flippedIndex] = video.pixels[index];
+            flippedVideo.pixels[flippedIndex + 1] = video.pixels[index + 1];
+            flippedVideo.pixels[flippedIndex + 2] = video.pixels[index + 2];
+            flippedVideo.pixels[flippedIndex + 3] = video.pixels[index + 3];
+        }
+    }
     flippedVideo.updatePixels();
 
-    //image(video, 0, 0, width, height); //per la fotocamera
-
-    //video = specchiaImmagine();
-    //image(flippedVideo, 0, 0);
-    //drawKeypoints();
-    //bottoneStartPremuto();
-    controllaBottoni();
+    //return flippedVideo;
 }
 
 
 function drawschermataStrumento() {
     background(sfondoStrumento);
+    controllaBottoni();
     bottoneSettings.draw();
     bottoneInfo.draw();
     bottoneHome.draw();
@@ -302,6 +347,7 @@ function drawschermataStrumento() {
 
 function drawschermataCanzone() {
     background(sfondoCanzone);
+    controllaBottoni();
     bottoneSettings.draw();
     bottoneInfo.draw();
     bottoneHome.draw();
@@ -310,7 +356,8 @@ function drawschermataCanzone() {
 }
 
 function drawSchermataInfo() {
-    
+    background(sfondoInfo);
+    controllaBottoni();
 
 }
 
