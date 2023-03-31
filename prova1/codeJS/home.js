@@ -82,7 +82,7 @@ let fontBrani;
 //oggetti Brano
 let vettoreBrani = [];
 
-
+let frecciaPremuta = false;
 
 
 //enumerazione degli stati :
@@ -317,7 +317,6 @@ function gestioneSchermate() {
 }
 
 function controllaBottoni(sche){
-    //settings e info sono invetite pk si
 
     bottoneStart.premuto(States.Canzone, sche);
     bottoneSettings.premuto(States.Settings, sche);
@@ -398,15 +397,31 @@ function drawschermataCanzone() {
     background(sfondoCanzone);
     controllaBottoni(sCanzone);
     vettoreBrani[Brano.branoCorrente].draw();
+
+
     if(bottoneScorreSX.premuto(States.Canzone, sCanzone)){
+        
+        if(!frecciaPremuta)
         if(Brano.branoCorrente-1 >= 0){
+            console.log("qualsosa funzia");
             Brano.branoCorrente -=1;
+        }else{
+            Brano.branoCorrente = vettoreBrani.length-1
         }
-    }else if(bottoneScorreSX.premuto(States.Canzone, sCanzone)){
+        frecciaPremuta = true;
+    }else if(bottoneScorreDX.premuto(States.Canzone, sCanzone)){
+
+        if(!frecciaPremuta)
         if(Brano.branoCorrente+1 < vettoreBrani.length){
             Brano.branoCorrente +=1;
+        }else{
+            Brano.branoCorrente = 0;
         }
+        frecciaPremuta = true;
+    }else{
+        frecciaPremuta = false;
     }
+
     bottoneSettings.draw();
     bottoneInfo.draw();
     bottoneHome.draw();
