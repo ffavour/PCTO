@@ -19,6 +19,22 @@ class Brano{
 
     draw(){
         image(this.img, this.posX, this.posY, this.dim, this.dim);
+        textSize(50);
+        textAlign(CENTER);
+        fill('white');
+        textFont(fontBrani);
+        text(this.titolo + " - " + this.autore, 650, 500);
+        /*
+        textSize(16);
+textAlign(RIGHT);
+text('ABCD', 50, 30);
+textAlign(CENTER);
+text('EFGH', 50, 50);
+textAlign(LEFT);
+text('IJKL', 50, 70);
+describe(`Letters ABCD displayed at top left, EFGH at center, and
+  IJKL at bottom right.`);
+         */
     }
 
 }

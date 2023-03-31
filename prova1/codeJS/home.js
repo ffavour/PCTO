@@ -74,12 +74,15 @@ let flippedVideoM //per specchiare la sorgente video
 
 let suono;
 
-//cose per il suono
+//cose per il suono/brani
 let nomeBrani = ["bizcocito"];
 let autori = ["rosalia"];
+let fontBrani;
 
 //oggetti Brano
 let vettoreBrani = [];
+
+
 
 
 //enumerazione degli stati :
@@ -190,7 +193,7 @@ function inizializzaBrani(){
     for(k=0; k<nomeBrani.length; k++){
         branoTemp = loadSound("canzoni/"+nomeBrani[k]+".mp3");
         copertinaTemp = loadImage("images/copertineCanzoni/"+nomeBrani[k]+".png");
-        vettoreBrani.push(new Brano(branoTemp, copertinaTemp, nomeBrani[k], autori[k], 200, width/2-100, 300));
+        vettoreBrani.push(new Brano(branoTemp, copertinaTemp, nomeBrani[k], autori[k], 200, width/2-100, 250));
 
     }
 }
@@ -201,7 +204,7 @@ function modelReady() {
 
 
 // Setup code
-function preload() {
+function preload(){
     sfondoPricipale = loadImage("images/sfondoSchermataPrincipale.png");
     sfondoSecondario = loadImage("images/sfondoBlur.jpg");
     sfondoCanzone = loadImage("images/sfondoBlurCanzone.jpg");
@@ -223,6 +226,7 @@ function preload() {
     soundFormats('mp3', 'ogg');
     //suono = loadSound('canzoni/bizcocito.mp3');
 
+    fontBrani = loadFont("font/Wheat Smile.ttf");
 
 }
 
@@ -235,8 +239,8 @@ function inizializzaBottoni() {
     bottoneInfo = new Bottone((width - 150), 70, bottoneinfoImg, 75, 75, "info");
     bottoneStart = new Bottone((width / 2 - (200 / 2)), height - 200, bottoneStartImg, 200, 80, "start");
     bottoneHome = new Bottone(width - 90, height - 85, bottoneHomeImg, 75, 75, "home");
-    bottoneScorreSX = new Bottone((width / 2 - (75 / 2) - 300), (height / 2 - (75 / 2)), scorreSxImg, 80, 100, "scorreSX");
-    bottoneScorreDX = new Bottone((width / 2 - (75 / 2) + 300), (height / 2 - (75 / 2)), scorreDxImg, 80, 85, "scorreDX");
+    bottoneScorreSX = new Bottone((width / 2 - (75 / 2) - 300), (height / 2 - (75 / 2)), scorreSxImg, 75, 75, "scorreSX");
+    bottoneScorreDX = new Bottone((width / 2 - (75 / 2) + 300), (height / 2 - (75 / 2)), scorreDxImg, 75, 75, "scorreDX");
 }
 
 function inizializzaSchermate(){
@@ -244,7 +248,7 @@ function inizializzaSchermate(){
     sGioco = new Schermata(["settings", "info"]);
     sGameOver = new Schermata(["settings", "info", "replay"]);
     sPause = new Schermata(["info", "replay"]);
-    sInfo = new Schermata(["back"]); //il pulsante back non esiste
+    sInfo = new Schermata(["home"]); //il pulsante back non esiste
     sSettings = new Schermata(["back"]); //il pulsante back non esiste
     sStrumento = new Schermata(["back", "info","home", "settings", "avanti", "scorreDX", "scorreSX"]); //il pulsante back non esiste
     sCanzone = new Schermata(["back", "info", "home", "settings", "avanti", "scorreDX", "scorreSX"]); //il pulsante back non esiste
@@ -404,6 +408,7 @@ function drawSchermataInfo() {
     if(debug)
         console.log("mi trovo nella schermata info");
     background(sfondoInfo);
+    bottoneHome.draw();
 
     controllaBottoni(sInfo);
 
