@@ -72,6 +72,14 @@ let predictions = []
 let debug = 0;
 let flippedVideoM //per specchiare la sorgente video
 
+let suono;
+
+//cose per il suono
+let nomeBrani = ["bizcochito"];
+let autori = ["rosalia"];
+
+//oggetti Brano
+let vettoreBrani = [];
 
 
 //enumerazione degli stati :
@@ -174,6 +182,18 @@ function drawKeypoints() { // la punta dell'indice ha valore 12 ed è quindi il 
     return ({x1,y1,premuto});
 }
 
+function inizializzaBrani(){
+    var k = 0;
+    var branoTemp;
+    var copertinaTemp;
+
+    for(k=0; k<nomeBrani.length; k++){
+        branoTemp = loadSound("canzoni/"+nomeBrani[k]+".mp3");
+        copertinaTemp = loadImage("images/copertine/")
+
+    }
+}
+
 function modelReady() {
     console.log("Model ready!");
 }
@@ -199,6 +219,9 @@ function preload() {
     scorreSxImg = loadImage("images/scorreSX.png");
     cursorePremuto = loadImage("images/pallaCursorePremuto.png");
     cursoreRilasciato = loadImage("images/pallaCursoreRilasciato.png");
+    soundFormats('mp3', 'ogg');
+    //suono = loadSound('canzoni/bizcocito.mp3');
+
 }
 
 //inizializza i bottoni nelle posizioni
@@ -228,6 +251,8 @@ function inizializzaSchermate(){
 function setup() {
 
     // per la fotocamera
+
+
     createCanvas(width, height);
 
     video = createCapture(VIDEO);
@@ -246,6 +271,10 @@ function setup() {
 
     inizializzaBottoni();
     inizializzaSchermate();
+
+
+
+
 }
 
 
@@ -256,6 +285,8 @@ function draw() {
 
 
 function gestioneSchermate() {
+
+    //suono.play();
     if(!debug)
         console.log(stato);
     if (stato === States.Gioco) {
