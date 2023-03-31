@@ -1,9 +1,12 @@
 class Brano{
-    constructor(brano, img, titolo, dim) {
-        this.brano = brano;
-        this.img = img;
-        this.titolo = titolo;
-        this.dim = dim;
+    constructor(brano, img, titolo, autore, dim, posX, posY) {
+        this.brano = brano; //ogetto contenente il brano.mp3
+        this.img = img;     //copertina brano
+        this.titolo = titolo; //titolo brano
+        this.autore = autore;
+        this.dim = dim;       //dim immagine copertina
+        this.posX = posX;
+        this.posY = posY;
     }
 
     play(){
@@ -15,7 +18,7 @@ class Brano{
     }
 
     draw(){
-        image()
+        image(this.img, this.posX, this.posY, this.dim, this.dim);
     }
 
 }

@@ -75,7 +75,7 @@ let flippedVideoM //per specchiare la sorgente video
 let suono;
 
 //cose per il suono
-let nomeBrani = ["bizcochito"];
+let nomeBrani = ["bizcocito"];
 let autori = ["rosalia"];
 
 //oggetti Brano
@@ -189,7 +189,8 @@ function inizializzaBrani(){
 
     for(k=0; k<nomeBrani.length; k++){
         branoTemp = loadSound("canzoni/"+nomeBrani[k]+".mp3");
-        copertinaTemp = loadImage("images/copertine/")
+        copertinaTemp = loadImage("images/copertineCanzoni/"+nomeBrani[k]+".png");
+        vettoreBrani.push(new Brano(branoTemp, copertinaTemp, nomeBrani[k], autori[k], 200, width/2-100, 300));
 
     }
 }
@@ -222,15 +223,16 @@ function preload() {
     soundFormats('mp3', 'ogg');
     //suono = loadSound('canzoni/bizcocito.mp3');
 
+
 }
 
 //inizializza i bottoni nelle posizioni
 function inizializzaBottoni() {
-    bottoneSettings = new Bottone(10, 10, bottoneImpostazini_image, 75, 75, "settings");
+    bottoneSettings = new Bottone(60, 70, bottoneImpostazini_image, 75, 75, "settings");
     bottoneReplay = new Bottone(50, 50, bottoneRepImg, 75, 75,"replay");
     //bottoneHome = new Bottone(80, 80, bottoneHomeImg, 75, 75),"home";
     bottonePause = new Bottone(180, 80, bottonePauseImg, 75, 75, "pause");
-    bottoneInfo = new Bottone((width - 90), 10, bottoneinfoImg, 75, 75, "info");
+    bottoneInfo = new Bottone((width - 150), 70, bottoneinfoImg, 75, 75, "info");
     bottoneStart = new Bottone((width / 2 - (200 / 2)), height - 200, bottoneStartImg, 200, 80, "start");
     bottoneHome = new Bottone(width - 90, height - 85, bottoneHomeImg, 75, 75, "home");
     bottoneScorreSX = new Bottone((width / 2 - (75 / 2) - 300), (height / 2 - (75 / 2)), scorreSxImg, 80, 100, "scorreSX");
@@ -272,6 +274,8 @@ function setup() {
     inizializzaBottoni();
     inizializzaSchermate();
 
+    inizializzaBrani();
+
 
 
 
@@ -311,7 +315,7 @@ function gestioneSchermate() {
 function controllaBottoni(sche){
     //settings e info sono invetite pk si
 
-    bottoneStart.premuto(States.Strumento, sche);
+    bottoneStart.premuto(States.Canzone, sche);
     bottoneSettings.premuto(States.Settings, sche);
     bottoneInfo.premuto(States.Info, sche);
     bottoneHome.premuto(States.Start, sche);
@@ -388,6 +392,7 @@ function drawschermataStrumento() {
 function drawschermataCanzone() {
     background(sfondoCanzone);
     controllaBottoni(sCanzone);
+    vettoreBrani[0].draw();
     bottoneSettings.draw();
     bottoneInfo.draw();
     bottoneHome.draw();
