@@ -75,8 +75,8 @@ let flippedVideoM //per specchiare la sorgente video
 let suono;
 
 //cose per il suono/brani
-let nomeBrani = ["As_it_was","BarbieGirl","Bitzcochito_rosalia","ciao","Guasto_Damore","hall_of_fame","Laurea_ad_honorem","Lingerie","Mademoiselle","Pirati_dei_caraibi","replay","stereo_hearts","waka_waka","WhereThemGirlsAt_DavidGuetta","wrecked"];
-let autori = ["HarryStyles","Aqua","Rosalia","Thasupreme","Bresh","TheScript","Marracash","Tedua","SferaEbbasta","Sconosciuto","Iyaz","GimClassHeroes","Shakira","DavidGuetta","ImagineDragons"];
+let nomeBrani = ["As_it_was","BarbieGirl","Bitzcochito_rosalia","ciao","Guasto_Damore","hall_of_fame","Laurea_ad_honorem","Lingerie","Mademoiselle","Pirati_dei_caraibi","replay","stereo_hearts","waka_waka","wrecked"];
+let autori = ["HarryStyles","Aqua","Rosalia","Thasupreme","Bresh","TheScript","Marracash","Tedua","SferaEbbasta","Sconosciuto","Iyaz","GimClassHeroes","Shakira","ImagineDragons"];
 let fontBrani;
 
 //oggetti Brano
