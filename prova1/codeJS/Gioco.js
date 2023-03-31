@@ -1,8 +1,12 @@
 class Gioco{
 
-    Gioco(){
-        this.stato = States.Initial;
+    constructor(brano){ //bitchess
+        this.brano = brano;
+        this.velocità = 0;
+        this.background = loadImage()
+
 
     }
+
 
 }

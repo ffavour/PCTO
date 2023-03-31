@@ -75,8 +75,8 @@ let flippedVideoM //per specchiare la sorgente video
 let suono;
 
 //cose per il suono/brani
-let nomeBrani = ["bizcocito", "stereoHearts"];
-let autori = ["rosalia", "GimClassHeroes"];
+let nomeBrani = ["As_it_was","BarbieGirl","Bitzcochito_rosalia","ciao","Guasto_Damore","hall_of_fame","Laurea_ad_honorem","Lingerie","Mademoiselle","Pirati_dei_caraibi","replay","stereo_hearts","waka_waka","WhereThemGirlsAt_DavidGuetta","wrecked"];
+let autori = ["HarryStyles","Aqua","Rosalia","Thasupreme","Bresh","TheScript","Marracash","Tedua","SferaEbbasta","Sconosciuto","Iyaz","GimClassHeroes","Shakira","DavidGuetta","ImagineDragons"];
 let fontBrani;
 
 //oggetti Brano
@@ -191,8 +191,13 @@ function inizializzaBrani(){
     var copertinaTemp;
 
     for(k=0; k<nomeBrani.length; k++){
+
         branoTemp = loadSound("canzoni/"+nomeBrani[k]+".mp3");
-        copertinaTemp = loadImage("images/copertineCanzoni/"+nomeBrani[k]+".png");
+        copertinaTemp = loadImage("images/copertineCanzoni/"+nomeBrani[k]+".jpeg");
+        console.log("canzoni/"+nomeBrani[k]+".mp3");
+        console.log("images/copertineCanzoni/"+nomeBrani[k]+".png");
+        //images/copertineCanzoni/WhereThemGirlsAt_DavidGuetta.jpeg
+        //C:\Users\Andrea\Desktop\cartelle\pcto_quarta\PCTO\prova1\images\copertineCanzoni
         vettoreBrani.push(new Brano(branoTemp, copertinaTemp, nomeBrani[k], autori[k], 200, width/2-100, 250));
 
     }
