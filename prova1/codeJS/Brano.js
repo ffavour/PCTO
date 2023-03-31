@@ -12,11 +12,11 @@ class Brano{
     }
 
     play(){
-        brano.play();
+        this.brano.play();
     }
 
     pause(){
-        brano.pause();
+        this.brano.pause();
     }
 
     draw(){

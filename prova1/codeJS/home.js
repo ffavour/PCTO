@@ -397,12 +397,15 @@ function drawschermataCanzone() {
     background(sfondoCanzone);
     controllaBottoni(sCanzone);
     vettoreBrani[Brano.branoCorrente].draw();
+    if(!vettoreBrani[Brano.branoCorrente].brano.isPlaying())
+    vettoreBrani[Brano.branoCorrente].play();
 
 
     if(bottoneScorreSX.premuto(States.Canzone, sCanzone)){
         
         if(!frecciaPremuta)
         if(Brano.branoCorrente-1 >= 0){
+            vettoreBrani[Brano.branoCorrente].brano.stop();
             console.log("qualsosa funzia");
             Brano.branoCorrente -=1;
         }else{
@@ -413,6 +416,7 @@ function drawschermataCanzone() {
 
         if(!frecciaPremuta)
         if(Brano.branoCorrente+1 < vettoreBrani.length){
+            vettoreBrani[Brano.branoCorrente].brano.stop();
             Brano.branoCorrente +=1;
         }else{
             Brano.branoCorrente = 0;
