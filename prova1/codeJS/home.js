@@ -14,6 +14,7 @@ let sfondoCanzone
 let sfondoStrumento
 let sfondoInfo;
 let sfondoSettings
+let sfondoGioco
 
 //immagini bottoni
 let bottoneImpostazini_image
@@ -25,6 +26,8 @@ let bottonePauseImg
 let scorreDxImg
 let scorreSxImg
 let bottoneStartImg
+let bottoneAvantiImg
+let bottoneIndietroImg
 
 //cursori
 let cursorePremuto;
@@ -40,8 +43,8 @@ let bottoneReplay
 let bottoneInfo
 let bottoneScorreDX
 let bottoneScorreSX
-let bottoneBack
-let bottoneFront
+let bottoneIndietro
+let bottoneAvanti
 
 //schermate
 let schermataPrincipale
@@ -75,8 +78,8 @@ let flippedVideoM //per specchiare la sorgente video
 let suono;
 
 //cose per il suono/brani
-let nomeBrani = ["As_it_was","BarbieGirl","Bitzcochito_rosalia","ciao","Guasto_Damore","hall_of_fame","Laurea_ad_honorem","Lingerie","Mademoiselle","Pirati_dei_caraibi","replay","stereo_hearts","waka_waka","wrecked"];
-let autori = ["HarryStyles","Aqua","Rosalia","Thasupreme","Bresh","TheScript","Marracash","Tedua","SferaEbbasta","Sconosciuto","Iyaz","GimClassHeroes","Shakira","ImagineDragons"];
+let nomeBrani = ["As_it_was","BarbieGirl","Bitzcochito_rosalia","ciao","Guasto_Damore","hall_of_fame","Laurea_ad_honorem","Lingerie","Mademoiselle","replay","stereo_hearts","waka_waka","wrecked"];
+let autori = ["HarryStyles","Aqua","Rosalia","Thasupreme","Bresh","TheScript","Marracash","Tedua","SferaEbbasta","Iyaz","GimClassHeroes","Shakira","ImagineDragons"];
 let fontBrani;
 
 //oggetti Brano
@@ -208,7 +211,7 @@ function modelReady() {
 }
 
 
-// Setup code
+// Preload code
 function preload(){
     sfondoPricipale = loadImage("images/sfondoSchermataPrincipale.png");
     sfondoSecondario = loadImage("images/sfondoBlur.jpg");
@@ -216,6 +219,7 @@ function preload(){
     sfondoStrumento = loadImage("images/sfondoBlurStrumento.jpg");
     sfondoSettings = loadImage("images/sfondoBlurSettings.png");
     sfondoInfo = loadImage("images/sfondoBlurInfo.png");
+    sfondoGioco = loadImage("images/sfondoGioco.png");
 
     bottoneImpostazini_image = loadImage("images/immagineBottoneSettings.png");
     bottoneRepImg = loadImage("images/immagineButtonReplay.png");
@@ -224,8 +228,13 @@ function preload(){
     bottonePlayImg = loadImage("images/immagineBottonePlay.png");
     bottonePauseImg = loadImage("images/immagineBottonePause.png");
     bottoneStartImg = loadImage("images/immagineBottoneStart.png");
+    bottoneAvantiImg = loadImage("images/immagineBottoneAvanti.png");
+    bottoneIndietroImg = loadImage("images/immagineBottoneIndietro.png");
+
+
     scorreDxImg = loadImage("images/scorreDX.png");
     scorreSxImg = loadImage("images/scorreSX.png");
+
     cursorePremuto = loadImage("images/pallaCursorePremuto.png");
     cursoreRilasciato = loadImage("images/pallaCursoreRilasciato.png");
     soundFormats('mp3', 'ogg');
@@ -239,7 +248,7 @@ function preload(){
 function inizializzaBottoni() {
     bottoneSettings = new Bottone(60, 70, bottoneImpostazini_image, 75, 75, "settings");
     bottoneReplay = new Bottone(50, 50, bottoneRepImg, 75, 75,"replay");
-    //bottoneHome = new Bottone(80, 80, bottoneHomeImg, 75, 75),"home";
+    bottoneAvanti = new Bottone(100, height-100, bottoneAvantiImg, 75,74,"avanti");
     bottonePause = new Bottone(180, 80, bottonePauseImg, 75, 75, "pause");
     bottoneInfo = new Bottone((width - 150), 70, bottoneinfoImg, 75, 75, "info");
     bottoneStart = new Bottone((width / 2 - (200 / 2)), height - 200, bottoneStartImg, 200, 80, "start");
@@ -255,7 +264,7 @@ function inizializzaSchermate(){
     sPause = new Schermata(["info", "replay"]);
     sInfo = new Schermata(["home"]); //il pulsante back non esiste
     sSettings = new Schermata(["back", "home"]); //il pulsante back non esiste
-    sStrumento = new Schermata(["back", "info","home", "settings", "avanti", "scorreDX", "scorreSX"]); //il pulsante back non esiste
+    //sStrumento = new Schermata(["back", "info","home", "settings", "avanti", "scorreDX", "scorreSX"]); //il pulsante back non esiste
     sCanzone = new Schermata(["back", "info", "home", "settings", "avanti", "scorreDX", "scorreSX"]); //il pulsante back non esiste
 }
 
@@ -334,6 +343,7 @@ function controllaBottoni(sche){
     bottoneSettings.premuto(States.Settings, sche);
     bottoneInfo.premuto(States.Info, sche);
     bottoneHome.premuto(States.Start, sche);
+    bottoneAvanti.premuto(States.Gioco, sche);
 
 }
 
@@ -443,6 +453,7 @@ function drawschermataCanzone() {
     bottoneHome.draw();
     bottoneScorreSX.draw();
     bottoneScorreDX.draw();
+    bottoneAvanti.draw();
 }
 
 function drawSchermataInfo() {
@@ -465,6 +476,13 @@ function drawSchermataSettings() {
     text(testo, 50, 50, 150);
     controllaBottoni(sSettings);
 
+}
+
+function drawSchermataGioco() {
+    image(flippedVideoM, 0,0,1300,700);
+    image(sfondoGioco, 0, 0,1300,700);
+    //flippedVideoM = cursoreMagiK();
+    //image(flippedVideoM, 0,0,1300,700);
 }
 
 
@@ -505,7 +523,5 @@ function drawSchermataGameOver() {
 
 }
 
-function drawSchermataGioco() {
 
-}
 

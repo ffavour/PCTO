@@ -3,8 +3,11 @@ class Gioco{
     constructor(brano){ //bitchess
         this.brano = brano;
         this.velocità = 0;
-        this.background = loadImage()
 
+        this.quadratini = []; //è il vettore di Quadratini
+    }
+
+    creaQuadratini(){
 
     }
 
