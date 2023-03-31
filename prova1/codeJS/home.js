@@ -254,7 +254,7 @@ function inizializzaSchermate(){
     sGameOver = new Schermata(["settings", "info", "replay"]);
     sPause = new Schermata(["info", "replay"]);
     sInfo = new Schermata(["home"]); //il pulsante back non esiste
-    sSettings = new Schermata(["back"]); //il pulsante back non esiste
+    sSettings = new Schermata(["back", "home"]); //il pulsante back non esiste
     sStrumento = new Schermata(["back", "info","home", "settings", "avanti", "scorreDX", "scorreSX"]); //il pulsante back non esiste
     sCanzone = new Schermata(["back", "info", "home", "settings", "avanti", "scorreDX", "scorreSX"]); //il pulsante back non esiste
 }
@@ -460,6 +460,7 @@ function drawSchermataInfo() {
 
 function drawSchermataSettings() {
     background(sfondoSettings);
+    bottoneHome.draw();
     testo = "settings"
     text(testo, 50, 50, 150);
     controllaBottoni(sSettings);
