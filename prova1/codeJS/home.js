@@ -479,9 +479,9 @@ function drawSchermataSettings() {
 }
 
 function drawSchermataGioco() {
-    image(flippedVideoM, 0,0,1300,700);
+    image(flippedVideoM, 0,0,1200,500);
     image(sfondoGioco, 0, 0,1300,700);
-    //flippedVideoM = cursoreMagiK();
+    flippedVideoM = cursoreMagiK();
     //image(flippedVideoM, 0,0,1300,700);
 }
 
