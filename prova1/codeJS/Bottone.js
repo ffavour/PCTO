@@ -31,6 +31,7 @@ class Bottone{
         var y1 = obj.y1;
         x1 = width - x1;
         var premuto = obj.premuto;
+
         if(schermata.cerca(this.stringa)) { //qui controlla se il tasto si puo premere
             if (premuto) {
                 var d1 = dist(x1, y1, this.posX + this.dimX / 2, this.posY + this.dimY / 2);

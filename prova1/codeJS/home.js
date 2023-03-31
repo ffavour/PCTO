@@ -314,6 +314,13 @@ function gestioneSchermate() {
     } else if (stato === States.Canzone) {
         drawschermataCanzone();
     }
+    controllaSuoni();
+}
+
+function controllaSuoni(){
+    if(stato != States.Canzone){
+        vettoreBrani[Brano.branoCorrente].brano.stop();
+    }
 }
 
 function controllaBottoni(sche){
@@ -402,7 +409,7 @@ function drawschermataCanzone() {
 
 
     if(bottoneScorreSX.premuto(States.Canzone, sCanzone)){
-        
+
         if(!frecciaPremuta)
         if(Brano.branoCorrente-1 >= 0){
             vettoreBrani[Brano.branoCorrente].brano.stop();
