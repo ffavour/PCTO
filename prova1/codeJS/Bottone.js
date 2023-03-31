@@ -42,8 +42,11 @@ class Bottone{
                     console.log("lo stato all'interno del bottone prima" + stato + "stato in imput:" + staSuccessivo);
                     console.log("bottone: "+this.stringa);
                     stato = staSuccessivo;
+                    return true;
 
 
+                }else{
+                    return false;
                 }
             }
 

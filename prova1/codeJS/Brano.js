@@ -1,4 +1,5 @@
 class Brano{
+    static branoCorrente = 0;
     constructor(brano, img, titolo, autore, dim, posX, posY) {
         this.brano = brano; //ogetto contenente il brano.mp3
         this.img = img;     //copertina brano
@@ -7,6 +8,7 @@ class Brano{
         this.dim = dim;       //dim immagine copertina
         this.posX = posX;
         this.posY = posY;
+
     }
 
     play(){

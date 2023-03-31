@@ -75,8 +75,8 @@ let flippedVideoM //per specchiare la sorgente video
 let suono;
 
 //cose per il suono/brani
-let nomeBrani = ["bizcocito"];
-let autori = ["rosalia"];
+let nomeBrani = ["bizcocito", "stereoHearts"];
+let autori = ["rosalia", "GimClassHeroes"];
 let fontBrani;
 
 //oggetti Brano
@@ -323,6 +323,7 @@ function controllaBottoni(sche){
     bottoneSettings.premuto(States.Settings, sche);
     bottoneInfo.premuto(States.Info, sche);
     bottoneHome.premuto(States.Start, sche);
+
 }
 
 //start gioco
@@ -396,7 +397,16 @@ function drawschermataStrumento() {
 function drawschermataCanzone() {
     background(sfondoCanzone);
     controllaBottoni(sCanzone);
-    vettoreBrani[0].draw();
+    vettoreBrani[Brano.branoCorrente].draw();
+    if(bottoneScorreSX.premuto(States.Canzone, sCanzone)){
+        if(Brano.branoCorrente-1 >= 0){
+            Brano.branoCorrente -=1;
+        }
+    }else if(bottoneScorreSX.premuto(States.Canzone, sCanzone)){
+        if(Brano.branoCorrente+1 < vettoreBrani.length){
+            Brano.branoCorrente +=1;
+        }
+    }
     bottoneSettings.draw();
     bottoneInfo.draw();
     bottoneHome.draw();
