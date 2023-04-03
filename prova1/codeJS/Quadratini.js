@@ -1,6 +1,6 @@
 class Quadratini{
 
-    static xSpeed = 15;
+    static xSpeed = 30;
 
     constructor(posX, posY, widthQuad, heightQuad, colore) {
         this.posX = posX;
