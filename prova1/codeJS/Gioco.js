@@ -10,7 +10,15 @@ class Gioco {
 
 
     creaQuadratini() {
+        if (random(1) < 0.010) {
+            this.quadratini.push(new Quadratini(width/2, 650, 250, 150, 'yellow'));
+        }
+    }
 
+    stampaQuadratini(){
+        for(var k = 0; k < this.quadratini.length; k++){
+            this.quadratini[k].move();
+        }
     }
 
 

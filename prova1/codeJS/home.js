@@ -89,6 +89,8 @@ let frecciaPremuta = false;
 
 let game;
 
+let immagineSpartito;
+let immagineSfumaturaSpartito;
 
 //enumerazione degli stati :
 const States = {
@@ -131,6 +133,8 @@ function preload(){
     bottoneStartImg = loadImage("images/immagineBottoneStart.png");
     bottoneAvantiImg = loadImage("images/immagineBottoneAvanti.png");
     bottoneIndietroImg = loadImage("images/immagineBottoneIndietro.png");
+    immagineSpartito = loadImage("images/spartitoMusicale.png");
+    immagineSfumaturaSpartito = loadImage("images/ulterioreSfumatureCentroGioco.png");
 
 
     scorreDxImg = loadImage("images/scorreDX.png");
@@ -177,16 +181,22 @@ function inizializzaBrani(){
     var branoTemp;
     var copertinaTemp;
 
-    for(k=0; k<nomeBrani.length; k++){
+    try {
 
-        branoTemp = loadSound("canzoni/"+nomeBrani[k]+".mp3");
-        copertinaTemp = loadImage("images/copertineCanzoni/"+nomeBrani[k]+".jpeg");
-        console.log("canzoni/"+nomeBrani[k]+".mp3");
-        console.log("images/copertineCanzoni/"+nomeBrani[k]+".png");
-        //images/copertineCanzoni/WhereThemGirlsAt_DavidGuetta.jpeg
-        //C:\Users\Andrea\Desktop\cartelle\pcto_quarta\PCTO\prova1\images\copertineCanzoni
-        vettoreBrani.push(new Brano(branoTemp, copertinaTemp, nomeBrani[k], autori[k], 200, width/2-100, 250));
 
+        for (k = 0; k < nomeBrani.length; k++) {
+
+            branoTemp = loadSound("canzoni/" + nomeBrani[k] + ".mp3");
+            copertinaTemp = loadImage("images/copertineCanzoni/" + nomeBrani[k] + ".jpeg");
+            console.log("canzoni/" + nomeBrani[k] + ".mp3");
+            console.log("images/copertineCanzoni/" + nomeBrani[k] + ".png");
+            //images/copertineCanzoni/WhereThemGirlsAt_DavidGuetta.jpeg
+            //C:\Users\Andrea\Desktop\cartelle\pcto_quarta\PCTO\prova1\images\copertineCanzoni
+            vettoreBrani.push(new Brano(branoTemp, copertinaTemp, nomeBrani[k], autori[k], 200, width / 2 - 100, 250));
+
+        }
+    }catch{
+        location.reload();
     }
 }
 
@@ -286,7 +296,7 @@ function inizializzaBottoni() {
     bottoneAvanti = new Bottone(100, height-100, bottoneAvantiImg, 75,74,"avanti");
     bottonePause = new Bottone(180, 80, bottonePauseImg, 75, 75, "pause");
     bottoneInfo = new Bottone((width - 150), 70, bottoneinfoImg, 75, 75, "info");
-    bottoneStart = new Bottone((width / 2 - (200 / 2)), height - 200, bottoneStartImg, 200, 80, "start");
+    bottoneStart = new Bottone((width / 2 - (200 / 2)), height - 150, bottoneStartImg, 200, 80, "start");
     bottoneHome = new Bottone(width - 90, height - 85, bottoneHomeImg, 75, 75, "home");
     bottoneScorreSX = new Bottone((width / 2 - (75 / 2) - 300), (height / 2 - (75 / 2)), scorreSxImg, 75, 75, "scorreSX");
     bottoneScorreDX = new Bottone((width / 2 - (75 / 2) + 300), (height / 2 - (75 / 2)), scorreDxImg, 75, 75, "scorreDX");
@@ -519,8 +529,21 @@ function drawSchermataSettings() {
 function drawSchermataGioco() {
     image(flippedVideoM, -650,0,1300,700);
     image(sfondoGioco, 0, 0,1300,700);
+    image(immagineSpartito, width/2, 0,750, 570);
     flippedVideoM = cursoreMagiK();
     game.drawKeypointsGioco();
+
+    quadratoProva = new Quadratini(width/2, 117, 120, 50, 'yellow');
+    //quadratoProva.draw();
+    quadratoProva.move();
+
+    image(immagineSfumaturaSpartito, 0,0,1300,700);
+
+    //game.creaQuadratini();
+    //game.stampaQuadratini();
+
+
+
 
     //image(flippedVideoM, 0,0,1300,700);
 }
