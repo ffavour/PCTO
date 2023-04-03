@@ -1,6 +1,6 @@
 class Quadratini{
 
-    static xSpeed = 5
+    static xSpeed = 5;
 
     constructor(posX, posY, widthQuad, heightQuad, colore) {
         this.posX = posX;
@@ -26,7 +26,7 @@ class Quadratini{
         // aggiorna posizione della figura
         if(this.posX - Quadratini.xSpeed < width/2)
         this.posX = this.posX - Quadratini.xSpeed;
-        draw();
+        this.draw();
     }
 
 
