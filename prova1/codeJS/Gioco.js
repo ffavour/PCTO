@@ -8,10 +8,10 @@ class Gioco {
         this.quadratini = []; //è il vettore di Quadratini
     }
 
-    /*
-        creaQuadratini(){
 
-        }*/
+    creaQuadratini() {
+
+    }
 
 
     drawKeypointsGioco() { // la punta dell'indice ha valore 12 ed è quindi il dito indice per il limite sotto invece è 0

@@ -108,6 +108,10 @@ let caricamento = true;
 let immaginiCaricamento = [];
 let immagineCaricamentoAttuale = 0;
 
+/*
+*NOTA:
+* pulsante scorreSx da guardare */
+
 // Preload code
 function preload(){
     sfondoPricipale = loadImage("images/sfondoSchermataPrincipale.png");
@@ -333,7 +337,7 @@ function gestioneSchermate() {
     } else if (stato === States.Info) {
         drawSchermataInfo();
     } else if (stato === States.Start) {
-        drawSchermataPrincipale();
+        setTimeout(drawSchermataPrincipale, 500);
     } else if (stato === States.GameOver) {
         drawSchermataGameOver();
     } else if (stato === States.Strumento) {
@@ -375,13 +379,12 @@ function drawSchermataPrincipale() {
     //mostraCaricamento();
     if(caricamento){
         image(immaginiCaricamento[immagineCaricamentoAttuale], 0, 0, width, height);
+
         immagineCaricamentoAttuale ++;
         if(immagineCaricamentoAttuale >= 9){
             immagineCaricamentoAttuale = 0;
         }
-        setTimeout(function() {
-            // il codice da eseguire dopo il ritardo
-        }, 1000);
+
     }else {
 
 
