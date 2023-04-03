@@ -479,7 +479,7 @@ function drawSchermataSettings() {
 }
 
 function drawSchermataGioco() {
-    image(flippedVideoM, 0,0,1200,500);
+    image(flippedVideoM, -650,0,1300,700);
     image(sfondoGioco, 0, 0,1300,700);
     flippedVideoM = cursoreMagiK();
     //image(flippedVideoM, 0,0,1300,700);
@@ -511,6 +511,68 @@ function bottoneStartPremuto() {
 
 }
 */
+
+/*
+// variabili per gestire la canzone e la sua analisi
+let song;
+let fft;
+
+function preload() {
+  // carica la canzone da riprodurre
+  song = loadSound('nome_file.mp3');
+}
+
+function setup() {
+  // crea un canvas per visualizzare il gioco
+  createCanvas(400, 400);
+
+  // inizia a riprodurre la canzone
+  song.play();
+
+  // crea un'istanza dell'analisi FFT
+  fft = new p5.FFT();
+}
+
+function draw() {
+  // calcola lo spettro della canzone
+  let spectrum = fft.analyze();
+
+  // calcola la frequenza fondamentale dello spettro
+  let fundamentalFreq = findFundamentalFreq(spectrum);
+
+  // calcola la nota musicale corrispondente alla frequenza fondamentale
+  let note = freqToNote(fundamentalFreq);
+
+  // converte la nota musicale in un valore da 1 a 100
+  let noteValue = map(note, 0, 88, 1, 100);
+
+  // disegna il valore della nota sulla finestra
+  background(0);
+  textSize(32);
+  fill(255);
+  text(noteValue, width/2, height/2);
+}
+
+// funzione ausiliaria per trovare la frequenza fondamentale
+function findFundamentalFreq(spectrum) {
+  let i = 0;
+  let maxAmp = 0;
+  for (let j = 0; j < spectrum.length; j++) {
+    if (spectrum[j] > maxAmp) {
+      i = j;
+      maxAmp = spectrum[j];
+    }
+  }
+  let freq = i * 22050 / spectrum.length;
+  return freq;
+}
+
+// funzione ausiliaria per convertire la frequenza in nota musicale
+function freqToNote(freq) {
+  let note = 12 * (Math.log2(freq) - Math.log2(440)) + 69;
+  return Math.round(note);
+}
+ */
 
 
 function drawSchermataPausa() {

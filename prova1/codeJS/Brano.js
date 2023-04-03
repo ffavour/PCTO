@@ -9,6 +9,7 @@ class Brano{
         this.posX = posX;
         this.posY = posY;
 
+
     }
 
     play(){
