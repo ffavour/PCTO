@@ -106,6 +106,7 @@ let stato = States.Start //variabile per stati
 //per animazione di caricamento
 let caricamento = true;
 let immaginiCaricamento = [];
+let immagineCaricamentoAttuale = 0;
 
 // Preload code
 function preload(){
@@ -149,7 +150,7 @@ function setup() {
     video.size(width, height);
 
     handpose = ml5.handpose(video, modelReady);
-    mostraCaricamento();
+
 
     // This sets up an event that fills the global variable "predictions"
     // with an array every time new hand poses are detected
@@ -300,16 +301,17 @@ function inizializzaSchermate(){
 
 function caricaImgCaricamento(){
 
-    for(var k = 1; k < 9; k++){
+    for(var k = 1; k <= 9; k++){
         immaginiCaricamento.push(loadImage("images/caricamentoImg/"+k+".png"));
     }
 }
 
 function mostraCaricamento(){
-    while(caricamento) //se caricamento deve caricare è vera;
+    while(caricamento) {//se caricamento deve caricare è vera;
 
-    for(var k = 0; k < 8; k++){
-        image(immaginiCaricamento[k] ,0,0,width, height);
+        for (var k = 0; k < 8; k++) {
+            //image(immaginiCaricamento[k], 0, 0, width, height);
+        }
     }
 }
 
@@ -370,37 +372,50 @@ function controllaBottoni(sche){
 function drawSchermataPrincipale() {
     //image(sfondoPricipale, 0,0, width, height);
     //background(video);
-
-    background(sfondoPricipale);
-    bottoneSettings.draw();
-    bottoneInfo.draw();
-    bottoneStart.draw();
-
-    // Inverto l'immagine orizzontalmente
-    flippedVideoM = cursoreMagiK();
-    controllaBottoni(sStart);
-    //flippedVideoM.updatePixels();
-
-    /*flippedVideo.loadPixels();
-    video.loadPixels();
-    for (let y = 0; y < video.height; y++) {
-        for (let x = 0; x < video.width; x++) {
-            let index = (x + y * video.width) * 4;
-            let flippedIndex = ((video.width - x - 1) + y * video.width) * 4;
-            flippedVideo.pixels[flippedIndex] = video.pixels[index];
-            flippedVideo.pixels[flippedIndex + 1] = video.pixels[index + 1];
-            flippedVideo.pixels[flippedIndex + 2] = video.pixels[index + 2];
-            flippedVideo.pixels[flippedIndex + 3] = video.pixels[index + 3];
+    //mostraCaricamento();
+    if(caricamento){
+        image(immaginiCaricamento[immagineCaricamentoAttuale], 0, 0, width, height);
+        immagineCaricamentoAttuale ++;
+        if(immagineCaricamentoAttuale >= 9){
+            immagineCaricamentoAttuale = 0;
         }
-    }*/
-    //flippedVideoM.updatePixels();
+        setTimeout(function() {
+            // il codice da eseguire dopo il ritardo
+        }, 1000);
+    }else {
 
-    //image(video, 0, 0, width, height); //per la fotocamera
 
-    //video = specchiaImmagine();
-    //image(flippedVideo, 0, 0);
-    //drawKeypoints();
-    //bottoneStartPremuto();
+        background(sfondoPricipale);
+        bottoneSettings.draw();
+        bottoneInfo.draw();
+        bottoneStart.draw();
+
+        // Inverto l'immagine orizzontalmente
+        flippedVideoM = cursoreMagiK();
+        controllaBottoni(sStart);
+        //flippedVideoM.updatePixels();
+
+        /*flippedVideo.loadPixels();
+        video.loadPixels();
+        for (let y = 0; y < video.height; y++) {
+            for (let x = 0; x < video.width; x++) {
+                let index = (x + y * video.width) * 4;
+                let flippedIndex = ((video.width - x - 1) + y * video.width) * 4;
+                flippedVideo.pixels[flippedIndex] = video.pixels[index];
+                flippedVideo.pixels[flippedIndex + 1] = video.pixels[index + 1];
+                flippedVideo.pixels[flippedIndex + 2] = video.pixels[index + 2];
+                flippedVideo.pixels[flippedIndex + 3] = video.pixels[index + 3];
+            }
+        }*/
+        //flippedVideoM.updatePixels();
+
+        //image(video, 0, 0, width, height); //per la fotocamera
+
+        //video = specchiaImmagine();
+        //image(flippedVideo, 0, 0);
+        //drawKeypoints();
+        //bottoneStartPremuto();
+    }
 }
 
 function cursoreMagiK(){
