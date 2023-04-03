@@ -15,6 +15,7 @@ class Quadratini{
 
     killa(){
         this.vivo = false;
+
     }
 
     draw(){

@@ -33,6 +33,9 @@ let bottoneIndietroImg
 let cursorePremuto;
 let cursoreRilasciato;
 
+let rettangoloLateralePremuto;
+let rettangoloLateraleRilasciato;
+
 //bottoni (oggetti)
 let bottoneSettings
 let bottoneStart  //o play sono la stessa cosa
@@ -110,6 +113,8 @@ let caricamento = true;
 let immaginiCaricamento = [];
 let immagineCaricamentoAttuale = 0;
 
+
+
 /*
 *NOTA:
 * pulsante scorreSx da guardare */
@@ -136,12 +141,15 @@ function preload(){
     immagineSpartito = loadImage("images/spartitoMusicale.png");
     immagineSfumaturaSpartito = loadImage("images/ulterioreSfumatureCentroGioco.png");
 
-
     scorreDxImg = loadImage("images/scorreDX.png");
     scorreSxImg = loadImage("images/scorreSX.png");
 
     cursorePremuto = loadImage("images/pallaCursorePremuto.png");
     cursoreRilasciato = loadImage("images/pallaCursoreRilasciato.png");
+
+    rettangoloLateraleRilasciato = loadImage("images/rettangoloGiocoLateraleNonPremuto.png");
+    rettangoloLateralePremuto = loadImage("images/rettangoloGiocoLateralePremuto.png");
+
     soundFormats('mp3', 'ogg');
     //suono = loadSound('canzoni/bizcocito.mp3');
 
@@ -152,7 +160,9 @@ function preload(){
 
 function setup() {
 
-    quadratoProva = new Quadratini(width, 117, 120, 50, 'yellow');
+    //quadratoProva = new Quadratini(width, 117, 120, 50, 'yellow');
+
+    spartitoProva = new Spartito(width/2, 300, width, 117, 'yellow');
 
     // per la fotocamera
     createCanvas(width, height);
@@ -177,6 +187,14 @@ function setup() {
     inizializzaSchermate();
 
     inizializzaBrani();
+}
+
+function delay(ms) {
+    let start = Date.now();
+
+    while (Date.now() < start + ms) {
+        // Attendi
+    }
 }
 
 function inizializzaBrani(){
@@ -350,7 +368,7 @@ function gestioneSchermate() {
     } else if (stato === States.Info) {
         drawSchermataInfo();
     } else if (stato === States.Start) {
-        setTimeout(drawSchermataPrincipale, 500);
+        drawSchermataPrincipale();
     } else if (stato === States.GameOver) {
         drawSchermataGameOver();
     } else if (stato === States.Strumento) {
@@ -397,6 +415,7 @@ function drawSchermataPrincipale() {
         if(immagineCaricamentoAttuale >= 9){
             immagineCaricamentoAttuale = 0;
         }
+        delay(50);
 
     }else {
 
@@ -537,7 +556,9 @@ function drawSchermataGioco() {
     game.drawKeypointsGioco();
 
     //quadratoProva.draw();
-    quadratoProva.move();
+    //quadratoProva.move();
+
+    spartitoProva.drawTuttiQuadratini();
 
     image(immagineSfumaturaSpartito, 0,0,1300,700);
 
