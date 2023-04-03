@@ -106,6 +106,87 @@ function puntoMedio(p1X, p1Y, p2x, p2y){
         const y = (p1Y + p2y) / 2;
         return { x, y};
 }
+function drawKeypoints() { // la punta dell'indice ha valore 12 ed è quindi il dito indice per il limite sotto invece è 0
+
+    if (debug) { //fino alla 74 solo per fare i vari calcoli della mano
+        var posYmin = 100000; //--> corrisponde al dito piu altro (solo in fase di test)
+        var posYmax = 0; //--> corrisponde alla parte piu bassa del palmo
+        var valueMax;
+        var valueMin;
+    }else {
+
+        noStroke();
+
+        for (let i = 0; i < predictions.length; i += 1) {
+            const prediction = predictions[i];
+            //i valori importanti sono quelli del 12 e del 0
+            //occore fare una media tra i due per trovare un punto centrale
+            //e poi disegnare il cursore
+            const keypoint1 = prediction.landmarks[0];
+            const keypoint2 = prediction.landmarks[12];
+            var premuto = false;
+
+            var midd = puntoMedio(keypoint1[0] * (1300 / 640), keypoint1[1] * (700 / 480), keypoint2[0] * (1300 / 640), keypoint2[1] * (700 / 480));
+
+            var d  = dist(keypoint1[0] * (1300 / 640), keypoint1[1] * (700 / 480), keypoint2[0] * (1300 / 640), keypoint2[1] * (700 / 480));
+            if(d < 100){
+                premuto = true;
+            }
+
+
+            console.log(midd);
+            if(premuto){
+                image(cursorePremuto,midd.x = width - midd.x, midd.y, 100, 100);
+            }else{
+                image(cursoreRilasciato,midd.x = width - midd.x, midd.y, 100, 100)
+            }
+            var x1 = midd.x = width - midd.x;
+            var y1 = midd.y;
+
+            if (debug) {
+                for (let j = 0; j < prediction.landmarks.length; j += 1) {
+                    const keypoint = prediction.landmarks[j];
+                    fill(0, 255, 0);
+
+                    // Adatta le coordinate dei punti chiave alla scala della finestra
+                    const x = keypoint[0] * (1300 / 640);
+                    const y = keypoint[1] * (700 / 480);
+                    const x_magica = width - x;
+                    if (debug) {
+
+                        if (y < posYmin) {
+                            posYmin = y;
+                            valueMin = j;
+                            console.log(y);
+                        } else if (y > posYmax) {
+                            valueMax = j;
+                            posYmax = y
+                            console.log(y);
+                        }
+                    }
+                    if (j == 12) {
+                        fill(255, 0, 0);
+                        ellipse(x_magica, y, 10, 10);
+                    } else if (j == 0) {
+                        fill(200, 50, 255);
+                        ellipse(x_magica, y, 10, 10);
+                    } else {
+                        ellipse(x_magica, y, 10, 10);
+                    }
+                }
+            }
+
+
+
+        }
+    }
+    if (debug) {
+        console.log("posizione dell'indice (piu in alto) " + valueMin);
+        console.log("posizione del palmo (piu in basso)" + valueMin);
+    }
+    return ({x1,y1,premuto});
+}
+
 
 function drawKeypoints() { // la punta dell'indice ha valore 12 ed è quindi il dito indice per il limite sotto invece è 0
 
@@ -405,7 +486,6 @@ function cursoreMagiK(){
 
 
 function drawschermataStrumento() {
-
     background(sfondoStrumento);
     controllaBottoni(sStrumento);
     bottoneSettings.draw();
@@ -454,6 +534,8 @@ function drawschermataCanzone() {
     bottoneScorreSX.draw();
     bottoneScorreDX.draw();
     bottoneAvanti.draw();
+    let game = new Gioco(vettoreBrani[branoCorrente]);
+
 }
 
 function drawSchermataInfo() {
@@ -482,6 +564,8 @@ function drawSchermataGioco() {
     image(flippedVideoM, -650,0,1300,700);
     image(sfondoGioco, 0, 0,1300,700);
     flippedVideoM = cursoreMagiK();
+    game.drawkeypointsGioco();
+
     //image(flippedVideoM, 0,0,1300,700);
 }
 
