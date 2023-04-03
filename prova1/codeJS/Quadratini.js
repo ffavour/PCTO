@@ -8,13 +8,9 @@ class Quadratini{
         this.widthQuad = widthQuad;
         this.heightQuad = heightQuad;
         this.colore = colore;
-        this.vivo = true;
+        this.mooving = true;
 
 
-    }
-
-    killa(){
-        this.vivo = false;
 
     }
 
@@ -25,7 +21,7 @@ class Quadratini{
 
     move(){
 
-        if(this.posX - Quadratini.xSpeed >= width/2)
+        if(this.posX - Quadratini.xSpeed >= width/2 && this.mooving)
         this.posX = this.posX- Quadratini.xSpeed;
         else
             this.posX = width;

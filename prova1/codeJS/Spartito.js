@@ -5,7 +5,7 @@ class Spartito{
         this.dimY = dimY;
         this.x1Via = x1Via;
         this.y1Via = y1Via;
-        this.colore = colore;
+        this.colore = img;
         this.quadratini = [];
         this.inizializzaQuadratini();
 
@@ -23,7 +23,6 @@ class Spartito{
     drawTuttiQuadratini(){
         for(var k=0; k<this.quadratini.length; k++){
             this.quadratini[k].move();
-
         }
     }
 
