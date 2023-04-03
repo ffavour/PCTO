@@ -151,6 +151,9 @@ function preload(){
 }
 
 function setup() {
+
+    quadratoProva = new Quadratini(width, 117, 120, 50, 'yellow');
+
     // per la fotocamera
     createCanvas(width, height);
 
@@ -533,7 +536,6 @@ function drawSchermataGioco() {
     flippedVideoM = cursoreMagiK();
     game.drawKeypointsGioco();
 
-    quadratoProva = new Quadratini(width/2, 117, 120, 50, 'yellow');
     //quadratoProva.draw();
     quadratoProva.move();
 
