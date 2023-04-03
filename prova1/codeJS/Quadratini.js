@@ -11,4 +11,6 @@ class Quadratini{
         fill(this.colore);
         rect(this.posX, this.posY, this.widthQuad, this.heightQuad);
     }
+
+
 }
