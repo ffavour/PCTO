@@ -10,18 +10,6 @@ class Bottone{
     }
 
     draw(){
-
-        /*if(this.dimY == -1 || this.dimX == -1){ //un bel filtrino AHAHAHHAHA - tolto perche c'era immagine che dava fastidio
-            if(this.dimY == -1){
-                image(this.img,this.posX, this.posY, this.dimX, this.dimX);
-            }else{
-                image(this.img,this.posX, this.posY, this.dimY, this.dimY);
-            }
-        }else{
-            image(this.img,this.posX, this.posY, this.dimX, this.dimY);
-        }*/
-
-
          image(this.img, this.posX, this.posY, this.dimX, this.dimY);
     }
 

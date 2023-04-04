@@ -7,7 +7,7 @@ let widht_init = 640
 
 
 
-//varibili immagini
+//immagini di sfondo
 let sfondoPricipale
 let sfondoSecondario
 let sfondoCanzone
@@ -16,7 +16,10 @@ let sfondoInfo;
 let sfondoSettings
 let sfondoGioco
 
-//immagini bottoni
+let immagineSpartito;
+let immagineSfumaturaSpartito;
+
+//immagini dei bottoni
 let bottoneImpostazini_image
 let bottoneRepImg
 let bottoneHomeImg
@@ -29,14 +32,13 @@ let bottoneStartImg
 let bottoneAvantiImg
 let bottoneIndietroImg
 
-//cursori
+//immagini dei cursori
 let cursorePremuto;
 let cursoreRilasciato;
-
 let rettangoloLateralePremuto;
 let rettangoloLateraleRilasciato;
 
-//bottoni (oggetti)
+//bottoni nelle varie schermate (oggetti)
 let bottoneSettings
 let bottoneStart  //o play sono la stessa cosa
 let bottonePause
@@ -49,7 +51,7 @@ let bottoneScorreSX
 let bottoneIndietro
 let bottoneAvanti
 
-//schermate
+//schermate (è qui giusto per)
 let schermataPrincipale
 let schermataGioco
 let schermataPausa
@@ -59,8 +61,8 @@ let schermataStrumento
 let schermataInfo
 
 
-//oggettiSchermate
-
+//oggetti schermate (servono per controllare
+// che i bottoni siano premibili nelle varia schermate)
 let sStart
 let sGioco
 let sGameOver
@@ -71,29 +73,26 @@ let sStrumento
 let sCanzone
 
 
-//gestione della videocamera
+//varibili per gestione della videocamera
 let video;
 let handpose; //<-- per la mano
 let predictions = []
 let debug = 0;
 let flippedVideoM //per specchiare la sorgente video
 
-let suono;
+let suono; //non credo serva
 
-//cose per il suono/brani
+//vettori  per il caricamento di suono/brani
 let nomeBrani = ["As_it_was","BarbieGirl","Bitzcochito_rosalia","ciao","Guasto_Damore","hall_of_fame","Laurea_ad_honorem","Lingerie","Mademoiselle","replay","stereo_hearts","waka_waka","wrecked"];
 let autori = ["HarryStyles","Aqua","Rosalia","Thasupreme","Bresh","TheScript","Marracash","Tedua","SferaEbbasta","Iyaz","GimClassHeroes","Shakira","ImagineDragons"];
-let fontBrani;
+let fontBrani;  //font utilizzato
+let vettoreBrani = []; // vettore contenente oggetti di tipo Brano (ovvero canzone, copertina, autore)
 
-//oggetti Brano
-let vettoreBrani = [];
-
-let frecciaPremuta = false;
+let frecciaPremuta = false; //controlla preccia di scorrimento nella schermata canzone
 
 let game;
 
-let immagineSpartito;
-let immagineSfumaturaSpartito;
+
 
 //enumerazione degli stati :
 const States = {
@@ -103,12 +102,12 @@ const States = {
     Pause: 3,
     Info: 4,
     Settings: 5,
-    Strumento: 6,
+    Strumento: 6,  //non serve
     Canzone: 7,
 }
-let stato = States.Start //variabile per stati
+let stato = States.Start //variabile che gestisce gli stati/schermate
 
-//per animazione di caricamento
+//variabili per l'animazione del caricamento
 let caricamento = true;
 let immaginiCaricamento = [];
 let immagineCaricamentoAttuale = 0;
@@ -117,9 +116,15 @@ let immagineCaricamentoAttuale = 0;
 
 /*
 *NOTA:
-* pulsante scorreSx da guardare */
+* pulsante scorreSx da guardare
+* Da fare:
+*   - schermata pausa
+*   - game over
+*   - impostazioni(?)
+*   - info
+**/
 
-// Preload code
+// caricamento di immagini e canzoni
 function preload(){
     sfondoPricipale = loadImage("images/sfondoSchermataPrincipale.png");
     sfondoSecondario = loadImage("images/sfondoBlur.jpg");
@@ -158,34 +163,27 @@ function preload(){
 
 }
 
+
+
 function setup() {
 
     //quadratoProva = new Quadratini(width, 117, 120, 50, 'yellow');
-
     spartitoProva = new Spartito(width/2, 300, width, 117, 'yellow');
 
-    // per la fotocamera
+
     createCanvas(width, height);
 
+    //canvas per la fotocamera che riconosce la mano
     video = createCapture(VIDEO);
     video.size(width, height);
-
     handpose = ml5.handpose(video, modelReady);
-
-
-    // This sets up an event that fills the global variable "predictions"
-    // with an array every time new hand poses are detected
     handpose.on("predict", results => {
         predictions = results;
     });
-
-
-    // Hide the video element, and just show the canvas
     video.hide();
 
     inizializzaBottoni();
     inizializzaSchermate();
-
     inizializzaBrani();
 }
 
@@ -197,30 +195,34 @@ function delay(ms) {
     }
 }
 
+
+function sorteggioRange(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
+//carica il vettore dei brani (let vettoreBrani[])
 function inizializzaBrani(){
     var k = 0;
     var branoTemp;
     var copertinaTemp;
 
     try {
-
-
         for (k = 0; k < nomeBrani.length; k++) {
-
             branoTemp = loadSound("canzoni/" + nomeBrani[k] + ".mp3");
             copertinaTemp = loadImage("images/copertineCanzoni/" + nomeBrani[k] + ".jpeg");
             console.log("canzoni/" + nomeBrani[k] + ".mp3");
             console.log("images/copertineCanzoni/" + nomeBrani[k] + ".png");
-            //images/copertineCanzoni/WhereThemGirlsAt_DavidGuetta.jpeg
-            //C:\Users\Andrea\Desktop\cartelle\pcto_quarta\PCTO\prova1\images\copertineCanzoni
             vettoreBrani.push(new Brano(branoTemp, copertinaTemp, nomeBrani[k], autori[k], 200, width / 2 - 100, 250));
-
         }
     }catch{
         location.reload();
     }
 }
 
+//serve per trovare il punto centrale della mano
 function puntoMedio(p1X, p1Y, p2x, p2y){
     const x = (p1X + p2x) / 2;
     const y = (p1Y + p2y) / 2;
@@ -253,7 +255,6 @@ function drawKeypoints() { // la punta dell'indice ha valore 12 ed è quindi il 
             if(d < 100){
                 premuto = true;
             }
-
 
             console.log(midd);
             if(premuto){
@@ -323,6 +324,7 @@ function inizializzaBottoni() {
     bottoneScorreDX = new Bottone((width / 2 - (75 / 2) + 300), (height / 2 - (75 / 2)), scorreDxImg, 75, 75, "scorreDX");
 }
 
+//crea oggetti schermata con pulsanti premibili per queste
 function inizializzaSchermate(){
     sStart = new Schermata(["settings", "info", "start"]);
     sGioco = new Schermata(["settings", "info"]);
@@ -334,8 +336,9 @@ function inizializzaSchermate(){
     sCanzone = new Schermata(["back", "info", "home", "settings", "avanti", "scorreDX", "scorreSX"]); //il pulsante back non esiste
 }
 
+//"animazione" di caricamento prima dell'avvio del gioco che "controlla" che il
+//modello della mano (handpose) sia pronto
 function caricaImgCaricamento(){
-
     for(var k = 1; k <= 9; k++){
         immaginiCaricamento.push(loadImage("images/caricamentoImg/"+k+".png"));
     }
@@ -357,8 +360,6 @@ function draw() {
 
 
 function gestioneSchermate() {
-
-    //suono.play();
     if(!debug)
         console.log(stato);
     if (stato === States.Gioco) {
@@ -387,20 +388,17 @@ function controllaSuoni(){
     }
 }
 
+//cambia schermata se un certo bottone è premuto
 function controllaBottoni(sche){
-
     bottoneStart.premuto(States.Canzone, sche);
     bottoneSettings.premuto(States.Settings, sche);
     bottoneInfo.premuto(States.Info, sche);
     bottoneHome.premuto(States.Start, sche);
 
     if(sche === sCanzone && bottoneAvanti.premuto(States.Gioco, sche)){
-        console.log("sono entrato spopositamente nella if diocan");
+        console.log("sono entrato spopositamente nella if yay!");
         game = new Gioco(vettoreBrani[Brano.branoCorrente]);
     }
-
-
-
 }
 
 //start gioco
@@ -408,18 +406,16 @@ function drawSchermataPrincipale() {
     //image(sfondoPricipale, 0,0, width, height);
     //background(video);
     //mostraCaricamento();
+
+    //mostra l'animazione di caricamento pre-gioco
     if(caricamento){
         image(immaginiCaricamento[immagineCaricamentoAttuale], 0, 0, width, height);
-
         immagineCaricamentoAttuale ++;
         if(immagineCaricamentoAttuale >= 9){
             immagineCaricamentoAttuale = 0;
         }
         delay(50);
-
     }else {
-
-
         background(sfondoPricipale);
         bottoneSettings.draw();
         bottoneInfo.draw();
@@ -453,6 +449,7 @@ function drawSchermataPrincipale() {
     }
 }
 
+//per il cursore
 function cursoreMagiK(){
     let flippedVideo = createImage(video.width, video.height);
     flippedVideo.loadPixels();
@@ -468,7 +465,6 @@ function cursoreMagiK(){
         }
     }
     flippedVideo.updatePixels(); // Update the flippedVideo image with the flipped pixels
-
     return flippedVideo;
 }
 
@@ -557,10 +553,11 @@ function drawSchermataGioco() {
 
     //quadratoProva.draw();
     //quadratoProva.move();
-
+    spartitoProva.gestioneQuadratini();
     spartitoProva.drawTuttiQuadratini();
 
-    image(immagineSfumaturaSpartito, 0,0,1300,700);ù
+
+    image(immagineSfumaturaSpartito, 0,0,1300,700);
  
 
     //game.creaQuadratini();
@@ -572,7 +569,19 @@ function drawSchermataGioco() {
     //image(flippedVideoM, 0,0,1300,700);
 }
 
+function drawSchermataPausa() {
 
+}
+
+
+
+function drawSchermataGameOver() {
+
+}
+
+
+
+//DA QUI IN POI BOH
 /*
 function bottoneStartPremuto() {
 
@@ -662,15 +671,15 @@ function freqToNote(freq) {
  */
 
 
-function drawSchermataPausa() {
 
+function compattaVettore(vettore) {
+    console.log("La lunghezza iniziale del vettore è: " + vettore.length);
+    let nuovoVettore = [];
+    for (let i = 0; i < vettore.length; i++) {
+        if (vettore[i] !== null && vettore[i] !== undefined && vettore[i] !== '') {
+            nuovoVettore.push(vettore[i]);
+        }
+    }
+    console.log("La lunghezza finale del vettore è: " + nuovoVettore.length);
+    return nuovoVettore;
 }
-
-
-
-function drawSchermataGameOver() {
-
-}
-
-
-

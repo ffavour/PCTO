@@ -6,8 +6,9 @@ class Gioco {
         this.velocità = 0;
 
         this.quadratini = []; //è il vettore di Quadratini
+        this.sorteggiabile = this.quadratini;
         this.posiZioniLibere = [];
-        this.posInSorteggio = posInSorteggio;
+
         /*
         this.posInSorteggio è un attributo che contiene il punto un cui
         verra fatto un ulteriore sorteggio della posizione di un "quadratino"
@@ -17,52 +18,7 @@ class Gioco {
     }
 
 
-    creaQuadratini() {
-        if (random(1) < 0.010) {
-            this.quadratini.push(new Quadratini(width/2, 650, 250, 150, 'yellow'));
-        }
-    }
 
-    stampaQuadratini(){
-        for(var k = 0; k < this.quadratini.length; k++){
-            this.quadratini[k].move();
-        }
-
-    }
-
-    controllaPosInSorteggio(){
-        for(var k =0; k<this.quadratini.length; k++){
-            if(this.quadratini[k]){
-
-            }
-        }
-
-    }
-
-    controllaLibereESostituisci(){
-        /* è una funzione che va a gestire le "posizioni" disponibili all'interno del pentagramma e decide
-            inserendo le posizioni libere all'interno di una lista, andando poi a sorteggiare uno dei numeri
-            nella lista va a rimuore l'elemento è un algoritmo con un elevata complessità di tempo
-         */
-        //prima controllo se ci sono elementi alla fine e nel caso gli "elimino"
-        var sort //<-- casella sorteggiata
-        var k = 0; //variabile che utilizzeremmo per ciclare
-
-        while(k < 4){ //presumo che solo un quadratino per volta possa essere alla fine
-            if(this.quadratini[k].posX <= width/2){
-                this.quadratini[k].posX = width;
-                this.quadratini[k].mooving = false;
-                //questo ramo dell'if blocca il quadratino a sinistra
-                this.posiZioniLibere.push(k);
-            }else if(this.quadratini[k].mooving == false){
-                this.posiZioniLibere.push(k);
-            }
-            k++;
-        }
-
-
-
-    }
 
     drawKeypointsGioco() { // la punta dell'indice ha valore 12 ed è quindi il dito indice per il limite sotto invece è 0
 

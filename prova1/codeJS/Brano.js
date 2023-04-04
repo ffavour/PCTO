@@ -1,11 +1,11 @@
 class Brano{
     static branoCorrente = 0;
     constructor(brano, img, titolo, autore, dim, posX, posY) {
-        this.brano = brano; //ogetto contenente il brano.mp3
-        this.img = img;     //copertina brano
-        this.titolo = titolo; //titolo brano
+        this.brano = brano;     //ogetto contenente il brano.mp3
+        this.img = img;         //copertina brano
+        this.titolo = titolo;   //titolo brano
         this.autore = autore;
-        this.dim = dim;       //dim immagine copertina
+        this.dim = dim;         //dimensione immagine copertina
         this.posX = posX;
         this.posY = posY;
 
@@ -26,18 +26,7 @@ class Brano{
         textAlign(CENTER);
         fill('white');
         textFont(fontBrani);
-        text(this.titolo + " - " + this.autore, 650, 500);
-        /*
-        textSize(16);
-textAlign(RIGHT);
-text('ABCD', 50, 30);
-textAlign(CENTER);
-text('EFGH', 50, 50);
-textAlign(LEFT);
-text('IJKL', 50, 70);
-describe(`Letters ABCD displayed at top left, EFGH at center, and
-  IJKL at bottom right.`);
-         */
+        text(this.titolo + " - " + this.autore, 65);
     }
 
 }
