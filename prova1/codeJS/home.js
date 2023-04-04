@@ -560,7 +560,8 @@ function drawSchermataGioco() {
 
     spartitoProva.drawTuttiQuadratini();
 
-    image(immagineSfumaturaSpartito, 0,0,1300,700);
+    image(immagineSfumaturaSpartito, 0,0,1300,700);ù
+ 
 
     //game.creaQuadratini();
     //game.stampaQuadratini();

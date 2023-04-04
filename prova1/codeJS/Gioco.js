@@ -27,6 +27,7 @@ class Gioco {
         for(var k = 0; k < this.quadratini.length; k++){
             this.quadratini[k].move();
         }
+
     }
 
     controllaPosInSorteggio(){
