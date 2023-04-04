@@ -1,13 +1,6 @@
-<<<<<<< Updated upstream
 # Game Ability 2023
-=======
-# Replay
-Progetto PCTO
->>>>>>> Stashed changes
-
 ## Our Project - Replay
 
-<<<<<<< Updated upstream
 In our game, the player must move around the screen using a cursor that detects the hand and try to "catch" the various squares that appear within the "music sheet".
 With an open hand, the cursor is released so it does not perform any action but can move freely within the game screen, while with a clenched fist, the cursor is in selection mode and therefore positioned on a key/button it presses it.
 
@@ -31,7 +24,3 @@ The game was mainly developed to train cognitive functions such as attention and
 - [Zoe Mandrile](https://github.com/Zoassa)
 
 - [Dario Dalmasso](https://github.com/dariodalmasso)
-=======
-
- 
->>>>>>> Stashed changes
