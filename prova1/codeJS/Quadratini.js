@@ -14,9 +14,22 @@ class Quadratini{
 
     }
 
+    //FACCIAMO ESPLODERE TUTTO!!!
+
+
     draw(){
         fill(this.colore);
         rect(this.posX, this.posY, this.widthQuad, this.heightQuad);
+    }
+
+    move2(){
+        this.posX = this.posX - 1 * Quadratini.xSpeed;
+    }
+
+    cambiaColore(){
+        if(this.posX === 800){ //800 sarebbe la x di taglio
+            this.colore = 'red';
+        }
     }
 
     move(){

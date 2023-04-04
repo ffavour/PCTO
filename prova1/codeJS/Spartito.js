@@ -5,14 +5,19 @@ class Spartito{
     constructor(dimX, dimY, x1Via, y1Via, colore) {
         this.dimX = dimX;
         this.dimY = dimY;
-        this.x1Via = x1Via;
-        this.y1Via = y1Via;
+        this.x1Via = x1Via;  //x
+        this.y1Via = y1Via;  //y
         this.colore = colore;
-        //this.quadratini = [];
+        this.quadratini = [];
         this.nonSulloSpartito = [];
         this.sulloSpartito = [];
         this.inizializzaQuadratini();
 
+
+    }
+
+    //codice prova di favour
+    drawRettangolini(){
 
     }
 

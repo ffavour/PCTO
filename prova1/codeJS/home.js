@@ -112,6 +112,40 @@ let caricamento = true;
 let immaginiCaricamento = [];
 let immagineCaricamentoAttuale = 0;
 
+let vettoreQ = []
+let distanza = 70
+
+
+//spero fungano
+function caricaRandom(){
+    var posDisp = [0, 1, 2, 3]
+    var posSelezionata;
+
+
+    for(var k = 0; k < 200; k++){
+        posSelezionata = random(posDisp);
+        vettoreQ.push(new Quadratini(width, 90 + distanza * posSelezionata, 70, 30, 'yellow'));
+    }
+
+}
+
+function visRandom(){
+    var xTaglio = 1000;
+
+    vettoreQ[0].move2();
+    vettoreQ[0].draw();
+    vettoreQ[0].cambiaColore();
+
+    for(var k = 0; k < vettoreQ.length - 1; k++){
+        if(vettoreQ[k].posX < xTaglio){
+            vettoreQ[k + 1].move2();
+            vettoreQ[k + 1].draw();
+            vettoreQ[k + 1].cambiaColore();
+
+        }
+    }
+}
+
 
 
 /*
@@ -124,11 +158,8 @@ let immagineCaricamentoAttuale = 0;
 *   - info
 **/
 
-<<<<<<< HEAD
-// caricamento di immagini e canzoni
-=======
-// Preload code 
->>>>>>> d2f78d6f512a16b525ab48fcd541786624d3623c
+
+// caricamento d'immagini e canzoni
 function preload(){
     sfondoPricipale = loadImage("images/sfondoSchermataPrincipale.png");
     sfondoSecondario = loadImage("images/sfondoBlur.jpg");
@@ -189,6 +220,8 @@ function setup() {
     inizializzaBottoni();
     inizializzaSchermate();
     inizializzaBrani();
+
+    caricaRandom(); //vettore quadratini
 }
 
 function delay(ms) {
@@ -557,9 +590,10 @@ function drawSchermataGioco() {
 
     //quadratoProva.draw();
     //quadratoProva.move();
-    spartitoProva.gestioneQuadratini();
-    spartitoProva.drawTuttiQuadratini();
+    //spartitoProva.gestioneQuadratini();
+    //spartitoProva.drawTuttiQuadratini();
 
+    visRandom();
 
     image(immagineSfumaturaSpartito, 0,0,1300,700);
  
