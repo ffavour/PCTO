@@ -14,7 +14,7 @@ The game was mainly developed to train cognitive functions such as attention and
 
 ## Requirements
 - webcam
-- WI-FI connection
+- Internet connection
 - music speakers
 
 ## The Team
