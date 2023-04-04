@@ -119,7 +119,7 @@ let immagineCaricamentoAttuale = 0;
 *NOTA:
 * pulsante scorreSx da guardare */
 
-// Preload code
+// Preload code 
 function preload(){
     sfondoPricipale = loadImage("images/sfondoSchermataPrincipale.png");
     sfondoSecondario = loadImage("images/sfondoBlur.jpg");
