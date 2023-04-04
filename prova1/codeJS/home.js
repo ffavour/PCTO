@@ -124,7 +124,11 @@ let immagineCaricamentoAttuale = 0;
 *   - info
 **/
 
+<<<<<<< HEAD
 // caricamento di immagini e canzoni
+=======
+// Preload code 
+>>>>>>> d2f78d6f512a16b525ab48fcd541786624d3623c
 function preload(){
     sfondoPricipale = loadImage("images/sfondoSchermataPrincipale.png");
     sfondoSecondario = loadImage("images/sfondoBlur.jpg");
