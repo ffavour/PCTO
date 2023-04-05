@@ -12,12 +12,13 @@ The game was mainly developed to train cognitive functions such as attention and
 - [ml5.js](https://ml5js.org/)
 
 ## How to Play
-[Click here to play!](link.com)
+Click [here](link.com) to play!🤩
 
 ## Requirements
 - webcam
 - Internet connection
 - music speakers
+- PC
 
 ## The Team
 - [Andrea Giordano](https://github.com/aandrix)
