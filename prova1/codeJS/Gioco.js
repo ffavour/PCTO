@@ -48,7 +48,7 @@ class Gioco {
                 }
 
 
-                console.log(midd);
+                //console.log(midd);
                 if(premuto){
                     image(cursorePremuto,0, midd.y, 100, 100);
                 }else{

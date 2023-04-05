@@ -1,52 +1,40 @@
 class Quadratini{
 
-    static xSpeed = 30;
+   static xSpeed = 30;
+   static width1 = 150;
+   static height1 = 50;
 
-    constructor(posX, posY, widthQuad, heightQuad, colore) {
-        this.posXinit = posX;
-        this.posYinit = posY;
-        this.posX = posX;
-        this.posY = posY;
-        this.widthQuad = widthQuad;
-        this.heightQuad = heightQuad;
-        this.colore = colore;
-        this.mooving = false;
+   static imageLibero = quadratinoImg;
+   static posXinit = width-50;
+   static limX = 500;
 
-    }
+   constructor(posY) {
+      this.posX = Quadratini.posXinit;
+      this.posY = posY;
 
-    //FACCIAMO ESPLODERE TUTTO!!!
+   }
 
+   draw(){
+      image(Quadratini.imageLibero, this.posX, this.posY, Quadratini.width1, Quadratini.height1);
+   }
 
-    draw(){
-        fill(this.colore);
-        rect(this.posX, this.posY, this.widthQuad, this.heightQuad);
-    }
+   move(){
+      if(this.posX - Quadratini.xSpeed < Quadratini.limX){
+         return false;
+      }else{
+         this.posX = this.posX - Quadratini.xSpeed;
+         return true;
+      }
+   }
+   
+   moveAndDraw(){
+      if(this.move()){
+         draw();
+         return true;
+      }else{
+         draw();
+         return false;
+      }
+   }
 
-    move2(){
-        this.posX = this.posX - 1 * Quadratini.xSpeed;
-    }
-
-    cambiaColore(){
-        if(this.posX === 800){ //800 sarebbe la x di taglio
-            this.colore = 'red';
-        }
-    }
-
-    move(){
-
-        if(this.posX - Quadratini.xSpeed >= width/2 && this.mooving) {
-            this.posX = this.posX - Quadratini.xSpeed;
-            rect(this.posX, this.posY, this.widthQuad, this.heightQuad);
-        }
-
-        // aggiorna posizione della figura
-        /*if(this.posX - Quadratini.xSpeed < width/2)
-        this.posX = this.posX - Quadratini.xSpeed;*/
-        //this.draw();
-    }
-
-    rinizializza(){
-        this.posX = this.posXinit;
-        this.posY = this.posYinit;
-    }
 }

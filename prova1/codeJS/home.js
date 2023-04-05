@@ -18,6 +18,7 @@ let sfondoGioco
 
 let immagineSpartito;
 let immagineSfumaturaSpartito;
+let vettoreQbase;
 
 //immagini dei bottoni
 let bottoneImpostazini_image
@@ -31,6 +32,10 @@ let scorreSxImg
 let bottoneStartImg
 let bottoneAvantiImg
 let bottoneIndietroImg
+
+//immagini quadratini
+let quadratinoImg
+let quadratinoPremutoImg
 
 //immagini dei cursori
 let cursorePremuto;
@@ -51,16 +56,6 @@ let bottoneScorreSX
 let bottoneIndietro
 let bottoneAvanti
 
-//schermate (è qui giusto per)
-let schermataPrincipale
-let schermataGioco
-let schermataPausa
-let schermataSettings
-let schermataGameOver
-let schermataStrumento
-let schermataInfo
-
-
 //oggetti schermate (servono per controllare
 // che i bottoni siano premibili nelle varia schermate)
 let sStart
@@ -72,15 +67,12 @@ let sSettings
 let sStrumento
 let sCanzone
 
-
 //varibili per gestione della videocamera
 let video;
 let handpose; //<-- per la mano
 let predictions = []
 let debug = 0;
 let flippedVideoM //per specchiare la sorgente video
-
-let suono; //non credo serva
 
 //vettori  per il caricamento di suono/brani
 let nomeBrani = ["As_it_was","BarbieGirl","Bitzcochito_rosalia","ciao","Guasto_Damore","hall_of_fame","Laurea_ad_honorem","Lingerie","Mademoiselle","replay","stereo_hearts","waka_waka","wrecked"];
@@ -90,9 +82,7 @@ let vettoreBrani = []; // vettore contenente oggetti di tipo Brano (ovvero canzo
 
 let frecciaPremuta = false; //controlla preccia di scorrimento nella schermata canzone
 
-let game;
-
-
+let game; //gestisce i brani del gioco
 
 //enumerazione degli stati :
 const States = {
@@ -105,6 +95,7 @@ const States = {
     Strumento: 6,  //non serve
     Canzone: 7,
 }
+
 let stato = States.Start //variabile che gestisce gli stati/schermate
 
 //variabili per l'animazione del caricamento
@@ -112,41 +103,9 @@ let caricamento = true;
 let immaginiCaricamento = [];
 let immagineCaricamentoAttuale = 0;
 
-let vettoreQ = []
-let distanza = 70
-
-
-//spero fungano
-function caricaRandom(){
-    var posDisp = [0, 1, 2, 3]
-    var posSelezionata;
-
-
-    for(var k = 0; k < 200; k++){
-        posSelezionata = random(posDisp);
-        vettoreQ.push(new Quadratini(width, 90 + distanza * posSelezionata, 70, 30, 'yellow'));
-    }
-
-}
-
-function visRandom(){
-    var xTaglio = 1000;
-
-    vettoreQ[0].move2();
-    vettoreQ[0].draw();
-    vettoreQ[0].cambiaColore();
-
-    for(var k = 0; k < vettoreQ.length - 1; k++){
-        if(vettoreQ[k].posX < xTaglio){
-            vettoreQ[k + 1].move2();
-            vettoreQ[k + 1].draw();
-            vettoreQ[k + 1].cambiaColore();
-
-        }
-    }
-}
-
-
+let varianza = 70
+let vettoreVarianze = [];
+let vettoreQuadratini = [];
 
 /*
 *NOTA:
@@ -190,22 +149,18 @@ function preload(){
     rettangoloLateraleRilasciato = loadImage("images/rettangoloGiocoLateraleNonPremuto.png");
     rettangoloLateralePremuto = loadImage("images/rettangoloGiocoLateralePremuto.png");
 
+    quadratinoImg = loadImage("images/rettangoloSpartito.png");
+    quadratinoImgPremutoImg = loadImage("images/rettangoloSpartitoPremuto.png");
+
     soundFormats('mp3', 'ogg');
-    //suono = loadSound('canzoni/bizcocito.mp3');
 
     fontBrani = loadFont("font/Wheat Smile.ttf");
     caricaImgCaricamento();
-
 }
-
-
 
 function setup() {
 
     //quadratoProva = new Quadratini(width, 117, 120, 50, 'yellow');
-    spartitoProva = new Spartito(width/2, 300, width, 117, 'yellow');
-
-
     createCanvas(width, height);
 
     //canvas per la fotocamera che riconosce la mano
@@ -221,19 +176,90 @@ function setup() {
     inizializzaSchermate();
     inizializzaBrani();
 
-    caricaRandom(); //vettore quadratini
+    vettoreVarianze = creaVettoreVarianze(vettoreVarianze);
+    Quadratini.image = quadratinoImg;
+}
+
+
+
+/*
+
+
+
+
+
+
+
+            DA QUI IN POI COMINCIA TUTTO
+
+
+
+
+
+
+
+
+
+
+
+ */
+
+
+
+
+
+
+
+
+
+
+
+function creaVettoreVarianze(vettVar){ //serve
+    for (var i = 0; i < 4; i++) {
+        vettVar[i] = i * varianza;
+    }
+    return vettVar;
+}
+
+function gestisciVettore(){
+        console.log("ENTRATOOOOOOOOOO")
+    console.log("lenght pre-pre-for " + vettoreQuadratini.length)
+    var sor; //per sorteggiare
+    var tro = true; //per controllare
+    if(vettoreQuadratini.length === 0){
+        console.log("lenght pre-for " + vettoreQuadratini.length)
+        sor = sorteggioRange(0,vettoreVarianze.length-1);
+        console.log("sor " + sor);
+        vettoreQuadratini.push(new Quadratini(vettoreVarianze[sor]));
+        console.log("lunght post-push" + vettoreQuadratini.length);
+    }else if(vettoreQuadratini.length != 0){
+        console.log("ENTRATAAAAAAAAAA")
+
+        for(var k = 0; k < vettoreQuadratini.length && tro === true; k++){
+            console.log("tro " + tro)
+                console.log("quadratino n." + k);
+            console.log("lenght nel for " + vettoreQuadratini.length)
+            tro = vettoreQuadratini[k].moveAndDraw();
+            
+            if(tro === false){
+                vettoreQuadratini.pop(k);
+                console.log("quadratino " + k + "rimosso");
+            }else if(vettoreQuadratini[k].posX <= varianza){
+                sor = sorteggioRange(0,vettoreVarianze.length-1);
+                vettoreQuadratini.push(new Quadratini(vettoreVarianze[sor]));
+            }
+        }
+    }
 }
 
 function delay(ms) {
     let start = Date.now();
-
     while (Date.now() < start + ms) {
         // Attendi
     }
 }
 
-
-function sorteggioRange(min, max) {
+function sorteggioRange(min, max) { //questo serve
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -250,8 +276,8 @@ function inizializzaBrani(){
         for (k = 0; k < nomeBrani.length; k++) {
             branoTemp = loadSound("canzoni/" + nomeBrani[k] + ".mp3");
             copertinaTemp = loadImage("images/copertineCanzoni/" + nomeBrani[k] + ".jpeg");
-            console.log("canzoni/" + nomeBrani[k] + ".mp3");
-            console.log("images/copertineCanzoni/" + nomeBrani[k] + ".png");
+            //console.log("canzoni/" + nomeBrani[k] + ".mp3");
+            //console.log("images/copertineCanzoni/" + nomeBrani[k] + ".png");
             vettoreBrani.push(new Brano(branoTemp, copertinaTemp, nomeBrani[k], autori[k], 200, width / 2 - 100, 250));
         }
     }catch{
@@ -293,11 +319,11 @@ function drawKeypoints() { // la punta dell'indice ha valore 12 ed è quindi il 
                 premuto = true;
             }
 
-            console.log(midd);
+            //console.log(midd);
             if(premuto){
-                image(cursorePremuto,midd.x = width - midd.x, midd.y, 100, 100);
+                image(cursorePremuto,midd.x = width - midd.x, midd.y, 70, 70);
             }else{
-                image(cursoreRilasciato,midd.x = width - midd.x, midd.y, 100, 100)
+                image(cursoreRilasciato,midd.x = width - midd.x, midd.y, 70, 70)
             }
             var x1 = midd.x = width - midd.x;
             var y1 = midd.y;
@@ -316,11 +342,11 @@ function drawKeypoints() { // la punta dell'indice ha valore 12 ed è quindi il 
                         if (y < posYmin) {
                             posYmin = y;
                             valueMin = j;
-                            console.log(y);
+                            //console.log(y);
                         } else if (y > posYmax) {
                             valueMax = j;
                             posYmax = y
-                            console.log(y);
+                            //console.log(y);
                         }
                     }
                     if (j == 12) {
@@ -337,14 +363,14 @@ function drawKeypoints() { // la punta dell'indice ha valore 12 ed è quindi il 
         }
     }
     if (debug) {
-        console.log("posizione dell'indice (piu in alto) " + valueMin);
-        console.log("posizione del palmo (piu in basso)" + valueMin);
+        //console.log("posizione dell'indice (piu in alto) " + valueMin);
+        //console.log("posizione del palmo (piu in basso)" + valueMin);
     }
     return ({x1,y1,premuto});
 }
 
 function modelReady() {
-    console.log("Model ready!");
+    //console.log("Model ready!");
     caricamento = !caricamento;
 }
 
@@ -381,24 +407,13 @@ function caricaImgCaricamento(){
     }
 }
 
-function mostraCaricamento(){
-    while(caricamento) {//se caricamento deve caricare è vera;
-
-        for (var k = 0; k < 8; k++) {
-            //image(immaginiCaricamento[k], 0, 0, width, height);
-        }
-    }
-}
-
-
 function draw() {
     gestioneSchermate();
 }
 
-
 function gestioneSchermate() {
     if(!debug)
-        console.log(stato);
+        //console.log(stato);
     if (stato === States.Gioco) {
         drawSchermataGioco();
     } else if (stato === States.Pause) {
@@ -433,7 +448,7 @@ function controllaBottoni(sche){
     bottoneHome.premuto(States.Start, sche);
 
     if(sche === sCanzone && bottoneAvanti.premuto(States.Gioco, sche)){
-        console.log("sono entrato spopositamente nella if yay!");
+        //console.log("sono entrato spopositamente nella if yay!");
         game = new Gioco(vettoreBrani[Brano.branoCorrente]);
     }
 }
@@ -463,26 +478,7 @@ function drawSchermataPrincipale() {
         controllaBottoni(sStart);
         //flippedVideoM.updatePixels();
 
-        /*flippedVideo.loadPixels();
-        video.loadPixels();
-        for (let y = 0; y < video.height; y++) {
-            for (let x = 0; x < video.width; x++) {
-                let index = (x + y * video.width) * 4;
-                let flippedIndex = ((video.width - x - 1) + y * video.width) * 4;
-                flippedVideo.pixels[flippedIndex] = video.pixels[index];
-                flippedVideo.pixels[flippedIndex + 1] = video.pixels[index + 1];
-                flippedVideo.pixels[flippedIndex + 2] = video.pixels[index + 2];
-                flippedVideo.pixels[flippedIndex + 3] = video.pixels[index + 3];
-            }
-        }*/
-        //flippedVideoM.updatePixels();
 
-        //image(video, 0, 0, width, height); //per la fotocamera
-
-        //video = specchiaImmagine();
-        //image(flippedVideo, 0, 0);
-        //drawKeypoints();
-        //bottoneStartPremuto();
     }
 }
 
@@ -529,7 +525,7 @@ function drawschermataCanzone() {
         if(!frecciaPremuta)
         if(Brano.branoCorrente-1 >= 0){
             vettoreBrani[Brano.branoCorrente].brano.stop();
-            console.log("qualsosa funzia");
+            //console.log("qualsosa funzia");
             Brano.branoCorrente -=1;
         }else{
             Brano.branoCorrente = vettoreBrani.length-1
@@ -561,7 +557,7 @@ function drawschermataCanzone() {
 
 function drawSchermataInfo() {
     if(debug)
-        console.log("mi trovo nella schermata info");
+        //console.log("mi trovo nella schermata info");
     background(sfondoInfo);
     bottoneHome.draw();
 
@@ -582,29 +578,16 @@ function drawSchermataSettings() {
 }
 
 function drawSchermataGioco() {
+
+    image(immagineSpartito, width/2, 0,750, 570);
+
     image(flippedVideoM, -650,0,1300,700);
     image(sfondoGioco, 0, 0,1300,700);
-    image(immagineSpartito, width/2, 0,750, 570);
     flippedVideoM = cursoreMagiK();
     game.drawKeypointsGioco();
-
-    //quadratoProva.draw();
-    //quadratoProva.move();
-    //spartitoProva.gestioneQuadratini();
-    //spartitoProva.drawTuttiQuadratini();
-
-    visRandom();
-
     image(immagineSfumaturaSpartito, 0,0,1300,700);
- 
+    gestisciVettore();
 
-    //game.creaQuadratini();
-    //game.stampaQuadratini();
-
-
-
-
-    //image(flippedVideoM, 0,0,1300,700);
 }
 
 function drawSchermataPausa() {
@@ -619,105 +602,16 @@ function drawSchermataGameOver() {
 
 
 
-//DA QUI IN POI BOH
-/*
-function bottoneStartPremuto() {
-
-    var obj = drawKeypoints();
-    var x1 = obj.x1;
-    var y1 = obj.y1;
-    var premuto = obj.premuto;
-
-    if(premuto){
-        var d1 = dist(x1,y1, bottoneStart.getPosX() + 100, bottoneStart.getPosY() - 50);
-        if(d1<100){
-            stato = States.Strumento;
-        }
-    }
-
-    if(debug)
-    if (mouseIsPressed) {
-        var d = dist(mouseX, mouseY, bottoneStart.getPosX() + 100, bottoneStart.getPosY() - 50);
-        if (d < 100) {
-            stato = States.Strumento;
-        }
-    }
-
-}
-*/
-
-/*
-// variabili per gestire la canzone e la sua analisi
-let song;
-let fft;
-
-function preload() {
-  // carica la canzone da riprodurre
-  song = loadSound('nome_file.mp3');
-}
-
-function setup() {
-  // crea un canvas per visualizzare il gioco
-  createCanvas(400, 400);
-
-  // inizia a riprodurre la canzone
-  song.play();
-
-  // crea un'istanza dell'analisi FFT
-  fft = new p5.FFT();
-}
-
-function draw() {
-  // calcola lo spettro della canzone
-  let spectrum = fft.analyze();
-
-  // calcola la frequenza fondamentale dello spettro
-  let fundamentalFreq = findFundamentalFreq(spectrum);
-
-  // calcola la nota musicale corrispondente alla frequenza fondamentale
-  let note = freqToNote(fundamentalFreq);
-
-  // converte la nota musicale in un valore da 1 a 100
-  let noteValue = map(note, 0, 88, 1, 100);
-
-  // disegna il valore della nota sulla finestra
-  background(0);
-  textSize(32);
-  fill(255);
-  text(noteValue, width/2, height/2);
-}
-
-// funzione ausiliaria per trovare la frequenza fondamentale
-function findFundamentalFreq(spectrum) {
-  let i = 0;
-  let maxAmp = 0;
-  for (let j = 0; j < spectrum.length; j++) {
-    if (spectrum[j] > maxAmp) {
-      i = j;
-      maxAmp = spectrum[j];
-    }
-  }
-  let freq = i * 22050 / spectrum.length;
-  return freq;
-}
-
-// funzione ausiliaria per convertire la frequenza in nota musicale
-function freqToNote(freq) {
-  let note = 12 * (Math.log2(freq) - Math.log2(440)) + 69;
-  return Math.round(note);
-}
- */
-
 
 
 function compattaVettore(vettore) {
-    console.log("La lunghezza iniziale del vettore è: " + vettore.length);
+    //console.log("La lunghezza iniziale del vettore è: " + vettore.length);
     let nuovoVettore = [];
     for (let i = 0; i < vettore.length; i++) {
         if (vettore[i] !== null && vettore[i] !== undefined && vettore[i] !== '') {
             nuovoVettore.push(vettore[i]);
         }
     }
-    console.log("La lunghezza finale del vettore è: " + nuovoVettore.length);
+    //console.log("La lunghezza finale del vettore è: " + nuovoVettore.length);
     return nuovoVettore;
 }
