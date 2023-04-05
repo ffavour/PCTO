@@ -11,6 +11,9 @@ The game was mainly developed to train cognitive functions such as attention and
 - [p5.js](https://p5js.org/)
 - [ml5.js](https://ml5js.org/)
 
+## How to Play
+[Click here to play!](link.com)
+
 ## Requirements
 - webcam
 - Internet connection
