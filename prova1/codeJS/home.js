@@ -240,7 +240,6 @@ function gestisciVettore(){
                 console.log("quadratino n." + k);
             console.log("lenght nel for " + vettoreQuadratini.length)
             tro = vettoreQuadratini[k].moveAndDraw();
-            
             if(tro === false){
                 vettoreQuadratini.pop(k);
                 console.log("quadratino " + k + "rimosso");
