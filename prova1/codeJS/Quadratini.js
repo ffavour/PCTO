@@ -14,27 +14,33 @@ class Quadratini{
 
    }
 
-   draw(){
-      image(Quadratini.imageLibero, this.posX, this.posY, Quadratini.width1, Quadratini.height1);
+   drawOso(){
+      image(quadratinoImg, this.posX, this.posY, Quadratini.width1, Quadratini.height1);
    }
 
    move(){
+      console.log("posx, y, limX", this.posX, this.posY, Quadratini.limX, Quadratini.xSpeed);
+      //delay(500);
       if(this.posX - Quadratini.xSpeed < Quadratini.limX){
+         console.log("dio can");
          return false;
       }else{
+         console.log("no ok tutto appost");
          this.posX = this.posX - Quadratini.xSpeed;
          return true;
       }
    }
-   
+
    moveAndDraw(){
       if(this.move()){
-         draw();
+         this.drawOso();
          return true;
       }else{
-         draw();
+         this.drawOso();
          return false;
       }
+
+
    }
 
 }

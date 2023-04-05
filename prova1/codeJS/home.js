@@ -241,9 +241,11 @@ function gestisciVettore(){
             console.log("lenght nel for " + vettoreQuadratini.length)
             tro = vettoreQuadratini[k].moveAndDraw();
             if(tro === false){
+                console.log("si è falso");
+
                 vettoreQuadratini.pop(k);
                 console.log("quadratino " + k + "rimosso");
-            }else if(vettoreQuadratini[k].posX <= varianza){
+            }else if(vettoreQuadratini[k].posX <= 675 && vettoreQuadratini[k].posX > 800){
                 sor = sorteggioRange(0,vettoreVarianze.length-1);
                 vettoreQuadratini.push(new Quadratini(vettoreVarianze[sor]));
             }
