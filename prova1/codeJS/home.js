@@ -204,16 +204,6 @@ function setup() {
 
  */
 
-
-
-
-
-
-
-
-
-
-
 function creaVettoreVarianze(vettVar){ //serve
     for (var i = 0; i < 4; i++) {
         vettVar[i] = i * varianza;
@@ -230,9 +220,9 @@ function gestisciVettore(){
         console.log("lenght pre-for " + vettoreQuadratini.length)
         sor = sorteggioRange(0,vettoreVarianze.length-1);
         console.log("sor " + sor);
-        vettoreQuadratini.push(new Quadratini(vettoreVarianze[sor]));
+        vettoreQuadratini.push(new Quadratini(vettoreVarianze[sor] + 117));
         console.log("lunght post-push" + vettoreQuadratini.length);
-    }else if(vettoreQuadratini.length != 0){
+    }else if(vettoreQuadratini.length !== 0){
         console.log("ENTRATAAAAAAAAAA")
 
         for(var k = 0; k < vettoreQuadratini.length && tro === true; k++){
@@ -247,7 +237,7 @@ function gestisciVettore(){
                 console.log("quadratino " + k + "rimosso");
             }else if(vettoreQuadratini[k].posX <= 675 && vettoreQuadratini[k].posX > 800){
                 sor = sorteggioRange(0,vettoreVarianze.length-1);
-                vettoreQuadratini.push(new Quadratini(vettoreVarianze[sor]));
+                vettoreQuadratini.push(new Quadratini(vettoreVarianze[sor] + 117));
             }
         }
     }
