@@ -20,13 +20,14 @@ class Brano{
         this.brano.pause();
     }
 
-    draw(){
+    drawBrano(){
         image(this.img, this.posX, this.posY, this.dim, this.dim);
         textSize(50);
         textAlign(CENTER);
         fill('white');
         textFont(fontBrani);
-        text(this.titolo + " - " + this.autore, 65);
+        console.log("titolo " + this.titolo + " autore " + this.autore + " font " + fontBrani);
+        text(this.titolo + "  -  " + this.autore, 650, 550);
     }
 
 }

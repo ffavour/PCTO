@@ -74,9 +74,9 @@ let predictions = []
 let debug = 0;
 let flippedVideoM //per specchiare la sorgente video
 
-//vettori  per il caricamento di suono/brani
-let nomeBrani = ["As_it_was","BarbieGirl","Bitzcochito_rosalia","ciao","Guasto_Damore","hall_of_fame","Laurea_ad_honorem","Lingerie","Mademoiselle","replay","stereo_hearts","waka_waka","wrecked"];
-let autori = ["HarryStyles","Aqua","Rosalia","Thasupreme","Bresh","TheScript","Marracash","Tedua","SferaEbbasta","Iyaz","GimClassHeroes","Shakira","ImagineDragons"];
+//vettori per il caricamento di suono/brani
+let nomeBrani = ["Cant-Hold-Us","famy","Grazie-A-Dio","bloody-Mary","hall-Of-Fame","fuoco-e-benzina","cenere","Replay","stereo-Hearts","waka-Waka","quevedo"];
+let autori = ["Macklemore","Ava","Thasupreme","Lady Gaga","The Script","Emis Killa","Lazza","Iyaz","Gim Class Heroes","Shakira","BZRP"];
 let fontBrani;  //font utilizzato
 let vettoreBrani = []; // vettore contenente oggetti di tipo Brano (ovvero canzone, copertina, autore)
 
@@ -84,7 +84,7 @@ let frecciaPremuta = false; //controlla preccia di scorrimento nella schermata c
 
 let game; //gestisce i brani del gioco
 
-//enumerazione degli stati :
+//enumerazione degli stati:
 const States = {
     Start: 0, //start
     Gioco: 1, //gioco
@@ -265,8 +265,8 @@ function inizializzaBrani(){
 
     try {
         for (k = 0; k < nomeBrani.length; k++) {
-            branoTemp = loadSound("canzoni/" + nomeBrani[k] + ".mp3");
-            copertinaTemp = loadImage("images/copertineCanzoni/" + nomeBrani[k] + ".jpeg");
+            branoTemp = loadSound("canzoniNoCopyright/" + nomeBrani[k] + ".mp3");
+            copertinaTemp = loadImage("images/copertineCanzoniNoCopyright/" + nomeBrani[k] + ".jpeg");
             //console.log("canzoni/" + nomeBrani[k] + ".mp3");
             //console.log("images/copertineCanzoni/" + nomeBrani[k] + ".png");
             vettoreBrani.push(new Brano(branoTemp, copertinaTemp, nomeBrani[k], autori[k], 200, width / 2 - 100, 250));
@@ -506,11 +506,12 @@ function drawschermataStrumento() {
 function drawschermataCanzone() {
     background(sfondoCanzone);
     controllaBottoni(sCanzone);
-    vettoreBrani[Brano.branoCorrente].draw();
+    vettoreBrani[Brano.branoCorrente].drawBrano();
+
     if(!vettoreBrani[Brano.branoCorrente].brano.isPlaying())
     vettoreBrani[Brano.branoCorrente].play();
 
-
+    //stoppa la canzone corrente se il bottone scorrimento è stato premuto
     if(bottoneScorreSX.premuto(States.Canzone, sCanzone)){
 
         if(!frecciaPremuta)
