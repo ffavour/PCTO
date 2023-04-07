@@ -577,8 +577,9 @@ function drawSchermataGioco() {
     image(sfondoGioco, 0, 0,1300,700);
     flippedVideoM = cursoreMagiK();
     game.drawKeypointsGioco();
-    image(immagineSfumaturaSpartito, 0,0,1300,700);
     gestisciVettore();
+    image(immagineSfumaturaSpartito, 0,0,1300,700);
+
 
 }
 

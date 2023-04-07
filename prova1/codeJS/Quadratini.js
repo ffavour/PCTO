@@ -6,7 +6,7 @@ class Quadratini{
 
    static imageLibero = quadratinoImg;
    static posXinit = width-50;
-   static limX = 500;
+   static limX = 600;  
 
    constructor(posY) {
       this.posX = Quadratini.posXinit;
@@ -39,8 +39,18 @@ class Quadratini{
          this.drawOso();
          return false;
       }
+   }
 
+   cursoreToccato(){
+      /*if(mouseX > this.posX && mouseX < this.posX + this.widthR &&
+       mouseY > this.posY && mouseY < this.posY + this.heightR){
+      this.colore = 'green';
+    }*/
 
+      if(mouseX > this.posY && mouseX < this.posX + Quadratini.width1 &&
+         mouseY > this.posY && mouseY < this.posY + Quadratini.height1){
+         Quadratini.imageLibero = quadratinoImgPremutoImg;
+      }
    }
 
 }
