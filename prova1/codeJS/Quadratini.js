@@ -6,7 +6,7 @@ class Quadratini{
 
    static imageLibero = quadratinoImg;
    static posXinit = width-50;
-   static limX = 500;
+   static limX = 600; //era 500 ma è meglio 600
 
    constructor(posY) {
       this.posX = Quadratini.posXinit;
