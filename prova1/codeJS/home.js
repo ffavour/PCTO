@@ -40,6 +40,8 @@ let quadratinoPremutoImg
 //immagini dei cursori
 let cursorePremuto;
 let cursoreRilasciato;
+let cursoreGiocoRilasciato;
+let cursoreGiocoPremuto;
 let rettangoloLateralePremuto;
 let rettangoloLateraleRilasciato;
 
@@ -139,6 +141,8 @@ function preload(){
     bottoneIndietroImg = loadImage("images/immagineBottoneIndietro.png");
     immagineSpartito = loadImage("images/spartitoMusicale.png");
     immagineSfumaturaSpartito = loadImage("images/ulterioreSfumatureCentroGioco.png");
+    cursoreGiocoPremuto = loadImage("images/immagineCursoreInGioco.png");
+    cursoreGiocoRilasciato = loadImage("images/immagineCursoreInGiocoRilasciato.png");
 
     scorreDxImg = loadImage("images/scorreDX.png");
     scorreSxImg = loadImage("images/scorreSX.png");
@@ -215,29 +219,26 @@ function gestisciVettore(){
         console.log("ENTRATOOOOOOOOOO")
     console.log("lenght pre-pre-for " + vettoreQuadratini.length)
     var sor; //per sorteggiare
-    var tro = true; //per controllare
-    if(vettoreQuadratini.length === 0){
-        console.log("lenght pre-for " + vettoreQuadratini.length)
-        sor = sorteggioRange(0,vettoreVarianze.length-1);
-        console.log("sor " + sor);
-        vettoreQuadratini.push(new Quadratini(vettoreVarianze[sor] + 117));
-        console.log("lunght post-push" + vettoreQuadratini.length);
-    }else if(vettoreQuadratini.length !== 0){
-        console.log("ENTRATAAAAAAAAAA")
+    if(vettoreQuadratini.length == 0){
+        console.log("what?");
 
-        for(var k = 0; k < vettoreQuadratini.length && tro === true; k++){
-            console.log("tro " + tro)
-                console.log("quadratino n." + k);
-            console.log("lenght nel for " + vettoreQuadratini.length)
-            tro = vettoreQuadratini[k].moveAndDraw();
-            if(tro === false){
+        sor = sorteggioRange(0,vettoreVarianze.length-1);
+        vettoreQuadratini.push(new Quadratini(vettoreVarianze[sor] + 117));
+    }else if(vettoreQuadratini.length !== 0){
+
+        for(var k = 0; k < vettoreQuadratini.length; k++){
+
+            if(vettoreQuadratini[k].posX < 600){
                 console.log("si è falso");
 
                 vettoreQuadratini.pop(k);
-                console.log("quadratino " + k + "rimosso");
-            }else if(vettoreQuadratini[k].posX <= 675 && vettoreQuadratini[k].posX > 800){
+
+                console.log("varianze " + k + "rimosso");
+            }else if(vettoreQuadratini[k].posX <= 800 && vettoreQuadratini[k].posX > 765){
+                console.log("varianzeeeeee");
                 sor = sorteggioRange(0,vettoreVarianze.length-1);
-                vettoreQuadratini.push(new Quadratini(vettoreVarianze[sor] + 117));
+                console.log("varianze"+vettoreVarianze);
+                vettoreQuadratini.push(new Quadratini(vettoreVarianze[sor]+117));
             }
         }
     }

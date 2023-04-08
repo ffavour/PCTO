@@ -1,12 +1,12 @@
 class Quadratini{
 
-   static xSpeed = 30;
+   static xSpeed = 45;
    static width1 = 150;
    static height1 = 50;
 
    static imageLibero = quadratinoImg;
    static posXinit = width-50;
-   static limX = 600;  
+   static limX = 500;
 
    constructor(posY) {
       this.posX = Quadratini.posXinit;
@@ -19,13 +19,10 @@ class Quadratini{
    }
 
    move(){
-      console.log("posx, y, limX", this.posX, this.posY, Quadratini.limX, Quadratini.xSpeed);
       //delay(500);
       if(this.posX - Quadratini.xSpeed < Quadratini.limX){
-         console.log("dio can");
          return false;
       }else{
-         console.log("no ok tutto appost");
          this.posX = this.posX - Quadratini.xSpeed;
          return true;
       }

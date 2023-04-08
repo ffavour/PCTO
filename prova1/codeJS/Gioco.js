@@ -50,9 +50,9 @@ class Gioco {
 
                 //console.log(midd);
                 if(premuto){
-                    image(cursorePremuto,0, midd.y, 100, 100);
+                    image(cursoreGiocoPremuto,0, midd.y, 1300, 70);
                 }else{
-                    image(cursoreRilasciato,0, midd.y, 100, 100)
+                    image(cursoreGiocoRilasciato,0, midd.y, 1300, 70)
                 }
 
                 console.log(midd);
