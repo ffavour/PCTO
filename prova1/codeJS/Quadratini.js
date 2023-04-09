@@ -28,6 +28,7 @@ class Quadratini{
       }
    }
 
+   //ma serve???
    moveAndDraw(){
       if(this.move()){
          this.drawOso();
@@ -38,11 +39,13 @@ class Quadratini{
       }
    }
 
+   //da guardare
    cursoreToccato(){
       /*if(mouseX > this.posX && mouseX < this.posX + this.widthR &&
        mouseY > this.posY && mouseY < this.posY + this.heightR){
       this.colore = 'green';
     }*/
+      var curX, cursY, selez = game.drawKeypointsGioco();
 
       if(mouseX > this.posY && mouseX < this.posX + Quadratini.width1 &&
          mouseY > this.posY && mouseY < this.posY + Quadratini.height1){

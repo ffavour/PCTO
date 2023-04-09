@@ -1,7 +1,7 @@
 class Gioco {
     static numeroQuadradini = 2;
 
-    constructor(brano, posInSorteggio) { //bitchess
+    constructor(brano, posInSorteggio) { //bitchess (tesio mi sa che il costruttore è da rifare)
         this.brano = brano;
         this.velocità = 0;
 
@@ -19,7 +19,7 @@ class Gioco {
 
 
 
-
+    //disegna il cursore magik nella schermata di gioco
     drawKeypointsGioco() { // la punta dell'indice ha valore 12 ed è quindi il dito indice per il limite sotto invece è 0
 
         if (debug) { //fino alla 74 solo per fare i vari calcoli della mano

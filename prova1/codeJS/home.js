@@ -98,7 +98,7 @@ const States = {
     Canzone: 7,
 }
 
-let stato = States.Start //variabile che gestisce gli stati/schermate
+let stato = States.Start//variabile che gestisce gli stati/schermate
 
 //variabili per l'animazione del caricamento
 let caricamento = true;
@@ -224,13 +224,14 @@ function gestisciVettore(){
 
         sor = sorteggioRange(0,vettoreVarianze.length-1);
         vettoreQuadratini.push(new Quadratini(vettoreVarianze[sor] + 117));
+
     }else if(vettoreQuadratini.length !== 0){
 
         for(var k = 0; k < vettoreQuadratini.length; k++){
 
             if(vettoreQuadratini[k].posX < 600){
                 console.log("si è falso");
-
+                vettoreQuadratini[k].moveAndDraw();
                 vettoreQuadratini.pop(k);
 
                 console.log("varianze " + k + "rimosso");
