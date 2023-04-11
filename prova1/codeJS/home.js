@@ -224,14 +224,15 @@ function gestisciVettore(){
 
         sor = sorteggioRange(0,vettoreVarianze.length-1);
         vettoreQuadratini.push(new Quadratini(vettoreVarianze[sor] + 117));
-    }else if(vettoreQuadratini.length !== 0){
+    }else if(vettoreQuadratini.length != 0){
+        console.log("ole");
 
         for(var k = 0; k < vettoreQuadratini.length; k++){
 
             if(vettoreQuadratini[k].posX < 600){
                 console.log("si è falso");
 
-                vettoreQuadratini.pop(k);
+                vettoreQuadratini.slice(k,1);
 
                 console.log("varianze " + k + "rimosso");
             }else if(vettoreQuadratini[k].posX <= 800 && vettoreQuadratini[k].posX > 765){
@@ -239,6 +240,9 @@ function gestisciVettore(){
                 sor = sorteggioRange(0,vettoreVarianze.length-1);
                 console.log("varianze"+vettoreVarianze);
                 vettoreQuadratini.push(new Quadratini(vettoreVarianze[sor]+117));
+                vettoreQuadratini[k].moveAndDraw();
+            }else{
+                vettoreQuadratini[k].moveAndDraw();
             }
         }
     }
