@@ -1,7 +1,0 @@
-Il nostro progetto
-
-Nel nostro gioco, il giocatore deve muoversi all'interno della schermata utilizzando un cursore che rileva la mano e provare ad "acchiappare" i vari quadratini che compaiono all'interno dello "spartitito". 
-A mano aperta il cursore è rilasciato quindi non compie nessuna azione ma si può mouvere liberamente all'interno della schermata di gioco, mentre a pugno chiuso il cursore è in modalità di selezione perciò posizionato su un tasto/bottone, lo preme.
-
-In che modo può aiutare pazienti malati di SM?
-Il gioco è stato sviluppato pricipalmente per allenare funzioni cognitive come attenzione e concentrazione attraverso l'associazione stimolo-gesto, ovvero, il paziente dovrà riconoscere in che punto dello schermo comparirà il rettangolino e muovere il braccio e/o aprire o chiudere la mano di conseuenza. In questo modo si compie anche un esercizio di riabilitazione del dual-task in cui il task motorio da svolgere è il movimento del braccio e l'apertura e la chiusura della mano, mentre il task cognitivo è riconoscere dove ci compaiono i quadratini e quindi dove spostare il braccio e/o chiudere la mano

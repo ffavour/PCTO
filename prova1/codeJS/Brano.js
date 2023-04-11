@@ -20,6 +20,7 @@ class Brano{
         this.brano.pause();
     }
 
+    //"disegna" la copertina del brano insieme a titolo e autore
     drawBrano(){
         image(this.img, this.posX, this.posY, this.dim, this.dim);
         textSize(50);
