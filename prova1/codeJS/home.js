@@ -154,7 +154,7 @@ function preload(){
     rettangoloLateralePremuto = loadImage("images/rettangoloGiocoLateralePremuto.png");
 
     quadratinoImg = loadImage("images/rettangoloSpartito.png");
-    quadratinoImgPremutoImg = loadImage("images/rettangoloSpartitoPremuto.png");
+    quadratinoPremutoImg = loadImage("images/rettangoloSpartitoPremuto.png");
 
     soundFormats('mp3', 'ogg');
 
@@ -216,29 +216,25 @@ function creaVettoreVarianze(vettVar){ //serve
 }
 
 function gestisciVettore(){
-        console.log("ENTRATOOOOOOOOOO")
-    console.log("lenght pre-pre-for " + vettoreQuadratini.length)
     var sor; //per sorteggiare
     if(vettoreQuadratini.length == 0){
-        console.log("what?");
 
         sor = sorteggioRange(0,vettoreVarianze.length-1);
         vettoreQuadratini.push(new Quadratini(vettoreVarianze[sor] + 117));
     }else if(vettoreQuadratini.length != 0){
-        console.log("ole");
 
         for(var k = 0; k < vettoreQuadratini.length; k++){
 
-            if(vettoreQuadratini[k].posX < 600){
-                console.log("si è falso");
+            if(vettoreQuadratini[k].posX < 700){
 
-                vettoreQuadratini.slice(k,1);
+                vettoreQuadratini.splice(k,1);
+                vettoreQuadratini[k].moveAndDraw();
 
-                console.log("varianze " + k + "rimosso");
-            }else if(vettoreQuadratini[k].posX <= 800 && vettoreQuadratini[k].posX > 765){
-                console.log("varianzeeeeee");
+
+
+            }else if(vettoreQuadratini[k].posX <= 900 && vettoreQuadratini[k].posX > 900-Quadratini.xSpeed){
+
                 sor = sorteggioRange(0,vettoreVarianze.length-1);
-                console.log("varianze"+vettoreVarianze);
                 vettoreQuadratini.push(new Quadratini(vettoreVarianze[sor]+117));
                 vettoreQuadratini[k].moveAndDraw();
             }else{
@@ -268,17 +264,13 @@ function inizializzaBrani(){
     var branoTemp;
     var copertinaTemp;
 
-    try {
+
         for (k = 0; k < nomeBrani.length; k++) {
             branoTemp = loadSound("canzoniNoCopyright/" + nomeBrani[k] + ".mp3");
             copertinaTemp = loadImage("images/copertineCanzoniNoCopyright/" + nomeBrani[k] + ".jpeg");
-            //console.log("canzoni/" + nomeBrani[k] + ".mp3");
-            //console.log("images/copertineCanzoni/" + nomeBrani[k] + ".png");
             vettoreBrani.push(new Brano(branoTemp, copertinaTemp, nomeBrani[k], autori[k], 200, width / 2 - 100, 250));
         }
-    }catch{
-        location.reload();
-    }
+
 }
 
 //serve per trovare il punto centrale della mano
@@ -478,6 +470,8 @@ function drawSchermataPrincipale() {
     }
 }
 
+
+
 //per il cursore
 function cursoreMagiK(){
     let flippedVideo = createImage(video.width, video.height);
@@ -508,13 +502,31 @@ function drawschermataStrumento() {
     bottoneScorreDX.draw();
 }
 
+
+function contrllaPremitureInGioco(){
+    var pos = game.drawKeypointsGioco();
+    for(var k=0; k<vettoreQuadratini.length; k++){
+        if(vettoreQuadratini[k].posY <= pos.y1 + 30 && pos.premuto == true && vettoreQuadratini[k].posY >= pos.y1 - 100 ){
+            vettoreQuadratini[k].premuto = true;
+        }
+    }
+}
+
+
+function fermaTuttiIbraniNonQuelloCorrente(){
+    for(var k=0; k<vettoreBrani.length; k++){
+        if(k != Brano.branoCorrente)
+        vettoreBrani[k].brano.stop();
+    }
+}
+
 function drawschermataCanzone() {
     background(sfondoCanzone);
     controllaBottoni(sCanzone);
     vettoreBrani[Brano.branoCorrente].drawBrano();
-
+    fermaTuttiIbraniNonQuelloCorrente();
     if(!vettoreBrani[Brano.branoCorrente].brano.isPlaying())
-    vettoreBrani[Brano.branoCorrente].play();
+        vettoreBrani[Brano.branoCorrente].play();
 
     //stoppa la canzone corrente se il bottone scorrimento è stato premuto
     if(bottoneScorreSX.premuto(States.Canzone, sCanzone)){
@@ -522,7 +534,6 @@ function drawschermataCanzone() {
         if(!frecciaPremuta)
         if(Brano.branoCorrente-1 >= 0){
             vettoreBrani[Brano.branoCorrente].brano.stop();
-            //console.log("qualsosa funzia");
             Brano.branoCorrente -=1;
         }else{
             Brano.branoCorrente = vettoreBrani.length-1
@@ -584,21 +595,28 @@ function drawSchermataGioco() {
     game.drawKeypointsGioco();
     gestisciVettore();
     image(immagineSfumaturaSpartito, 0,0,1300,700);
+    contrllaPremitureInGioco();
 
 
 }
 
-function drawSchermataPausa() {
+function drawSchermataPausa() { //seh vabbe
 
 }
 
 
 
-function drawSchermataGameOver() {
+function drawSchermataGameOver() { // oleee
 
 }
 
 
+
+
+/*
+
+sta roba sotto serviva nella versione precedente ma adesso
+non serve
 
 
 
@@ -613,3 +631,5 @@ function compattaVettore(vettore) {
     //console.log("La lunghezza finale del vettore è: " + nuovoVettore.length);
     return nuovoVettore;
 }
+
+ */
