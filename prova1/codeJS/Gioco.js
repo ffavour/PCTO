@@ -1,13 +1,13 @@
 class Gioco {
     static numeroQuadradini = 2;
 
-    constructor(brano, posInSorteggio) { //bitchess (tesio mi sa che il costruttore è da rifare)
+    constructor(brano) { //bitchess (tesio mi sa che il costruttore è da rifare)
         this.brano = brano;
         this.velocità = 0;
 
-        this.quadratini = []; //è il vettore di Quadratini
-        this.sorteggiabile = this.quadratini;
-        this.posiZioniLibere = [];
+        this.quadratini = [];
+        this.brano.replay();
+
 
         /*
         this.posInSorteggio è un attributo che contiene il punto un cui
@@ -16,6 +16,8 @@ class Gioco {
         difficoltà di gioco
          */
     }
+
+
 
 
 

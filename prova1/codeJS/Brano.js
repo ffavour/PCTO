@@ -12,12 +12,21 @@ class Brano{
 
     }
 
+    replay(){
+        this.brano.stop();
+        this.brano.play();
+    }
+
     play(){
         this.brano.play();
     }
 
     pause(){
         this.brano.pause();
+    }
+
+    stop(){
+        this.brano.stop();
     }
 
     //"disegna" la copertina del brano insieme a titolo e autore

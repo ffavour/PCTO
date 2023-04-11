@@ -225,14 +225,7 @@ function gestisciVettore(){
 
         for(var k = 0; k < vettoreQuadratini.length; k++){
 
-            if(vettoreQuadratini[k].posX < 700){
-
-                vettoreQuadratini.splice(k,1);
-                vettoreQuadratini[k].moveAndDraw();
-
-
-
-            }else if(vettoreQuadratini[k].posX <= 900 && vettoreQuadratini[k].posX > 900-Quadratini.xSpeed){
+            if(vettoreQuadratini[k].posX <= 900 && vettoreQuadratini[k].posX > 900-Quadratini.xSpeed){
 
                 sor = sorteggioRange(0,vettoreVarianze.length-1);
                 vettoreQuadratini.push(new Quadratini(vettoreVarianze[sor]+117));
@@ -438,6 +431,7 @@ function controllaBottoni(sche){
     if(sche === sCanzone && bottoneAvanti.premuto(States.Gioco, sche)){
         //console.log("sono entrato spopositamente nella if yay!");
         game = new Gioco(vettoreBrani[Brano.branoCorrente]);
+        vettoreBrani[Brano.branoCorrente].stop();
     }
 }
 
@@ -520,6 +514,23 @@ function fermaTuttiIbraniNonQuelloCorrente(){
     }
 }
 
+function controllaSeNonPremutiAllaFine(){
+    for(var k =0 ; k<vettoreQuadratini.length; k++){
+        if(vettoreQuadratini[k].posX <= 700 && vettoreQuadratini[k].premuto == false){
+            console.log("entrato nel if 1 ");
+
+            vettoreBrani[Brano.branoCorrente].pause();
+            game.errori = game.errori+1;
+        }else if(vettoreQuadratini[k].posX <= 700 && vettoreQuadratini[k].premuto == true){
+            console.log("entrato nel if ");
+            game.brano.play();
+            vettoreQuadratini.splice(k,1);
+
+
+        }
+    }
+}
+
 function drawschermataCanzone() {
     background(sfondoCanzone);
     controllaBottoni(sCanzone);
@@ -561,6 +572,7 @@ function drawschermataCanzone() {
     bottoneAvanti.draw();
 
 
+
 }
 
 function drawSchermataInfo() {
@@ -596,6 +608,7 @@ function drawSchermataGioco() {
     gestisciVettore();
     image(immagineSfumaturaSpartito, 0,0,1300,700);
     contrllaPremitureInGioco();
+    controllaSeNonPremutiAllaFine();
 
 
 }
