@@ -1,6 +1,6 @@
 class Quadratini {
 
-   static xSpeed = 25;
+   static xSpeed = 35;
    static width1 = 150;
    static height1 = 50;
 
