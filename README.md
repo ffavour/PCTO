@@ -19,7 +19,7 @@ The game was mainly developed to train cognitive functions such as attention and
 ## Quick Demo
 ![replayfin4](https://user-images.githubusercontent.com/113350281/231393693-2df634a0-82c2-4e2c-b609-445108310a3d.gif)
 
-Click [here](link.com) to play!🤩
+Click [here](http://replay.netsons.org/) to play!🤩
 
 ## Basic Requirements
 - webcam
