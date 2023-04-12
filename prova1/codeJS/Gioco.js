@@ -4,9 +4,11 @@ class Gioco {
     constructor(brano) { //bitchess (tesio mi sa che il costruttore è da rifare)
         this.brano = brano;
         this.velocità = 0;
+        this.punteggio = 0;
+        this.errori = 0;
 
         this.quadratini = [];
-        this.brano.replay();
+
 
 
         /*

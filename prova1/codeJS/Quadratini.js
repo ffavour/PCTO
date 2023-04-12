@@ -31,18 +31,26 @@ class Quadratini {
    //perche e quella che chiama la home quando fa controlla
 
    moveAndDraw() {
-      if (this.move()) {
+      if(!stopDraw){
+         if (this.move()) {
+            if(!this.premuto) //anche alla riga 39 il punto esclamativo perche avevo invertito i file
+               image(quadratinoImg, this.posX, this.posY, Quadratini.width1, Quadratini.height1);
+            else
+               image(quadratinoPremutoImg, this.posX, this.posY, Quadratini.width1, Quadratini.height1);
+            return true;
+         } else {
+            if(!this.premuto)
+               image(quadratinoImg, this.posX, this.posY, Quadratini.width1, Quadratini.height1);
+            else
+               image(quadratinoPremutoImg, this.posX, this.posY, Quadratini.width1, Quadratini.height1);
+            return false;
+         }
+      }else{
          if(!this.premuto) //anche alla riga 39 il punto esclamativo perche avevo invertito i file
             image(quadratinoImg, this.posX, this.posY, Quadratini.width1, Quadratini.height1);
          else
             image(quadratinoPremutoImg, this.posX, this.posY, Quadratini.width1, Quadratini.height1);
-         return true;
-      } else {
-         if(!this.premuto)
-            image(quadratinoImg, this.posX, this.posY, Quadratini.width1, Quadratini.height1);
-         else
-            image(quadratinoPremutoImg, this.posX, this.posY, Quadratini.width1, Quadratini.height1);
-         return false;
+
       }
    }
 
