@@ -1,6 +1,9 @@
 # Game Ability 2023
 ## Our Project - Replay
 
+![sfondoSchermataPrincipale](https://user-images.githubusercontent.com/113350281/231370884-90053c0f-b161-410f-b4fa-ec232f431484.png)
+
+
 In our game, the player must move around the screen using a cursor that detects the hand and try to "catch" the various squares that appear within the "music sheet".
 With an open hand, the cursor is released so it does not perform any action but can move freely within the game screen, while with a clenched fist, the cursor is in selection mode and therefore positioned on a key/button it presses it.
 
@@ -12,19 +15,14 @@ The game was mainly developed to train cognitive functions such as attention and
 - [p5.js](https://p5js.org/)
 - [ml5.js](https://ml5js.org/)
 
-## How to Play!
-
-![sfondoSchermataPrincipale](https://user-images.githubusercontent.com/113350281/231370884-90053c0f-b161-410f-b4fa-ec232f431484.png)
-
-
 
 ## Quick Demo
-![replay](https://user-images.githubusercontent.com/113350281/231381679-52c188e9-ff16-4c11-90dc-0ecfd1a94c84.gif)
 
+![replay3](https://user-images.githubusercontent.com/113350281/231382839-77017659-3dd1-46be-b67a-5f64c6e400e0.gif)
 
 Click [here](link.com) to play!🤩
 
-## Requirements
+## Basic Requirements
 - webcam
 - Internet connection
 - music speakers
