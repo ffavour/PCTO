@@ -5,13 +5,16 @@ let width = 1300
 let height_init = 480
 let widht_init = 640
 
+let primo = true // mi serve per gestire il brano durante il gioco nella funzione gestisciBraniNelGioco()
+let stopDraw = false;
+
+
 
 
 //immagini di sfondo
 let sfondoPricipale
 let sfondoSecondario
 let sfondoCanzone
-let sfondoStrumento
 let sfondoInfo;
 let sfondoSettings
 let sfondoGioco
@@ -50,7 +53,6 @@ let bottoneSettings
 let bottoneStart  //o play sono la stessa cosa
 let bottonePause
 let bottoneHome
-let bottoneStrumento //non credo serva
 let bottoneReplay
 let bottoneInfo
 let bottoneScorreDX
@@ -66,7 +68,6 @@ let sGameOver
 let sPause
 let sInfo
 let sSettings
-let sStrumento
 let sCanzone
 
 //varibili per gestione della videocamera
@@ -94,8 +95,7 @@ const States = {
     Pause: 3,
     Info: 4,
     Settings: 5,
-    Strumento: 6,  //non serve
-    Canzone: 7,
+    Win:8,
 }
 
 let stato = States.Start //variabile che gestisce gli stati/schermate
@@ -125,7 +125,6 @@ function preload(){
     sfondoPricipale = loadImage("images/sfondoSchermataPrincipale.png");
     sfondoSecondario = loadImage("images/sfondoBlur.jpg");
     sfondoCanzone = loadImage("images/sfondoBlurCanzone.jpg");
-    sfondoStrumento = loadImage("images/sfondoBlurStrumento.jpg");
     sfondoSettings = loadImage("images/sfondoBlurSettings.png");
     sfondoInfo = loadImage("images/sfondoBlurInfo.png");
     sfondoGioco = loadImage("images/sfondoGioco.png");
@@ -363,7 +362,7 @@ function inizializzaBottoni() {
     bottonePause = new Bottone(180, 80, bottonePauseImg, 75, 75, "pause");
     bottoneInfo = new Bottone((width - 150), 70, bottoneinfoImg, 75, 75, "info");
     bottoneStart = new Bottone((width / 2 - (200 / 2)), height - 150, bottoneStartImg, 200, 80, "start");
-    bottoneHome = new Bottone(width - 90, height - 85, bottoneHomeImg, 75, 75, "home");
+    bottoneHome = new Bottone(width - 150, height - 100, bottoneHomeImg, 75, 75, "home");
     bottoneScorreSX = new Bottone((width / 2 - (75 / 2) - 300), (height / 2 - (75 / 2)), scorreSxImg, 75, 75, "scorreSX");
     bottoneScorreDX = new Bottone((width / 2 - (75 / 2) + 300), (height / 2 - (75 / 2)), scorreDxImg, 75, 75, "scorreDX");
 }
@@ -376,7 +375,6 @@ function inizializzaSchermate(){
     sPause = new Schermata(["info", "replay"]);
     sInfo = new Schermata(["home"]); //il pulsante back non esiste
     sSettings = new Schermata(["back", "home"]); //il pulsante back non esiste
-    //sStrumento = new Schermata(["back", "info","home", "settings", "avanti", "scorreDX", "scorreSX"]); //il pulsante back non esiste
     sCanzone = new Schermata(["back", "info", "home", "settings", "avanti", "scorreDX", "scorreSX"]); //il pulsante back non esiste
 }
 
@@ -405,14 +403,13 @@ function gestioneSchermate() {
         drawSchermataPrincipale();
     } else if (stato === States.GameOver) {
         drawSchermataGameOver();
-    } else if (stato === States.Strumento) {
-        drawschermataStrumento();
     } else if (stato === States.Settings) {
         drawSchermataSettings();
-    } else if (stato === States.Canzone) {
+    } else if (stato === States.Win) {
         drawschermataCanzone();
+        controllaSuoni();
     }
-    controllaSuoni();
+
 }
 
 function controllaSuoni(){
@@ -429,9 +426,9 @@ function controllaBottoni(sche){
     bottoneHome.premuto(States.Start, sche);
 
     if(sche === sCanzone && bottoneAvanti.premuto(States.Gioco, sche)){
-        //console.log("sono entrato spopositamente nella if yay!");
+        console.log("sono entrato spopositamente nella if yay!");
         game = new Gioco(vettoreBrani[Brano.branoCorrente]);
-        vettoreBrani[Brano.branoCorrente].stop();
+
     }
 }
 
@@ -486,21 +483,12 @@ function cursoreMagiK(){
 }
 
 
-function drawschermataStrumento() {
-    background(sfondoStrumento);
-    controllaBottoni(sStrumento);
-    bottoneSettings.draw();
-    bottoneInfo.draw();
-    bottoneHome.draw();
-    bottoneScorreSX.draw();
-    bottoneScorreDX.draw();
-}
 
 
 function contrllaPremitureInGioco(){
     var pos = game.drawKeypointsGioco();
     for(var k=0; k<vettoreQuadratini.length; k++){
-        if(vettoreQuadratini[k].posY <= pos.y1 + 30 && pos.premuto == true && vettoreQuadratini[k].posY >= pos.y1 - 100 ){
+        if(vettoreQuadratini[k].posY <= pos.y1 + 100 && pos.premuto == true && vettoreQuadratini[k].posY >= pos.y1 - 30 ){
             vettoreQuadratini[k].premuto = true;
         }
     }
@@ -514,21 +502,55 @@ function fermaTuttiIbraniNonQuelloCorrente(){
     }
 }
 
+function gestisciBraniNelGioco(){
+    console.log("si è fermato? "+vettoreBrani[Brano.branoCorrente].brano.isPlaying())
+    var tro;
+    tro = controllaSeNonPremutiAllaFine();
+
+
+    if(primo){
+        vettoreBrani[Brano.branoCorrente].brano.play();
+        primo = false;
+        console.log("in teoria e entrato");
+
+    }else if(tro){
+
+                vettoreBrani[Brano.branoCorrente].brano.pause();
+                stopDraw = true;
+
+        }else if(!vettoreBrani[Brano.branoCorrente].brano.isPlaying()){
+        vettoreBrani[Brano.branoCorrente].brano.play();
+        stopDraw = false;
+    }
+
+    console.log("brano: "+Brano.branoCorrente);
+    console.log("plaing? "+ vettoreBrani[Brano.branoCorrente].brano.isPlaying());
+    console.log("primo"+ primo);
+}
+
 function controllaSeNonPremutiAllaFine(){
+    var tro = false;
     for(var k =0 ; k<vettoreQuadratini.length; k++){
         if(vettoreQuadratini[k].posX <= 700 && vettoreQuadratini[k].premuto == false){
             console.log("entrato nel if 1 ");
 
-            vettoreBrani[Brano.branoCorrente].pause();
-            game.errori = game.errori+1;
+
+            game.errori ++;
+            tro = true;
+
+
+
         }else if(vettoreQuadratini[k].posX <= 700 && vettoreQuadratini[k].premuto == true){
             console.log("entrato nel if ");
-            game.brano.play();
             vettoreQuadratini.splice(k,1);
+            game.punteggio ++;
+
 
 
         }
+
     }
+    return tro;
 }
 
 function drawschermataCanzone() {
@@ -537,14 +559,14 @@ function drawschermataCanzone() {
     vettoreBrani[Brano.branoCorrente].drawBrano();
     fermaTuttiIbraniNonQuelloCorrente();
     if(!vettoreBrani[Brano.branoCorrente].brano.isPlaying())
-        vettoreBrani[Brano.branoCorrente].play();
+        vettoreBrani[Brano.branoCorrente].brano.play();
 
     //stoppa la canzone corrente se il bottone scorrimento è stato premuto
     if(bottoneScorreSX.premuto(States.Canzone, sCanzone)){
 
         if(!frecciaPremuta)
         if(Brano.branoCorrente-1 >= 0){
-            vettoreBrani[Brano.branoCorrente].brano.stop();
+            vettoreBrani[Brano.branoCorrente].brano.pause();
             Brano.branoCorrente -=1;
         }else{
             Brano.branoCorrente = vettoreBrani.length-1
@@ -588,6 +610,14 @@ function drawSchermataInfo() {
 
 }
 
+function controllaVintoPerso(){
+    if(game.punteggio >= 20){
+       stato = States.Win;
+    }else if(game.errori >= 5){
+        stato = States.GameOver;
+    }
+}
+
 function drawSchermataSettings() {
     background(sfondoSettings);
     bottoneHome.draw();
@@ -599,6 +629,7 @@ function drawSchermataSettings() {
 
 function drawSchermataGioco() {
 
+
     image(immagineSpartito, width/2, 0,750, 570);
 
     image(flippedVideoM, -650,0,1300,700);
@@ -606,9 +637,15 @@ function drawSchermataGioco() {
     flippedVideoM = cursoreMagiK();
     game.drawKeypointsGioco();
     gestisciVettore();
+
+
+
+   contrllaPremitureInGioco();
+    gestisciBraniNelGioco();
+    //controllaVintoPerso();
+
     image(immagineSfumaturaSpartito, 0,0,1300,700);
-    contrllaPremitureInGioco();
-    controllaSeNonPremutiAllaFine();
+
 
 
 }
