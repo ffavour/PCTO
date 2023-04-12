@@ -406,7 +406,7 @@ function gestioneSchermate() {
             drawSchermataGameOver();
         } else if (stato === States.Settings) {
             drawSchermataSettings();
-        } else if (stato === States.Win) {
+        } else if (stato === States.Canzone) {
             drawschermataCanzone();
             controllaSuoni();
         }
@@ -426,7 +426,7 @@ function controllaBottoni(sche){
     bottoneInfo.premuto(States.Info, sche);
     bottoneHome.premuto(States.Start, sche);
 
-    if(sche === sCanzone && bottoneAvanti.premuto(States.Gioco, sche)){
+    if(sche == sCanzone && bottoneAvanti.premuto(States.Gioco, sche)){
         console.log("sono entrato spopositamente nella if yay!");
         game = new Gioco(vettoreBrani[Brano.branoCorrente]);
 
