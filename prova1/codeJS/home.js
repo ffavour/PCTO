@@ -95,6 +95,7 @@ const States = {
     Pause: 3,
     Info: 4,
     Settings: 5,
+    Canzone: 7,
     Win:8,
 }
 
@@ -257,11 +258,11 @@ function inizializzaBrani(){
     var copertinaTemp;
 
 
-        for (k = 0; k < nomeBrani.length; k++) {
-            branoTemp = loadSound("canzoniNoCopyright/" + nomeBrani[k] + ".mp3");
-            copertinaTemp = loadImage("images/copertineCanzoniNoCopyright/" + nomeBrani[k] + ".jpeg");
-            vettoreBrani.push(new Brano(branoTemp, copertinaTemp, nomeBrani[k], autori[k], 200, width / 2 - 100, 250));
-        }
+    for (k = 0; k < nomeBrani.length; k++) {
+        branoTemp = loadSound("canzoniNoCopyright/" + nomeBrani[k] + ".mp3");
+        copertinaTemp = loadImage("images/copertineCanzoniNoCopyright/" + nomeBrani[k] + ".jpeg");
+        vettoreBrani.push(new Brano(branoTemp, copertinaTemp, nomeBrani[k], autori[k], 200, width / 2 - 100, 250));
+    }
 
 }
 
@@ -393,22 +394,22 @@ function draw() {
 function gestioneSchermate() {
     if(!debug)
         //console.log(stato);
-    if (stato === States.Gioco) {
-        drawSchermataGioco();
-    } else if (stato === States.Pause) {
-        drawSchermataPausa();
-    } else if (stato === States.Info) {
-        drawSchermataInfo();
-    } else if (stato === States.Start) {
-        drawSchermataPrincipale();
-    } else if (stato === States.GameOver) {
-        drawSchermataGameOver();
-    } else if (stato === States.Settings) {
-        drawSchermataSettings();
-    } else if (stato === States.Win) {
-        drawschermataCanzone();
-        controllaSuoni();
-    }
+        if (stato === States.Gioco) {
+            drawSchermataGioco();
+        } else if (stato === States.Pause) {
+            drawSchermataPausa();
+        } else if (stato === States.Info) {
+            drawSchermataInfo();
+        } else if (stato === States.Start) {
+            drawSchermataPrincipale();
+        } else if (stato === States.GameOver) {
+            drawSchermataGameOver();
+        } else if (stato === States.Settings) {
+            drawSchermataSettings();
+        } else if (stato === States.Canzone) {
+            drawschermataCanzone();
+            controllaSuoni();
+        }
 
 }
 
@@ -425,7 +426,7 @@ function controllaBottoni(sche){
     bottoneInfo.premuto(States.Info, sche);
     bottoneHome.premuto(States.Start, sche);
 
-    if(sche === sCanzone && bottoneAvanti.premuto(States.Gioco, sche)){
+    if(sche == sCanzone && bottoneAvanti.premuto(States.Gioco, sche)){
         console.log("sono entrato spopositamente nella if yay!");
         game = new Gioco(vettoreBrani[Brano.branoCorrente]);
 
@@ -498,7 +499,7 @@ function contrllaPremitureInGioco(){
 function fermaTuttiIbraniNonQuelloCorrente(){
     for(var k=0; k<vettoreBrani.length; k++){
         if(k != Brano.branoCorrente)
-        vettoreBrani[k].brano.stop();
+            vettoreBrani[k].brano.stop();
     }
 }
 
@@ -515,10 +516,10 @@ function gestisciBraniNelGioco(){
 
     }else if(tro){
 
-                vettoreBrani[Brano.branoCorrente].brano.pause();
-                stopDraw = true;
+        vettoreBrani[Brano.branoCorrente].brano.pause();
+        stopDraw = true;
 
-        }else if(!vettoreBrani[Brano.branoCorrente].brano.isPlaying()){
+    }else if(!vettoreBrani[Brano.branoCorrente].brano.isPlaying()){
         vettoreBrani[Brano.branoCorrente].brano.play();
         stopDraw = false;
     }
@@ -565,22 +566,22 @@ function drawschermataCanzone() {
     if(bottoneScorreSX.premuto(States.Canzone, sCanzone)){
 
         if(!frecciaPremuta)
-        if(Brano.branoCorrente-1 >= 0){
-            vettoreBrani[Brano.branoCorrente].brano.pause();
-            Brano.branoCorrente -=1;
-        }else{
-            Brano.branoCorrente = vettoreBrani.length-1
-        }
+            if(Brano.branoCorrente-1 >= 0){
+                vettoreBrani[Brano.branoCorrente].brano.pause();
+                Brano.branoCorrente -=1;
+            }else{
+                Brano.branoCorrente = vettoreBrani.length-1
+            }
         frecciaPremuta = true;
     }else if(bottoneScorreDX.premuto(States.Canzone, sCanzone)){
 
         if(!frecciaPremuta)
-        if(Brano.branoCorrente+1 < vettoreBrani.length){
-            vettoreBrani[Brano.branoCorrente].brano.stop();
-            Brano.branoCorrente +=1;
-        }else{
-            Brano.branoCorrente = 0;
-        }
+            if(Brano.branoCorrente+1 < vettoreBrani.length){
+                vettoreBrani[Brano.branoCorrente].brano.stop();
+                Brano.branoCorrente +=1;
+            }else{
+                Brano.branoCorrente = 0;
+            }
         frecciaPremuta = true;
     }else{
         frecciaPremuta = false;
@@ -600,7 +601,7 @@ function drawschermataCanzone() {
 function drawSchermataInfo() {
     if(debug)
         //console.log("mi trovo nella schermata info");
-    background(sfondoInfo);
+        background(sfondoInfo);
     bottoneHome.draw();
 
     controllaBottoni(sInfo);
@@ -612,7 +613,7 @@ function drawSchermataInfo() {
 
 function controllaVintoPerso(){
     if(game.punteggio >= 20){
-       stato = States.Win;
+        stato = States.Win;
     }else if(game.errori >= 5){
         stato = States.GameOver;
     }
@@ -640,7 +641,7 @@ function drawSchermataGioco() {
 
 
 
-   contrllaPremitureInGioco();
+    contrllaPremitureInGioco();
     gestisciBraniNelGioco();
     //controllaVintoPerso();
 
