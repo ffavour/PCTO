@@ -14,7 +14,7 @@ The game was mainly developed to train cognitive functions such as attention and
 
 ## How to Play!
 
-[sfondoSchermataPrincipale](https://user-images.githubusercontent.com/113350281/231370884-90053c0f-b161-410f-b4fa-ec232f431484.png)
+![sfondoSchermataPrincipale](https://user-images.githubusercontent.com/113350281/231370884-90053c0f-b161-410f-b4fa-ec232f431484.png)
 
 
 
