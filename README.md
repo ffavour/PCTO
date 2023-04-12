@@ -12,7 +12,10 @@ The game was mainly developed to train cognitive functions such as attention and
 - [p5.js](https://p5js.org/)
 - [ml5.js](https://ml5js.org/)
 
-## How to Play
+## How to Play!
+
+[sfondoSchermataPrincipale](https://user-images.githubusercontent.com/113350281/231370884-90053c0f-b161-410f-b4fa-ec232f431484.png)
+
 
 
 ![App Screenshot](https://github.com/ffavour/PCTO/tree/main/prova1/images/sfondoSchermataPrincipale.png)
