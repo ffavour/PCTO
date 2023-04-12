@@ -18,7 +18,10 @@ The game was mainly developed to train cognitive functions such as attention and
 
 
 
-![App Screenshot](https://github.com/ffavour/PCTO/tree/main/prova1/images/sfondoSchermataPrincipale.png)
+
+
+https://user-images.githubusercontent.com/113350281/231379486-4586480f-7895-4b51-8c68-1c55bcd130dc.mp4
+
 
 Click [here](link.com) to play!🤩
 
