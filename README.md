@@ -13,6 +13,7 @@ The game was mainly developed to train cognitive functions such as attention and
 - [ml5.js](https://ml5js.org/)
 
 ## How to Play
+![App Screenshot](https://imgur.com/a/tT5p9sN)
 Click [here](link.com) to play!🤩
 
 ## Requirements
