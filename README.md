@@ -19,7 +19,7 @@ The game was mainly developed to train cognitive functions such as attention and
 
 
 ## Quick Demo
-![video](https://user-images.githubusercontent.com/113350281/231379486-4586480f-7895-4b51-8c68-1c55bcd130dc.mp4)
+![replay](https://user-images.githubusercontent.com/113350281/231381679-52c188e9-ff16-4c11-90dc-0ecfd1a94c84.gif)
 
 
 Click [here](link.com) to play!🤩
