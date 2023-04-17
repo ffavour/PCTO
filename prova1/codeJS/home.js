@@ -489,7 +489,7 @@ function cursoreMagiK(){
 function contrllaPremitureInGioco(){
     var pos = game.drawKeypointsGioco();
     for(var k=0; k<vettoreQuadratini.length; k++){
-        if(vettoreQuadratini[k].posY <= pos.y1 + 100 && pos.premuto == true && vettoreQuadratini[k].posY >= pos.y1 - 30 ){
+        if(vettoreQuadratini[k].posY <= pos.y1 + 50 && pos.premuto == true && vettoreQuadratini[k].posY >= pos.y1 +5 ){
             vettoreQuadratini[k].premuto = true;
         }
     }
